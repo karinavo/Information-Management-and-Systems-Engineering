@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+#       Webservice
+  imse-app:
+    image: kwindsor/php7-apache-ubuntu
+    container_name: imse-app
+    restart: unless-stopped
+    working_dir: /var/www
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src/php:/var/www/html:rw
+  mariadb:
+    image: mariadb
+    restart: always
+    environment: 
+      - MYSQL_DATABASE=imse_db
+      - MYSQL_ROOT_PASSWORD=rootpsw
+      - MYSQL_USER=imse_user
+      - MYSQL_PASSWORD=imsepsw
+    volumes:
+      - my-db:/var/lib/mysql
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+
+volumes: 
+ my-db:
+

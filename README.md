@@ -11,3 +11,6 @@ https://medium.com/better-programming/setting-up-mysql-database-in-a-docker-d6c6
 
 Um die database zu managen eventuell
 
+Answer 2: adding the sql scripts to the start of the creation of the database to create the tables
+https://stackoverflow.com/questions/29145370/how-can-i-initialize-a-mysql-database-with-schema-in-a-docker-container
+

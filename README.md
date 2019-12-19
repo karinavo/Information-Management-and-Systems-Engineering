@@ -45,3 +45,7 @@ OR
 
 Solution: add sudo to command
 
+For the java dockerfile to be able to run
+
+`sudo docker build -f filler/Dockerfile .`
+

@@ -33,6 +33,8 @@ services:
   filler: 
     image: openjdk:8
     build: ./filler/
+    volumes: 
+      - ./src/java/:/src/java/filler
     depends_on:
       - mariadb
 volumes: 

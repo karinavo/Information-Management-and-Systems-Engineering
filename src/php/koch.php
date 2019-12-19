@@ -235,7 +235,7 @@ if (!$conn) exit;
         //Prepare insert statementd
         $sql="INSERT INTO Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
         //Parse and execute statement
-        $insert = mysqli_parse($conn, $sql);
+        $insert = mysqli_stmt_prepare($conn, $sql);
         mysqli_stmt_execute($insert);
         $conn_err=mysqli_error($conn);
         $insert_err=mysqli_error($insert);
@@ -249,7 +249,7 @@ if (!$conn) exit;
             print_r($insert_err);
             print("<br>");
         }
-        mysqli_free_statement($insert);
+        mysqli_free_result($insert);
     }
     ?>
     <!--Suche-->
@@ -276,7 +276,7 @@ if (!$conn) exit;
         $sql = "SELECT * FROM Koch";
     }
     // execute sql statement
-    $stmt = mysqli_parse($conn, $sql);
+    $stmt = mysqli_stmt_prepare($conn, $sql);
     mysqli_stmt_execute($stmt);
     ?>
     <!--Ausgabe-->
@@ -312,7 +312,7 @@ if (!$conn) exit;
 
     </div>
     <?php
-        mysqli_free_statement($stmt);
+        mysqli_free_result($stmt);
         mysqli_close($conn);
     ?>
 </div>

@@ -269,7 +269,7 @@ if (!$conn) exit;
             $_GET['PLZ'].",TO_DATE('" . $_GET['Geburtsdatum'] . "','YYYY/MM/DD')," . $_GET['LeiterMId'] . "," . $_GET['AbteilungsNr']. ")";
 
         //Parse and execute statement
-        $insert = mysqli_parse($conn, $sql);
+        $insert = mysqli_stmt_prepare($conn, $sql);
         mysqli_stmt_execute($insert);
         $conn_err=mysqli_error($conn);
         $insert_err=mysqli_error($insert);
@@ -283,7 +283,7 @@ if (!$conn) exit;
             print_r($insert_err);
             print("<br>");
         }
-        mysqli_free_statement($insert);
+        mysqli_free_result($insert);
     }
     ?>
 
@@ -311,7 +311,7 @@ if (!$conn) exit;
         $sql = "SELECT * FROM Mitarbeiter";
     }
     // execute sql statement
-    $stmt = mysqli_parse($conn, $sql);
+    $stmt = mysqli_stmt_prepare($conn, $sql);
     mysqli_stmt_execute($stmt);
     ?>
     <!--Ausgabe-->
@@ -360,7 +360,7 @@ if (!$conn) exit;
 
     </div>
     <?php
-    mysqli_free_statement($stmt);
+    mysqli_free_result($stmt);
     mysqli_close($conn);
     ?>
 </div>

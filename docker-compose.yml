@@ -12,7 +12,7 @@ services:
       - "8080:80"
     volumes:
       - ./src/php:/var/www/html:rw
-
+# Database
   mariadb:
     image: mariadb
     build: ./mysql/
@@ -29,7 +29,12 @@ services:
       - target: 3308
         published: 3308
         protocol: tcp
-
+# Filler 
+  filler: 
+    image: openjdk:8
+    build: ./filler/
+    depends_on:
+      - mariadb
 volumes: 
  my-db:
 

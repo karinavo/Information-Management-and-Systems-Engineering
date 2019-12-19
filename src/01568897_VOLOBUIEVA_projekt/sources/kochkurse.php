@@ -239,7 +239,7 @@ if (!$conn) exit;
         $sql="INSERT INTO Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
         //Parse and execute statement
         $insert = mysqli_parse($conn, $sql);
-        mysqli_execute($insert);
+        mysqli_stmt_execute($insert);
         $conn_err=mysqli_error($conn);
         $insert_err=mysqli_error($insert);
         if(!$conn_err & !$insert_err){
@@ -298,7 +298,7 @@ if (!$conn) exit;
         mysqli_bind_by_name($sproc, ':p6', $tlfnr,14);
 
 
-        mysqli_execute($sproc);
+        mysqli_stmt_execute($sproc);
 
 
 
@@ -345,7 +345,7 @@ if (isset($_GET['search'])) {
 }
 // execute sql statement
 $stmt = mysqli_parse($conn, $sql);
-mysqli_execute($stmt);
+mysqli_stmt_execute($stmt);
 ?>
 <!--Ausgabe-->
 <table>

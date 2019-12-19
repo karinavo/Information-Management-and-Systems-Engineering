@@ -248,7 +248,7 @@ if (!$conn) exit;
         $sql="INSERT INTO Findet_statt VALUES('". $_GET['ZeitBlock'] ."',TO_DATE('" . $_GET['Datum'] . "','YYYY/MM/DD')," . $_GET['KursNr'] . "," . $_GET['Nummer'] . "," . $_GET['AbteilungsNr'] . ")";
         //Parse and execute statement
         $insert = mysqli_parse($conn, $sql);
-        mysqli_execute($insert);
+        mysqli_stmt_execute($insert);
         $conn_err=mysqli_error($conn);
         $insert_err=mysqli_error($insert);
         if(!$conn_err & !$insert_err){
@@ -285,7 +285,7 @@ if (!$conn) exit;
         //Bind variables, p1=input (abt), p2=output (str)
         mysqli_bind_by_name($sproc, ':p1', $abt);
         mysqli_bind_by_name($sproc, ':p2', $str, 25);
-        mysqli_execute($sproc);
+        mysqli_stmt_execute($sproc);
         $conn_err=mysqli_error($conn);
         $proc_err=mysqli_error($sproc);
         //If there have been no Connection or Database errors, print department
@@ -327,7 +327,7 @@ if (!$conn) exit;
     }
     // execute sql statement
     $stmt = mysqli_parse($conn, $sql);
-    mysqli_execute($stmt);
+    mysqli_stmt_execute($stmt);
     ?>
     <!--Ausgabe-->
     <table>

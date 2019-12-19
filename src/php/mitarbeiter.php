@@ -270,7 +270,7 @@ if (!$conn) exit;
 
         //Parse and execute statement
         $insert = mysqli_parse($conn, $sql);
-        mysqli_execute($insert);
+        mysqli_stmt_execute($insert);
         $conn_err=mysqli_error($conn);
         $insert_err=mysqli_error($insert);
         if(!$conn_err & !$insert_err){
@@ -312,7 +312,7 @@ if (!$conn) exit;
     }
     // execute sql statement
     $stmt = mysqli_parse($conn, $sql);
-    mysqli_execute($stmt);
+    mysqli_stmt_execute($stmt);
     ?>
     <!--Ausgabe-->
     <table>

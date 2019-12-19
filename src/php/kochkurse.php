@@ -5,7 +5,7 @@ $pass = 'karina39';
 $database = 'lab';
 
 // establish database connection
-$conn = mysql_connect($user, $pass, $database);
+$conn = mysqli_connect($user, $pass, $database);
 if (!$conn) exit;
 ?>
 
@@ -238,10 +238,10 @@ if (!$conn) exit;
         //Prepare insert statementd
         $sql="INSERT INTO Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
         //Parse and execute statement
-        $insert = mysql_parse($conn, $sql);
-        mysql_execute($insert);
-        $conn_err=mysql_error($conn);
-        $insert_err=mysql_error($insert);
+        $insert = mysqli_parse($conn, $sql);
+        mysqli_execute($insert);
+        $conn_err=mysqli_error($conn);
+        $insert_err=mysqli_error($insert);
         if(!$conn_err & !$insert_err){
             print("Successfully inserted");
             print("<br>");
@@ -252,7 +252,7 @@ if (!$conn) exit;
             print_r($insert_err);
             print("<br>");
         }
-        mysql_free_statement($insert);
+        mysqli_free_statement($insert);
     }
     ?>
     <!--Stored Procedure-->
@@ -287,23 +287,23 @@ if (!$conn) exit;
         $email='';
         $tlfnr='';
 
-        $sproc = mysql_parse($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
+        $sproc = mysqli_parse($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
         //Bind variables
 
-        mysql_bind_by_name($sproc, ':p1', $kursnr);
-        mysql_bind_by_name($sproc, ':p2', $svnr);
-        mysql_bind_by_name($sproc, ':p3', $nachname,30);
-        mysql_bind_by_name($sproc, ':p4', $vorname,30);
-        mysql_bind_by_name($sproc, ':p5', $email,80);
-        mysql_bind_by_name($sproc, ':p6', $tlfnr,14);
+        mysqli_bind_by_name($sproc, ':p1', $kursnr);
+        mysqli_bind_by_name($sproc, ':p2', $svnr);
+        mysqli_bind_by_name($sproc, ':p3', $nachname,30);
+        mysqli_bind_by_name($sproc, ':p4', $vorname,30);
+        mysqli_bind_by_name($sproc, ':p5', $email,80);
+        mysqli_bind_by_name($sproc, ':p6', $tlfnr,14);
 
 
-        mysql_execute($sproc);
+        mysqli_execute($sproc);
 
 
 
-        $conn_err=mysql_error($conn);
-        $proc_err=mysql_error($sproc);
+        $conn_err=mysqli_error($conn);
+        $proc_err=mysqli_error($sproc);
         //If there have been no Connection or Database errors, print department
         if(!$conn_err && !$proc_err){
             echo("<br><b>". "Der Koch " . $nachname . " " . $vorname ." fuehrt Kurs " . $kursnr. "</b><br>" );  // prints OUT parameter of stored procedure
@@ -317,7 +317,7 @@ if (!$conn) exit;
     }
 
     // clean up connections
-    mysql_free_statement($sproc);
+    mysqli_free_statement($sproc);
    ;
 
     ?>
@@ -344,8 +344,8 @@ if (isset($_GET['search'])) {
     $sql = "SELECT * FROM Kochkurse";
 }
 // execute sql statement
-$stmt = mysql_parse($conn, $sql);
-mysql_execute($stmt);
+$stmt = mysqli_parse($conn, $sql);
+mysqli_execute($stmt);
 ?>
 <!--Ausgabe-->
 <table>
@@ -362,7 +362,7 @@ mysql_execute($stmt);
     <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = mysql_fetch_assoc($stmt)) {
+        while ($row = mysqli_fetch_assoc($stmt)) {
             echo "<tr>";
             echo "<td>" . $row['KURSNR'] . "</td>";
             echo "<td>" . $row['PREIS'] . "</td>";
@@ -376,12 +376,12 @@ mysql_execute($stmt);
     <!--ANZAHL-->
     <div>
 
-            Insgesamt <?php echo mysql_num_rows($stmt); ?> Kochkurs(e) gefunden!
+            Insgesamt <?php echo mysqli_num_rows($stmt); ?> Kochkurs(e) gefunden!
 
     </div>
     <?php
-        mysql_free_statement($stmt);
-        mysql_close($conn);
+        mysqli_free_statement($stmt);
+        mysqli_close($conn);
         ?>
 
 </div>

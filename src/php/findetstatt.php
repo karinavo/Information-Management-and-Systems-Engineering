@@ -5,7 +5,7 @@ $pass = 'karina39';
 $database = 'lab';
 
 // establish database connection
-$conn = mysql_connect($user, $pass, $database);
+$conn = mysqli_connect($user, $pass, $database);
 if (!$conn) exit;
 ?>
 
@@ -247,10 +247,10 @@ if (!$conn) exit;
         //Prepare insert statementd
         $sql="INSERT INTO Findet_statt VALUES('". $_GET['ZeitBlock'] ."',TO_DATE('" . $_GET['Datum'] . "','YYYY/MM/DD')," . $_GET['KursNr'] . "," . $_GET['Nummer'] . "," . $_GET['AbteilungsNr'] . ")";
         //Parse and execute statement
-        $insert = mysql_parse($conn, $sql);
-        mysql_execute($insert);
-        $conn_err=mysql_error($conn);
-        $insert_err=mysql_error($insert);
+        $insert = mysqli_parse($conn, $sql);
+        mysqli_execute($insert);
+        $conn_err=mysqli_error($conn);
+        $insert_err=mysqli_error($insert);
         if(!$conn_err & !$insert_err){
             print("Successfully inserted");
             print("<br>");
@@ -261,7 +261,7 @@ if (!$conn) exit;
             print_r($insert_err);
             print("<br>");
         }
-        mysql_free_statement($insert);
+        mysqli_free_statement($insert);
     }
     ?>  <!--Stored Procedure-->
     <div>
@@ -281,13 +281,13 @@ if (!$conn) exit;
         //Call Stored Procedure
         $abt = $_GET['AbteilungsNr'];
         $str='';
-        $sproc = mysql_parse($conn, 'begin abt_strasse(:p1, :p2); end;');
+        $sproc = mysqli_parse($conn, 'begin abt_strasse(:p1, :p2); end;');
         //Bind variables, p1=input (abt), p2=output (str)
-        mysql_bind_by_name($sproc, ':p1', $abt);
-        mysql_bind_by_name($sproc, ':p2', $str, 25);
-        mysql_execute($sproc);
-        $conn_err=mysql_error($conn);
-        $proc_err=mysql_error($sproc);
+        mysqli_bind_by_name($sproc, ':p1', $abt);
+        mysqli_bind_by_name($sproc, ':p2', $str, 25);
+        mysqli_execute($sproc);
+        $conn_err=mysqli_error($conn);
+        $proc_err=mysqli_error($sproc);
         //If there have been no Connection or Database errors, print department
         if(!$conn_err && !$proc_err){
             echo("<br><b>". "Die Kochschule Nr." . $abt . " befindet sich auf der  " . $str . "</b><br>" );  // prints OUT parameter of stored procedure
@@ -299,7 +299,7 @@ if (!$conn) exit;
         }
     }
     // clean up connections
-    mysql_free_statement($sproc);
+    mysqli_free_statement($sproc);
 
     ?>
     <!--Suche-->
@@ -326,8 +326,8 @@ if (!$conn) exit;
         $sql = "SELECT * FROM Findet_statt";
     }
     // execute sql statement
-    $stmt = mysql_parse($conn, $sql);
-    mysql_execute($stmt);
+    $stmt = mysqli_parse($conn, $sql);
+    mysqli_execute($stmt);
     ?>
     <!--Ausgabe-->
     <table>
@@ -345,7 +345,7 @@ if (!$conn) exit;
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = mysql_fetch_assoc($stmt)) {
+        while ($row = mysqli_fetch_assoc($stmt)) {
             echo "<tr>";
             echo "<td>" . $row['ZEITBLOCK'] . "</td>";
             echo "<td>" . $row['DATUM'] . "</td>";
@@ -360,10 +360,10 @@ if (!$conn) exit;
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo mysql_num_rows($stmt); ?> Termin(e) gefunden!
+        Insgesamt <?php echo mysqli_num_rows($stmt); ?> Termin(e) gefunden!
 
     </div>
-    <?php  mysql_free_statement($stmt); mysql_close($conn); ?>
+    <?php  mysqli_free_statement($stmt); mysqli_close($conn); ?>
 </div>
 
 <!--menu of school-->

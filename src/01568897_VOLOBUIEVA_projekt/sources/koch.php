@@ -5,7 +5,7 @@ $pass = 'karina39';
 $database = 'lab';
 
 // establish database connection
-$conn = mysql_connect($user, $pass, $database);
+$conn = mysqli_connect($user, $pass, $database);
 if (!$conn) exit;
 ?>
 
@@ -235,10 +235,10 @@ if (!$conn) exit;
         //Prepare insert statementd
         $sql="INSERT INTO Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
         //Parse and execute statement
-        $insert = mysql_parse($conn, $sql);
-        mysql_execute($insert);
-        $conn_err=mysql_error($conn);
-        $insert_err=mysql_error($insert);
+        $insert = mysqli_parse($conn, $sql);
+        mysqli_execute($insert);
+        $conn_err=mysqli_error($conn);
+        $insert_err=mysqli_error($insert);
         if(!$conn_err & !$insert_err){
             print("Successfully inserted");
             print("<br>");
@@ -249,7 +249,7 @@ if (!$conn) exit;
             print_r($insert_err);
             print("<br>");
         }
-        mysql_free_statement($insert);
+        mysqli_free_statement($insert);
     }
     ?>
     <!--Suche-->
@@ -276,8 +276,8 @@ if (!$conn) exit;
         $sql = "SELECT * FROM Koch";
     }
     // execute sql statement
-    $stmt = mysql_parse($conn, $sql);
-    mysql_execute($stmt);
+    $stmt = mysqli_parse($conn, $sql);
+    mysqli_execute($stmt);
     ?>
     <!--Ausgabe-->
     <table>
@@ -294,7 +294,7 @@ if (!$conn) exit;
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = mysql_fetch_assoc($stmt)) {
+        while ($row = mysqli_fetch_assoc($stmt)) {
             echo "<tr>";
             echo "<td>" . $row['KOCHID'] . "</td>";
             echo "<td>" . $row['RANG'] . "</td>";
@@ -308,12 +308,12 @@ if (!$conn) exit;
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo mysql_num_rows($stmt); ?> Koch(e) gefunden!
+        Insgesamt <?php echo mysqli_num_rows($stmt); ?> Koch(e) gefunden!
 
     </div>
     <?php
-        mysql_free_statement($stmt);
-        mysql_close($conn);
+        mysqli_free_statement($stmt);
+        mysqli_close($conn);
     ?>
 </div>
 <!--menu of school-->

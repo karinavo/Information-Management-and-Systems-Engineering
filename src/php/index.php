@@ -211,14 +211,14 @@
 
         <div class="mySlides fade">
             <div class="numbertext"></div>
-            <a href="http://wwwlab.cs.univie.ac.at/~karynav98/dbs/kochkurse.php?search=Alles+WOK%21">
+            <a href="/var/kochkurse.php?search=Alles+WOK%21">
                  WOK Kurse <img src="Wok.jpg" style="width:100%"></a>
             <div class="text">Alles WOK!</div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext"></div>
-            <a href="http://wwwlab.cs.univie.ac.at/~karynav98/dbs/kochkurse.php?search=Ganz">
+            <a href="http://.cs.univie.ac.at/~karynav98/dbs/kochkurse.php?search=Ganz">
                 Ganz schoen Wild<img src="Wild.jpg" style="width:100%"></a>
             <div class="text">Ganz schön Wild</div>
         </div>

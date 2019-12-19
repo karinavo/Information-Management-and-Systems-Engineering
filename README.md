@@ -11,3 +11,7 @@ https://medium.com/better-programming/setting-up-mysql-database-in-a-docker-d6c6
 
 Um die database zu managen eventuell
 
+Für create tables:
+cat /home/karina/Documents/IMSE/IMSEGIT/imse/mysql/create.sql |sudo docker exec -i mariadb_database /usr/bin/mysql -u root --password=rootpsw imse_db 
+
+

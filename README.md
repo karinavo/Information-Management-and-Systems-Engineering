@@ -24,3 +24,7 @@ Delete all volumes using the following command:
 Restart the containers using the following command:
 `sudo docker-compose up -d`
 
+----------------------------
+
+Run `sudo docker build .` in a directory with a dockerfile to test if it is working/to build the image
+

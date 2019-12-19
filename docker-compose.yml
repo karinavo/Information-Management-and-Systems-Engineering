@@ -4,6 +4,7 @@ services:
 #       Webservice
   imse-app:
     image: kwindsor/php7-apache-ubuntu
+    build: ./web/
     container_name: imse-app
     restart: unless-stopped
     working_dir: /var/www
@@ -11,8 +12,10 @@ services:
       - "8080:80"
     volumes:
       - ./src/php:/var/www/html:rw
+
   mariadb:
     image: mariadb
+    build: ./mysql/
     restart: always
     environment: 
       - MYSQL_DATABASE=imse_db
@@ -21,9 +24,10 @@ services:
       - MYSQL_PASSWORD=imsepsw
     volumes:
       - my-db:/var/lib/mysql
+      - ./mysql:/docker-entrypoint-initdb.d:rw
     ports:
-      - target: 3306
-        published: 3306
+      - target: 3308
+        published: 3308
         protocol: tcp
 
 volumes: 

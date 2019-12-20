@@ -306,7 +306,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo oci_num_rows($stmt); ?> Fuehrung(en) gefunden!
+        Insgesamt <?php echo $stmt->rowCount(); ?> Fuehrung(en) gefunden!
         <br>
     </div>
     <?php

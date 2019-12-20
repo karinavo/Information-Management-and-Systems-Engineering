@@ -367,7 +367,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo oci_num_rows($stmt); ?> Termin(e) gefunden!
+        Insgesamt <?php echo $stmt->rowCount(); ?> Termin(e) gefunden!
 
     </div>
     <?php  oci_free_statement($stmt); oci_close($conn); ?>

@@ -363,7 +363,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo oci_num_rows($stmt); ?> Mitarbeiter gefunden!
+        Insgesamt <?php echo $stmt->rowCount(); ?> Mitarbeiter gefunden!
 
     </div>
     <?php

@@ -327,7 +327,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo oci_num_rows($stmt); ?> Kursteilnehmer gefunden!
+        Insgesamt <?php echo $stmt->rowCount(); ?> Kursteilnehmer gefunden!
 
     </div>
     <?php

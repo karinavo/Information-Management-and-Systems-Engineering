@@ -373,8 +373,8 @@ if (isset($_GET['search'])) {
     $sql = "SELECT * FROM Kochkurse";
 }
 // execute sql statement
-$stmt = $conn->prepare($conn, $sql);
-oci_execute($stmt);
+$stmt = $conn->prepare($sql);
+$stmt->execute();
 ?>
 <!--Ausgabe-->
 <table>

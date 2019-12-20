@@ -256,8 +256,8 @@ catch(PDOException $e)
         //Parse and execute statement
         $insert = $conn->prepare($sql);
         $insert->execute($insert);
-        $conn_err=oci_error($conn);
-        $insert_err=oci_error($insert);
+        $conn_err=$conn->errorInfo();
+        $insert_err=$insert->errorInfo();
         if(!$conn_err & !$insert_err){
             print("Successfully inserted");
             print("<br>");
@@ -293,7 +293,7 @@ catch(PDOException $e)
         oci_bind_by_name($sproc, ':p1', $abt);
         oci_bind_by_name($sproc, ':p2', $str, 25);
         $insert->execute($sproc);
-        $conn_err=oci_error($conn);
+        $conn_err=$conn->errorInfo();
         $proc_err=oci_error($sproc);
         //If there have been no Connection or Database errors, print department
         if(!$conn_err && !$proc_err){

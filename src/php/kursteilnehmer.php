@@ -249,8 +249,8 @@ catch(PDOException $e)
         //Parse and execute statement
         $insert = $conn->prepare($sql);
         $insert->execute($insert);
-        $conn_err=oci_error($conn);
-        $insert_err=oci_error($insert);
+        $conn_err=$conn->errorInfo();
+        $insert_err=$insert->errorInfo();
         if(!$conn_err & !$insert_err){
             print("Successfully inserted");
             print("<br>");

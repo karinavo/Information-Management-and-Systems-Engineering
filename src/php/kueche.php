@@ -293,10 +293,17 @@ catch(PDOException $e)
     <!--IN SQL-->
     <?php
     // check if search view of list view
-    if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM Kueche WHERE Nummer like '%" . $_GET['search'] . "%'";
+    $search = $_GET['search'];
+    if (isset($search)) {
+        $sql = "SELECT * FROM Kueche WHERE Nummer like '%?%'";
+        // execute sql statement
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($search);
     } else {
-        $sql = "SELECT * FROM Kueche";
+        $sql = "SELECT * FROM imse_db.Kueche";
+        // execute sql statement
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
     }
     // execute sql statement
     try{
@@ -323,7 +330,7 @@ catch(PDOException $e)
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = oci_fetch_assoc($stmt)) {
+        while ($row = $stmt->fetch()) {
             echo "<tr>";
             echo "<td>" . $row['ABTEILUNGSNR'] . "</td>";
             echo "<td>" . $row['NUMMER'] . "</td>";
@@ -337,7 +344,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo oci_num_rows($stmt); ?> Küche(n) gefunden!
+        Insgesamt <?php echo $stmt->rowCount(); ?> Küche(n) gefunden!
 
     </div>
 </div>

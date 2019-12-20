@@ -238,7 +238,7 @@ catch(PDOException $e)
         $sql="INSERT INTO imse_db.Fuehrt VALUES(". $_GET['KochID'] . "," . $_GET['KursNr'] . ")";
         //Parse and execute statement
         $insert = $conn->prepare($sql);
-        $insert->execute($insert);
+        $insert->execute();
         $conn_err=$conn->errorInfo();
         $insert_err=$insert->errorInfo();
         if(!$conn_err & !$insert_err){

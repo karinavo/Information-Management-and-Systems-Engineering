@@ -243,7 +243,7 @@ catch(PDOException $e)
         $sql="INSERT INTO imse_db.Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
         //Parse and execute statement
         $insert = $conn->prepare($sql);
-        $insert->execute($insert);
+        $insert->execute();
         $conn_err=$conn->errorInfo();
         $insert_err=$insert->errorInfo();
         if(!$conn_err & !$insert_err){

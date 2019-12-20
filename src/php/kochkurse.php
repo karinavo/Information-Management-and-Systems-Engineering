@@ -265,7 +265,7 @@ try {
     //HANDLE insert
     if(isset($_GET['Thema'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
+        $sql="INSERT INTO imse_db.Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
         //Parse and execute statement
         $insert = $conn->prepare($sql);
         $insert->execute();

@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <?php
-$user = 'a01568897';
-$pass = 'karina39';
-$database = 'lab';
-
-// establish database connection
-$conn = oci_connect($user, $pass, $database);
-if (!$conn) exit;
+$servername = "mariadb";
+$username = "root";
+$password = "rootpsw";
+$dbname = "imse_db";
+try {
+    $conn = new PDO("mysql:host=$servername;$dbname", $username, $password);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully";
+    }
+catch(PDOException $e)
+    {
+    echo "Connection failed: " . $e->getMessage();
+    }
 ?>
 
 <html>
@@ -235,7 +242,7 @@ if (!$conn) exit;
         //Prepare insert statementd
         $sql="INSERT INTO Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
         //Parse and execute statement
-        $insert = oci_parse($conn, $sql);
+        $insert = $conn->prepare($conn, $sql);
         oci_execute($insert);
         $conn_err=oci_error($conn);
         $insert_err=oci_error($insert);
@@ -276,7 +283,7 @@ if (!$conn) exit;
         $sql = "SELECT * FROM Koch";
     }
     // execute sql statement
-    $stmt = oci_parse($conn, $sql);
+    $stmt = $conn->prepare($conn, $sql);
     oci_execute($stmt);
     ?>
     <!--Ausgabe-->

@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <?php
-$user = 'root';
-$pass = 'rootpsw';
-$database = 'imse_db';
-
-// establish database connection
-$conn = mysqli_connect($user, $pass, $database);
-if (!$conn) exit;
+$servername = "mariadb";
+$username = "root";
+$password = "rootpsw";
+$dbname = "imse_db";
+try {
+    $conn = new PDO("mysql:host=$servername;$dbname", $username, $password);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully";
+    }
+catch(PDOException $e)
+    {
+    echo "Connection failed: " . $e->getMessage();
+    }
 ?>
 
 <html>
@@ -238,7 +245,7 @@ if (!$conn) exit;
         //Prepare insert statementd
         $sql="INSERT INTO Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
         //Parse and execute statement
-        $insert = oci_parse($conn, $sql);
+        $insert = $conn->prepare($conn, $sql);
         oci_execute($insert);
         $conn_err=oci_error($conn);
         $insert_err=oci_error($insert);
@@ -287,7 +294,7 @@ if (!$conn) exit;
         $email='';
         $tlfnr='';
 
-        $sproc = oci_parse($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
+        $sproc = $conn->prepare($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
         //Bind variables
 
         oci_bind_by_name($sproc, ':p1', $kursnr);
@@ -344,7 +351,7 @@ if (isset($_GET['search'])) {
     $sql = "SELECT * FROM Kochkurse";
 }
 // execute sql statement
-$stmt = oci_parse($conn, $sql);
+$stmt = $conn->prepare($conn, $sql);
 oci_execute($stmt);
 ?>
 <!--Ausgabe-->

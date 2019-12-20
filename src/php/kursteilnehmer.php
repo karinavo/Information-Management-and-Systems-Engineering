@@ -285,7 +285,7 @@ catch(PDOException $e)
             print_r($insert_err);
             print("<br>");
         }
-        oci_free_statement($insert);
+        //oci_free_statement($insert);
     }
     ?>
     <!--Suche-->
@@ -333,7 +333,7 @@ catch(PDOException $e)
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = oci_fetch_assoc($stmt)) {
+        while ($row = $stmt->fetch()) {
             echo "<tr>";
             echo "<td>" . $row['KURSTEILNEHMERNR'] . "</td>";
             echo "<td>" . $row['VORNAME'] . "</td>";
@@ -354,8 +354,8 @@ catch(PDOException $e)
 
     </div>
     <?php
-        oci_free_statement($stmt);
-        oci_close($conn);
+        //oci_free_statement($stmt);
+        //oci_close($conn);
         ?>
 
 

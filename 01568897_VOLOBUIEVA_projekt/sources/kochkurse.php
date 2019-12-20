@@ -294,7 +294,7 @@ catch(PDOException $e)
         $email='';
         $tlfnr='';
 
-        $sproc = $conn->prepare($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
+        $sproc = $conn->prepare("begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
         //Bind variables
 
         $sproc->bindParam(':p1', $kursnr);

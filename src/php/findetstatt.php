@@ -288,7 +288,7 @@ catch(PDOException $e)
         //Call Stored Procedure
         $abt = $_GET['AbteilungsNr'];
         $str='';
-        $sproc = $conn->prepare($conn, 'begin abt_strasse(:p1, :p2); end;');
+        $sproc = $conn->prepare('begin abt_strasse(:p1, :p2); end;');
         //Bind variables, p1=input (abt), p2=output (str)
         $sproc->bindParam(':p1', $abt);
         $sproc->bindParam(':p2', $str, 25);

@@ -260,10 +260,10 @@ catch(PDOException $e)
         //Prepare insert statementd
         $sql="INSERT INTO Fuehrt VALUES(". $_GET['KochID'] . "," . $_GET['KursNr'] . ")";
         //Parse and execute statement
-        $insert = $conn->prepare($conn, $sql);
-        oci_execute($insert);
-        $conn_err=oci_error($conn);
-        $insert_err=oci_error($insert);
+        $insert = $conn->prepare($sql);
+        $insert->execute();
+        $conn_err=$conn->errorInfo();
+        $insert_err=$insert->errorInfo();
         if(!$conn_err & !$insert_err){
             print("Successfully inserted");
             print("<br>");

@@ -283,8 +283,8 @@ if (!$conn) exit;
         $str='';
         $sproc = mysqli_stmt_prepare($conn, 'begin abt_strasse(:p1, :p2); end;');
         //Bind variables, p1=input (abt), p2=output (str)
-        mysqli_bind_by_name($sproc, ':p1', $abt);
-        mysqli_bind_by_name($sproc, ':p2', $str, 25);
+        mysqli_stmt_bind_param($sproc, ':p1', $abt);
+        mysqli_stmt_bind_param($sproc, ':p2', $str, 25);
         mysqli_stmt_execute($sproc);
         $conn_err=mysqli_error($conn);
         $proc_err=mysqli_error($sproc);

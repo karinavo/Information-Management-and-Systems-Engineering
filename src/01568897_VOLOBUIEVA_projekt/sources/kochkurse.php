@@ -290,12 +290,12 @@ if (!$conn) exit;
         $sproc = mysqli_stmt_prepare($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
         //Bind variables
 
-        mysqli_bind_by_name($sproc, ':p1', $kursnr);
-        mysqli_bind_by_name($sproc, ':p2', $svnr);
-        mysqli_bind_by_name($sproc, ':p3', $nachname,30);
-        mysqli_bind_by_name($sproc, ':p4', $vorname,30);
-        mysqli_bind_by_name($sproc, ':p5', $email,80);
-        mysqli_bind_by_name($sproc, ':p6', $tlfnr,14);
+        mysqli_stmt_bind_param($sproc, ':p1', $kursnr);
+        mysqli_stmt_bind_param($sproc, ':p2', $svnr);
+        mysqli_stmt_bind_param($sproc, ':p3', $nachname,30);
+        mysqli_stmt_bind_param($sproc, ':p4', $vorname,30);
+        mysqli_stmt_bind_param($sproc, ':p5', $email,80);
+        mysqli_stmt_bind_param($sproc, ':p6', $tlfnr,14);
 
 
         mysqli_stmt_execute($sproc);

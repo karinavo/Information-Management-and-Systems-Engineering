@@ -319,7 +319,7 @@ catch(PDOException $e)
     }
     // execute sql statement
     $stmt = $conn->prepare($sql);
-    $stmt->execute($stmt);
+    $stmt->execute();
     ?>
     <!--Ausgabe-->
     <table>

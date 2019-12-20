@@ -277,7 +277,7 @@ catch(PDOException $e)
 
         //Parse and execute statement
         $insert = $conn->prepare($sql);
-        $insert->execute($insert);
+        $insert->execute();
         $conn_err=$conn->errorInfo();
         $insert_err=$insert->errorInfo();
         if(!$conn_err & !$insert_err){
@@ -319,7 +319,7 @@ catch(PDOException $e)
     }
     // execute sql statement
     $stmt = $conn->prepare($sql);
-    $stmt->execute($stmt);
+    $stmt->execute();
     ?>
     <!--Ausgabe-->
     <table>

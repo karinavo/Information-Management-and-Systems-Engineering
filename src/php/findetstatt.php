@@ -290,11 +290,11 @@ catch(PDOException $e)
         $str='';
         $sproc = $conn->prepare($conn, 'begin abt_strasse(:p1, :p2); end;');
         //Bind variables, p1=input (abt), p2=output (str)
-        oci_bind_by_name($sproc, ':p1', $abt);
-        oci_bind_by_name($sproc, ':p2', $str, 25);
+        $sproc->bindParam(':p1', $abt);
+        $sproc->bindParam(':p2', $str, 25);
         $insert->execute($sproc);
         $conn_err=$conn->errorInfo();
-        $proc_err=oci_error($sproc);
+        $proc_err=$sproc->errorInfo();
         //If there have been no Connection or Database errors, print department
         if(!$conn_err && !$proc_err){
             echo("<br><b>". "Die Kochschule Nr." . $abt . " befindet sich auf der  " . $str . "</b><br>" );  // prints OUT parameter of stored procedure

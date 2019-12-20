@@ -297,12 +297,12 @@ catch(PDOException $e)
         $sproc = $conn->prepare("begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
         //Bind variables
 
-        oci_bind_by_name($sproc, ':p1', $kursnr);
-        oci_bind_by_name($sproc, ':p2', $svnr);
-        oci_bind_by_name($sproc, ':p3', $nachname,30);
-        oci_bind_by_name($sproc, ':p4', $vorname,30);
-        oci_bind_by_name($sproc, ':p5', $email,80);
-        oci_bind_by_name($sproc, ':p6', $tlfnr,14);
+        $sproc->bindParam(':p1', $kursnr);
+        $sproc->bindParam(':p2', $svnr);
+        $sproc->bindParam(':p3', $nachname,30);
+        $sproc->bindParam(':p4', $vorname,30);
+        $sproc->bindParam(':p5', $email,80);
+        $sproc->bindParam(':p6', $tlfnr,14);
 
 
         $insert->execute($sproc);
@@ -310,7 +310,7 @@ catch(PDOException $e)
 
 
         $conn_err=$conn->errorInfo();
-        $proc_err=oci_error($sproc);
+        $proc_err=$sproc->errorInfo();
         //If there have been no Connection or Database errors, print department
         if(!$conn_err && !$proc_err){
             echo("<br><b>". "Der Koch " . $nachname . " " . $vorname ." fuehrt Kurs " . $kursnr. "</b><br>" );  // prints OUT parameter of stored procedure

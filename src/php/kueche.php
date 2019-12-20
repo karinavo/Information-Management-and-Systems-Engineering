@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <?php
-$user = 'a01568897';
-$pass = 'karina39';
-$database = 'lab';
+$servername = "mariadb";
+$username = "user";
+$password = "userpsw";
+$dbname = "imse_db";
+try {
+    $conn = new PDO("mysql:host=$servername;$dbname", $username, $password);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully";
+    }
+catch(PDOException $e)
+    {
+    echo "Connection failed: " . $e->getMessage();
+    }
+?>
+<?php
+$servername = "mariadb";
+$user = 'root';
+$pass = 'rootpsw';
+$database = 'imse_db';
 
 // establish database connection
-$conn = mysqli_connect($user, $pass, $database);
+$conn = mysqli_connect($servername, $user, $pass, $database);
 if (!$conn) exit;
 ?>
 

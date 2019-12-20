@@ -49,3 +49,11 @@ For the java dockerfile to be able to run
 
 `sudo docker build -f filler/Dockerfile .`
 
+
+Um nicht mehr sudo schreiben zu müssen
+
+`sudo usermod -a -G docker lujza`
+
+Baut das ganze Ding noch einmal auf
+
+`sudo docker-compose build no-cache` 

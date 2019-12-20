@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <?php
-$user = 'a01568897';
-$pass = 'karina39';
-$database = 'lab';
+$user = 'root';
+$pass = 'rootpsw';
+$database = 'imse_db';
 
 // establish database connection
 $conn = mysqli_connect($user, $pass, $database);

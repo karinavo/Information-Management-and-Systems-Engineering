@@ -23,8 +23,8 @@ private static int randBetween(int start, int end) {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String database = "jdbc:oracle:thin:@131.130.122.4:1521:lab";
-            String user = "a01568897";
-            String pass = "karina39";
+            String user = "root";
+            String pass = "rootpsw";
 
             // establish connection to database
             Connection con = DriverManager.getConnection(database, user, pass);

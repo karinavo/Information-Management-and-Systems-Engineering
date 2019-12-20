@@ -260,7 +260,7 @@ catch(PDOException $e)
         //Prepare insert statementd
         $sql="INSERT INTO Fuehrt VALUES(". $_GET['KochID'] . "," . $_GET['KursNr'] . ")";
         //Parse and execute statement
-        $insert = oci_parse($conn, $sql);
+        $insert = $conn->prepare($conn, $sql);
         oci_execute($insert);
         $conn_err=oci_error($conn);
         $insert_err=oci_error($insert);
@@ -301,7 +301,7 @@ catch(PDOException $e)
         $sql = "SELECT * FROM Fuehrt";
     }
     // execute sql statement
-    $stmt = oci_parse($conn, $sql);
+    $stmt = $conn->prepare($conn, $sql);
     oci_execute($stmt);
     ?>
     <!--Ausgabe-->

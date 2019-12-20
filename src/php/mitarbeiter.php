@@ -301,7 +301,7 @@ catch(PDOException $e)
             $_GET['PLZ'].",TO_DATE('" . $_GET['Geburtsdatum'] . "','YYYY/MM/DD')," . $_GET['LeiterMId'] . "," . $_GET['AbteilungsNr']. ")";
 
         //Parse and execute statement
-        $insert = oci_parse($conn, $sql);
+        $insert = $conn->prepare($conn, $sql);
         oci_execute($insert);
         $conn_err=oci_error($conn);
         $insert_err=oci_error($insert);
@@ -343,7 +343,7 @@ catch(PDOException $e)
         $sql = "SELECT * FROM Mitarbeiter";
     }
     // execute sql statement
-    $stmt = oci_parse($conn, $sql);
+    $stmt = $conn->prepare($conn, $sql);
     oci_execute($stmt);
     ?>
     <!--Ausgabe-->

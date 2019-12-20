@@ -278,7 +278,7 @@ try {
         //Prepare insert statementd
         $sql="INSERT INTO Findet_statt VALUES('". $_GET['ZeitBlock'] ."',TO_DATE('" . $_GET['Datum'] . "','YYYY/MM/DD')," . $_GET['KursNr'] . "," . $_GET['Nummer'] . "," . $_GET['AbteilungsNr'] . ")";
         //Parse and execute statement
-        $insert = oci_parse($conn, $sql);
+        $insert = $conn->prepare($conn, $sql);
         oci_execute($insert);
         $conn_err=oci_error($conn);
         $insert_err=oci_error($insert);
@@ -312,7 +312,7 @@ try {
         //Call Stored Procedure
         $abt = $_GET['AbteilungsNr'];
         $str='';
-        $sproc = oci_parse($conn, 'begin abt_strasse(:p1, :p2); end;');
+        $sproc = $conn->prepare($conn, 'begin abt_strasse(:p1, :p2); end;');
         //Bind variables, p1=input (abt), p2=output (str)
         oci_bind_by_name($sproc, ':p1', $abt);
         oci_bind_by_name($sproc, ':p2', $str, 25);
@@ -357,7 +357,7 @@ try {
         $sql = "SELECT * FROM Findet_statt";
     }
     // execute sql statement
-    $stmt = oci_parse($conn, $sql);
+    $stmt = $conn->prepare($conn, $sql);
     oci_execute($stmt);
     ?>
     <!--Ausgabe-->

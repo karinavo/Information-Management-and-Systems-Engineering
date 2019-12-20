@@ -271,7 +271,7 @@ catch(PDOException $e)
         $sql="INSERT INTO Kursteilnehmer(Vorname,Nachname,EMail,TelefonNr,AbteilungsNr,KursNr) VALUES('". $_GET['Vorname'] ."','" . $_GET['Nachname'] . "','" . $_GET['EMail'] . "','" . $_GET['TelefonNr'] . "'," . $_GET['AbteilungsNr'] .",".$_GET['KursNr']. ")";
 
         //Parse and execute statement
-        $insert = oci_parse($conn, $sql);
+        $insert = $conn->prepare($conn, $sql);
         oci_execute($insert);
         $conn_err=oci_error($conn);
         $insert_err=oci_error($insert);
@@ -312,7 +312,7 @@ catch(PDOException $e)
         $sql = "SELECT * FROM Kursteilnehmer";
     }
     // execute sql statement
-    $stmt = oci_parse($conn, $sql);
+    $stmt = $conn->prepare($conn, $sql);
     oci_execute($stmt);
     ?>
     <!--Ausgabe-->

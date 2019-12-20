@@ -267,7 +267,7 @@ try {
         //Prepare insert statementd
         $sql="INSERT INTO Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
         //Parse and execute statement
-        $insert = oci_parse($conn, $sql);
+        $insert = $conn->prepare($conn, $sql);
         oci_execute($insert);
         $conn_err=oci_error($conn);
         $insert_err=oci_error($insert);
@@ -316,7 +316,7 @@ try {
         $email='';
         $tlfnr='';
 
-        $sproc = oci_parse($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
+        $sproc = $conn->prepare($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
         //Bind variables
 
         oci_bind_by_name($sproc, ':p1', $kursnr);
@@ -373,7 +373,7 @@ if (isset($_GET['search'])) {
     $sql = "SELECT * FROM Kochkurse";
 }
 // execute sql statement
-$stmt = oci_parse($conn, $sql);
+$stmt = $conn->prepare($conn, $sql);
 oci_execute($stmt);
 ?>
 <!--Ausgabe-->

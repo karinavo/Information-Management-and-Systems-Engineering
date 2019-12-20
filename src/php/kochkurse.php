@@ -405,7 +405,7 @@ $stmt->execute();
     <!--ANZAHL-->
     <div>
 
-            Insgesamt <?php echo oci_num_rows($stmt); ?> Kochkurs(e) gefunden!
+            Insgesamt <?php echo $stmt->rowCount(); ?> Kochkurs(e) gefunden!
 
     </div>
     <?php

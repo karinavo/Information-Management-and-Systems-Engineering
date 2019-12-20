@@ -338,7 +338,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo oci_num_rows($stmt); ?> Koch(e) gefunden!
+        Insgesamt <?php echo $stmt->rowCount(); ?> Koch(e) gefunden!
 
     </div>
     <?php

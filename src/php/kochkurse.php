@@ -238,7 +238,7 @@ if (!$conn) exit;
         //Prepare insert statementd
         $sql="INSERT INTO Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
         //Parse and execute statement
-        $insert = mysqli_stmt_prepare($conn, $sql);
+        $insert = mysqli_prepare($conn, $sql);
         mysqli_stmt_execute($insert);
         $conn_err=mysqli_error($conn);
         $insert_err=mysqli_error($insert);
@@ -287,7 +287,7 @@ if (!$conn) exit;
         $email='';
         $tlfnr='';
 
-        $sproc = mysqli_stmt_prepare($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
+        $sproc = mysqli_prepare($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
         //Bind variables
 
         mysqli_stmt_bind_param($sproc, ':p1', $kursnr);
@@ -344,7 +344,7 @@ if (isset($_GET['search'])) {
     $sql = "SELECT * FROM Kochkurse";
 }
 // execute sql statement
-$stmt = mysqli_stmt_prepare($conn, $sql);
+$stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_execute($stmt);
 ?>
 <!--Ausgabe-->

@@ -241,7 +241,7 @@ if (!$conn) exit;
         $sql="INSERT INTO Kursteilnehmer(Vorname,Nachname,EMail,TelefonNr,AbteilungsNr,KursNr) VALUES('". $_GET['Vorname'] ."','" . $_GET['Nachname'] . "','" . $_GET['EMail'] . "','" . $_GET['TelefonNr'] . "'," . $_GET['AbteilungsNr'] .",".$_GET['KursNr']. ")";
 
         //Parse and execute statement
-        $insert = mysqli_stmt_prepare($conn, $sql);
+        $insert = mysqli_prepare($conn, $sql);
         mysqli_stmt_execute($insert);
         $conn_err=mysqli_error($conn);
         $insert_err=mysqli_error($insert);
@@ -282,7 +282,7 @@ if (!$conn) exit;
         $sql = "SELECT * FROM Kursteilnehmer";
     }
     // execute sql statement
-    $stmt = mysqli_stmt_prepare($conn, $sql);
+    $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_execute($stmt);
     ?>
     <!--Ausgabe-->

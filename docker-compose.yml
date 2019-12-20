@@ -1,17 +1,6 @@
 version: '3.7'
 
 services:
-#       Webservice
-  imse-app:
-    image: kwindsor/php7-apache-ubuntu
-    build: ./web/
-    container_name: imse-app
-    restart: unless-stopped
-    working_dir: /var/www
-    ports:
-      - "8080:80"
-    volumes:
-      - ./src/php:/var/www/html:rw
 # Database
   mariadb:
     image: mariadb
@@ -29,6 +18,24 @@ services:
       - target: 3308
         published: 3308
         protocol: tcp
+
+#       Webservice
+  imse-app:
+    image: kwindsor/php7-apache-ubuntu
+    build: ./web/
+    container_name: imse-app
+    restart: unless-stopped
+    working_dir: /var/www
+    depends_on:
+      - mariadb
+    ports:
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - ./src/php:/var/www/html:rw
+    #environment: 
+    #  - DATABASE_URL=mysql://imse_user:imsepsw@mariadb/imse_db
+
 # Filler 
   filler: 
     image: openjdk:8

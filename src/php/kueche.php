@@ -295,12 +295,12 @@ catch(PDOException $e)
     // check if search view of list view
     $search = $_GET['search'];
     if (isset($search)) {
-        $sql = "SELECT * FROM Kueche WHERE Nummer like '%?%'";
+        $sql = "SELECT * FROM imse_db.Kueche WHERE Nummer like '%?%'";
         // execute sql statement
         $stmt = $conn->prepare($sql);
         $stmt->execute($search);
     } else {
-        $sql = "SELECT * FROM imse_db.Kueche";
+        $sql = "SELECT * FROM imse_db.imse_db.Kueche";
         // execute sql statement
         $stmt = $conn->prepare($sql);
         $stmt->execute();

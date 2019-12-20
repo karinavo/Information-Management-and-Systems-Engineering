@@ -328,9 +328,9 @@ catch(PDOException $e)
     <?php
     // check if search view of list view
     if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM Findet_statt WHERE Datum like '%" . $_GET['search'] . "%'";
+        $sql = "SELECT * FROM imse_db.Findet_statt WHERE Datum like '%" . $_GET['search'] . "%'";
     } else {
-        $sql = "SELECT * FROM Findet_statt";
+        $sql = "SELECT * FROM imse_db.Findet_statt";
     }
     // execute sql statement
     $stmt = $conn->prepare($sql);

@@ -346,9 +346,9 @@ catch(PDOException $e)
 <?php
 // check if search view of list view
 if (isset($_GET['search'])) {
-    $sql = "SELECT * FROM Kochkurse WHERE Thema like '%" . $_GET['search'] . "%'";
+    $sql = "SELECT * FROM imse_db.Kochkurse WHERE Thema like '%" . $_GET['search'] . "%'";
 } else {
-    $sql = "SELECT * FROM Kochkurse";
+    $sql = "SELECT * FROM imse_db.Kochkurse";
 }
 // execute sql statement
 $stmt = $conn->prepare($sql);

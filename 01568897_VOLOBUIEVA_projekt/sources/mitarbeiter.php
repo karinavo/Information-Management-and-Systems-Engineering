@@ -313,9 +313,9 @@ catch(PDOException $e)
     <?php
     // check if search view of list view
     if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM Mitarbeiter WHERE MId like '%" . $_GET['search'] . "%'";
+        $sql = "SELECT * FROM imse_db.Mitarbeiter WHERE MId like '%" . $_GET['search'] . "%'";
     } else {
-        $sql = "SELECT * FROM Mitarbeiter";
+        $sql = "SELECT * FROM imse_db.Mitarbeiter";
     }
     // execute sql statement
     $stmt = $conn->prepare($sql);

@@ -252,7 +252,7 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['ZeitBlock'])&&isset($_GET['Datum'])&&isset($_GET['KursNr'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO Findet_statt VALUES('". $_GET['ZeitBlock'] ."',TO_DATE('" . $_GET['Datum'] . "','YYYY/MM/DD')," . $_GET['KursNr'] . "," . $_GET['Nummer'] . "," . $_GET['AbteilungsNr'] . ")";
+        $sql="INSERT INTO imse_db.Findet_statt VALUES('". $_GET['ZeitBlock'] ."',TO_DATE('" . $_GET['Datum'] . "','YYYY/MM/DD')," . $_GET['KursNr'] . "," . $_GET['Nummer'] . "," . $_GET['AbteilungsNr'] . ")";
         //Parse and execute statement
         $insert = $conn->prepare($sql);
         $insert->execute($insert);

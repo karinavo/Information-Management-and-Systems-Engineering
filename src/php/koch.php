@@ -240,7 +240,7 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['MId'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
+        $sql="INSERT INTO imse_db.Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
         //Parse and execute statement
         $insert = $conn->prepare($sql);
         $insert->execute($insert);

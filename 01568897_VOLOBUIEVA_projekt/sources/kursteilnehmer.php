@@ -245,7 +245,7 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['AbteilungsNr'])&&isset($_GET['KursNr'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO Kursteilnehmer(Vorname,Nachname,EMail,TelefonNr,AbteilungsNr,KursNr) VALUES('". $_GET['Vorname'] ."','" . $_GET['Nachname'] . "','" . $_GET['EMail'] . "','" . $_GET['TelefonNr'] . "'," . $_GET['AbteilungsNr'] .",".$_GET['KursNr']. ")";
+        $sql="INSERT INTO imse_db.Kursteilnehmer(Vorname,Nachname,EMail,TelefonNr,AbteilungsNr,KursNr) VALUES('". $_GET['Vorname'] ."','" . $_GET['Nachname'] . "','" . $_GET['EMail'] . "','" . $_GET['TelefonNr'] . "'," . $_GET['AbteilungsNr'] .",".$_GET['KursNr']. ")";
 
         //Parse and execute statement
         $insert = $conn->prepare($sql);

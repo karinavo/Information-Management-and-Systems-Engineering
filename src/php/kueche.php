@@ -244,7 +244,7 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['Nummer'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO imse_db.Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(?,?,?,?)";
+        $sql="INSERT INTO imse_db.imse_db.Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(?,?,?,?)";
         //Parse and execute statement
         $insert = $conn->prepare($sql);  //$conn->prepare($sql);
         try {
@@ -289,7 +289,7 @@ catch(PDOException $e)
         $stmt = $conn->prepare($sql);
         $stmt->execute($search);
     } else {
-        $sql = "SELECT * FROM imse_db.imse_db.Kueche";
+        $sql = "SELECT * FROM imse_db.Kueche";
         // execute sql statement
         $stmt = $conn->prepare($sql);
         $stmt->execute();

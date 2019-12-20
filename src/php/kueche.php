@@ -244,23 +244,24 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['Nummer'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(".$_GET['AbteilungsNr'].",". $_GET['Nummer'] ."," . $_GET['Fassungsvermoegen'].",'" . $_GET['Ausstattung'] . "')";
+        $sql="INSERT INTO imse_db.Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(?,?,?,?)";
         //Parse and execute statement
         $insert = $conn->prepare($sql);  //$conn->prepare($sql);
-        $insert->execute($insert);
-        $conn_err=oci_error($conn);
-        $insert_err=oci_error($insert);
-        if(!$conn_err & !$insert_err){
-            print("Successfully inserted");
-            print("<br>");
-        }
-        //Print potential errors and warnings
-        else{
+        try {
+            $insert->execute(array($_GET['AbteilungsNr'], $_GET['Nummer'], $_GET['Fassungsvermoegen'], $_GET['Ausstattung']));
+            if($insert){
+                print("Successfully inserted");
+                print("<br>");
+            }
+        } catch(Exception $e) {
+            //Print potential errors and warnings
+            $conn_err=$conn->errorInfo();
+            $insert_err=$insert->errorInfo();
             print($conn_err);
             print_r($insert_err);
             print("<br>");
         }
-        oci_free_statement($insert);
+        //oci_free_statement($insert);
     }
     ?>
     <!--Suche-->
@@ -281,14 +282,19 @@ catch(PDOException $e)
     <!--IN SQL-->
     <?php
     // check if search view of list view
-    if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM Kueche WHERE Nummer like '%" . $_GET['search'] . "%'";
+    $search = $_GET['search'];
+    if (isset($search)) {
+        $sql = "SELECT * FROM Kueche WHERE Nummer like '%?%'";
+        // execute sql statement
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($search);
     } else {
-        $sql = "SELECT * FROM Kueche";
+        $sql = "SELECT * FROM imse_db.Kueche";
+        // execute sql statement
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
     }
-    // execute sql statement
-    $stmt = $conn->prepare($sql);
-    $insert->execute($stmt);
+
     ?>
     <!--Ausgabe-->
     <table>
@@ -305,7 +311,7 @@ catch(PDOException $e)
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = oci_fetch_assoc($stmt)) {
+        while ($row = $stmt->fetch()) {
             echo "<tr>";
             echo "<td>" . $row['ABTEILUNGSNR'] . "</td>";
             echo "<td>" . $row['NUMMER'] . "</td>";
@@ -319,12 +325,13 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo oci_num_rows($stmt); ?> Küche(n) gefunden!
+        Insgesamt <?php echo $stmt->rowCount(); ?> Küche(n) gefunden!
 
     </div>
     <?php
-    oci_free_statement($stmt);
-    oci_close($conn);
+    //oci_free_statement($stmt);
+    //oci_close($conn);
+    //$conn->;
     ?>
 </div>
 <!--menu of school-->

@@ -245,8 +245,8 @@ catch(PDOException $e)
         //Prepare insert statementd
         $sql="INSERT INTO Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
         //Parse and execute statement
-        $insert = $conn->prepare($conn, $sql);
-        oci_execute($insert);
+        $insert = $conn->prepare($sql);
+        $insert->execute($insert);
         $conn_err=oci_error($conn);
         $insert_err=oci_error($insert);
         if(!$conn_err & !$insert_err){
@@ -294,7 +294,7 @@ catch(PDOException $e)
         $email='';
         $tlfnr='';
 
-        $sproc = $conn->prepare($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
+        $sproc = $conn->prepare("begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
         //Bind variables
 
         oci_bind_by_name($sproc, ':p1', $kursnr);
@@ -305,7 +305,7 @@ catch(PDOException $e)
         oci_bind_by_name($sproc, ':p6', $tlfnr,14);
 
 
-        oci_execute($sproc);
+        $insert->execute($sproc);
 
 
 
@@ -351,8 +351,8 @@ if (isset($_GET['search'])) {
     $sql = "SELECT * FROM Kochkurse";
 }
 // execute sql statement
-$stmt = $conn->prepare($conn, $sql);
-oci_execute($stmt);
+$stmt = $conn->prepare($sql);
+$insert->execute($stmt);
 ?>
 <!--Ausgabe-->
 <table>

@@ -242,8 +242,8 @@ catch(PDOException $e)
         //Prepare insert statementd
         $sql="INSERT INTO Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
         //Parse and execute statement
-        $insert = $conn->prepare($conn, $sql);
-        oci_execute($insert);
+        $insert = $conn->prepare($sql);
+        $insert->execute($insert);
         $conn_err=oci_error($conn);
         $insert_err=oci_error($insert);
         if(!$conn_err & !$insert_err){
@@ -283,8 +283,8 @@ catch(PDOException $e)
         $sql = "SELECT * FROM Koch";
     }
     // execute sql statement
-    $stmt = $conn->prepare($conn, $sql);
-    oci_execute($stmt);
+    $stmt = $conn->prepare($sql);
+    $insert->execute($stmt);
     ?>
     <!--Ausgabe-->
     <table>

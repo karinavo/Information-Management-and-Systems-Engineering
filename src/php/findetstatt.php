@@ -254,8 +254,8 @@ catch(PDOException $e)
         //Prepare insert statementd
         $sql="INSERT INTO Findet_statt VALUES('". $_GET['ZeitBlock'] ."',TO_DATE('" . $_GET['Datum'] . "','YYYY/MM/DD')," . $_GET['KursNr'] . "," . $_GET['Nummer'] . "," . $_GET['AbteilungsNr'] . ")";
         //Parse and execute statement
-        $insert = $conn->prepare($conn, $sql);
-        oci_execute($insert);
+        $insert = $conn->prepare($sql);
+        $insert->execute($insert);
         $conn_err=oci_error($conn);
         $insert_err=oci_error($insert);
         if(!$conn_err & !$insert_err){
@@ -292,7 +292,7 @@ catch(PDOException $e)
         //Bind variables, p1=input (abt), p2=output (str)
         oci_bind_by_name($sproc, ':p1', $abt);
         oci_bind_by_name($sproc, ':p2', $str, 25);
-        oci_execute($sproc);
+        $insert->execute($sproc);
         $conn_err=oci_error($conn);
         $proc_err=oci_error($sproc);
         //If there have been no Connection or Database errors, print department
@@ -333,8 +333,8 @@ catch(PDOException $e)
         $sql = "SELECT * FROM Findet_statt";
     }
     // execute sql statement
-    $stmt = $conn->prepare($conn, $sql);
-    oci_execute($stmt);
+    $stmt = $conn->prepare($sql);
+    $insert->execute($stmt);
     ?>
     <!--Ausgabe-->
     <table>

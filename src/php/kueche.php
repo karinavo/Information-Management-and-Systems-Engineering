@@ -246,8 +246,8 @@ catch(PDOException $e)
         //Prepare insert statementd
         $sql="INSERT INTO Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(".$_GET['AbteilungsNr'].",". $_GET['Nummer'] ."," . $_GET['Fassungsvermoegen'].",'" . $_GET['Ausstattung'] . "')";
         //Parse and execute statement
-        $insert = $conn->prepare($sql);  //$conn->prepare($conn, $sql);
-        oci_execute($insert);
+        $insert = $conn->prepare($sql);  //$conn->prepare($sql);
+        $insert->execute($insert);
         $conn_err=oci_error($conn);
         $insert_err=oci_error($insert);
         if(!$conn_err & !$insert_err){
@@ -287,8 +287,8 @@ catch(PDOException $e)
         $sql = "SELECT * FROM Kueche";
     }
     // execute sql statement
-    $stmt = $conn->prepare($conn, $sql);
-    oci_execute($stmt);
+    $stmt = $conn->prepare($sql);
+    $insert->execute($stmt);
     ?>
     <!--Ausgabe-->
     <table>

@@ -261,7 +261,7 @@ catch(PDOException $e)
             print_r($insert_err);
             print("<br>");
         }
-        //oci_free_statement($insert);
+        ////oci_free_statement($insert);
     }
     ?>
     <!--Suche-->
@@ -329,8 +329,8 @@ catch(PDOException $e)
 
     </div>
     <?php
-    //oci_free_statement($stmt);
-    //oci_close($conn);
+    ////oci_free_statement($stmt);
+    ////oci_close($conn);
     //$conn->;
     ?>
 </div>

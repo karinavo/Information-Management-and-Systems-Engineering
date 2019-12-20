@@ -268,7 +268,7 @@ catch(PDOException $e)
             print_r($insert_err);
             print("<br>");
         }
-        oci_free_statement($insert);
+        //oci_free_statement($insert);
     }
     ?>  <!--Stored Procedure-->
     <div>
@@ -306,7 +306,7 @@ catch(PDOException $e)
         }
     }
     // clean up connections
-    oci_free_statement($sproc);
+    //oci_free_statement($sproc);
 
     ?>
     <!--Suche-->
@@ -352,7 +352,7 @@ catch(PDOException $e)
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = oci_fetch_assoc($stmt)) {
+        while ($row = $stmt->fetch()) {
             echo "<tr>";
             echo "<td>" . $row['ZEITBLOCK'] . "</td>";
             echo "<td>" . $row['DATUM'] . "</td>";
@@ -370,7 +370,7 @@ catch(PDOException $e)
         Insgesamt <?php echo $stmt->rowCount(); ?> Termin(e) gefunden!
 
     </div>
-    <?php  oci_free_statement($stmt); oci_close($conn); ?>
+    <?php  //oci_free_statement($stmt); //oci_close($conn); ?>
 </div>
 
 <!--menu of school-->

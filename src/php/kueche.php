@@ -25,7 +25,7 @@ catch(PDOException $e)
     <style>
          /*text style*/
         h1 {
-            font-family:  "TeX Gyre ", serif; /* Гарнитура текста */
+            font-family:"Courier New", serif; /* Гарнитура текста */
             font-size: 65%; /* Размер шрифта в процентах */
         }
     </style>
@@ -321,23 +321,13 @@ catch(PDOException $e)
         </tr>
         </thead>
         <tbody>
-        <?php
-        // fetch rows of the executed sql query
-        while ($row = oci_fetch_assoc($stmt)) {
-            echo "<tr>";
-            echo "<td>" . $row['ABTEILUNGSNR'] . "</td>";
-            echo "<td>" . $row['NUMMER'] . "</td>";
-            echo "<td>" . $row['FASSUNGSVERMOEGEN']. "</td>";
-            echo "<td>" . $row['AUSSTATTUNG']. "</td>";
-            echo "</tr>";
-        }
-        ?>
+
         </tbody>
     </table>
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo oci_num_rows($stmt); ?> Küche(n) gefunden!
+        Insgesamt  Küche(n) gefunden!
 
     </div>
 </div>

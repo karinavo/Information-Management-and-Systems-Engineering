@@ -5,20 +5,31 @@
 <title>Die Kochschule</title>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--icon-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /*text style*/
+        h1 {
+            font-family:  "TeX Gyre ", serif; /* Гарнитура текста */
+            font-size: 65%; /* Размер шрифта в процентах */
+        }
+
+    </style>
     <!--Dropdown botton-->
     <style>
         /*Fixed sidenav,full height*/
-    .sidenav{
-        height: 100%;
-        width:200px;
-        position: fixed;
-        z-index: 1;
-        top:0;
-        left: 0;
-        background-color:#4d4d4d ;
-        overflow-x: hidden;
-        padding-top: 20px;
-    }
+        .sidenav{
+            height: 100%;
+            width:200px;
+            position: fixed;
+            z-index: 1;
+            top:0;
+            left: 0;
+            background-color:#4d4d4d ;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
         /* Style the sidenav links and the dropdown button */
         .sidenav a, .dropdown-btn{
             padding: 6px 8px 6px 16px;
@@ -32,7 +43,7 @@
             text-align: left;
             cursor: pointer;
             outline: none;
-            };
+        };
         }
         .sidenav a:hover,.dropdown-btn:hover{
             color: bisque;
@@ -43,7 +54,7 @@
             padding: 0px 10px;
         }
         .active{
-            background-color: bisque;
+            background-color: #4d4d4d;
             color: bisque;
         }
         .dropdown-container{
@@ -51,16 +62,19 @@
             background-color: #4d4d4d;
             padding-left:8px;
         }
+
         .fa-caret-down{
+            display: none;
             float: right;
             padding-right: 8px;
         }
 
-    @media screen and(max-height: 450px){
-        .sidenav{padding-top: 15px;}
-        .sidenav a {font-size: 18px;}
+        @media screen and(max-height: 450px){
+            .sidenav{padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
 
-    }
+        }
+
     </style>
     <style>
         img {
@@ -69,8 +83,15 @@
             margin-right: auto;
         }
     </style>
-<img src="Culinary.png" alt="Cooking courses logo" style="width:200px;height:200px;" class="center" align="top">
-
+    <img src="Culinary.png" alt="Cooking courses logo" style="width:200px;height:200px;" class="center" align="top">
+    <style>
+        p.oblique {
+            font-style:oblique;
+        }
+        div.a{
+            text-align: center;
+        }
+    </style>
     <div class="a">
     <p class="oblique" > Die Kochschule</p>
     </div>

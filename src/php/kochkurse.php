@@ -5,12 +5,16 @@ $username = "root";
 $password = "rootpsw";
 $dbname = "imse_db";
 try {
-    $conn = new PDO("mysql:host=$servername;$dbname", $username, $password);
+    $conn = new PDO(
+    "mysql:host=$servername;$dbname;charset=utf8",
+    $username,
+    $password,
+    array(PDO::ATTR_PERSISTENT => true));
+
+
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully";
-    }
-catch(PDOException $e)
+    } catch(PDOException $e)
     {
     echo "Connection failed: " . $e->getMessage();
     }
@@ -204,6 +208,24 @@ catch(PDOException $e)
         <a href="mitarbeiter.php">Mitarbeiter</a>
     </div>
 </div>
+<!--menu of school-->
+<script>
+    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
 <div class="main">
     <!--Insert Formular-->
     <div>
@@ -243,12 +265,12 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['Thema'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO imse_db.Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
+        $sql="INSERT INTO Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
         //Parse and execute statement
-        $insert = $conn->prepare($sql);
-        $insert->execute();
-        $conn_err=$conn->errorInfo();
-        $insert_err=$insert->errorInfo();
+        $insert = oci_parse($conn, $sql);
+        oci_execute($insert);
+        $conn_err=oci_error($conn);
+        $insert_err=oci_error($insert);
         if(!$conn_err & !$insert_err){
             print("Successfully inserted");
             print("<br>");
@@ -259,7 +281,7 @@ catch(PDOException $e)
             print_r($insert_err);
             print("<br>");
         }
-        //oci_free_statement($insert);
+        oci_free_statement($insert);
     }
     ?>
     <!--Stored Procedure-->
@@ -294,23 +316,23 @@ catch(PDOException $e)
         $email='';
         $tlfnr='';
 
-        $sproc = $conn->prepare("begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
+        $sproc = oci_parse($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
         //Bind variables
 
-        $sproc->bindParam(':p1', $kursnr);
-        $sproc->bindParam(':p2', $svnr);
-        $sproc->bindParam(':p3', $nachname,30);
-        $sproc->bindParam(':p4', $vorname,30);
-        $sproc->bindParam(':p5', $email,80);
-        $sproc->bindParam(':p6', $tlfnr,14);
+        oci_bind_by_name($sproc, ':p1', $kursnr);
+        oci_bind_by_name($sproc, ':p2', $svnr);
+        oci_bind_by_name($sproc, ':p3', $nachname,30);
+        oci_bind_by_name($sproc, ':p4', $vorname,30);
+        oci_bind_by_name($sproc, ':p5', $email,80);
+        oci_bind_by_name($sproc, ':p6', $tlfnr,14);
 
 
-        $insert->execute($sproc);
+        oci_execute($sproc);
 
 
 
-        $conn_err=$conn->errorInfo();
-        $proc_err=$sproc->errorInfo();
+        $conn_err=oci_error($conn);
+        $proc_err=oci_error($sproc);
         //If there have been no Connection or Database errors, print department
         if(!$conn_err && !$proc_err){
             echo("<br><b>". "Der Koch " . $nachname . " " . $vorname ." fuehrt Kurs " . $kursnr. "</b><br>" );  // prints OUT parameter of stored procedure
@@ -324,7 +346,7 @@ catch(PDOException $e)
     }
 
     // clean up connections
-    //oci_free_statement($sproc);
+    oci_free_statement($sproc);
    ;
 
     ?>
@@ -346,13 +368,13 @@ catch(PDOException $e)
 <?php
 // check if search view of list view
 if (isset($_GET['search'])) {
-    $sql = "SELECT * FROM imse_db.Kochkurse WHERE Thema like '%" . $_GET['search'] . "%'";
+    $sql = "SELECT * FROM Kochkurse WHERE Thema like '%" . $_GET['search'] . "%'";
 } else {
-    $sql = "SELECT * FROM imse_db.Kochkurse";
+    $sql = "SELECT * FROM Kochkurse";
 }
 // execute sql statement
-$stmt = $conn->prepare($sql);
-$stmt->execute();
+$stmt = oci_parse($conn, $sql);
+oci_execute($stmt);
 ?>
 <!--Ausgabe-->
 <table>
@@ -369,7 +391,7 @@ $stmt->execute();
     <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = $stmt->fetch()) {
+        while ($row = oci_fetch_assoc($stmt)) {
             echo "<tr>";
             echo "<td>" . $row['KURSNR'] . "</td>";
             echo "<td>" . $row['PREIS'] . "</td>";
@@ -383,33 +405,16 @@ $stmt->execute();
     <!--ANZAHL-->
     <div>
 
-            Insgesamt <?php echo $stmt->rowCount(); ?> Kochkurs(e) gefunden!
+            Insgesamt <?php echo oci_num_rows($stmt); ?> Kochkurs(e) gefunden!
 
     </div>
     <?php
-        //oci_free_statement($stmt);
-        //oci_close($conn);
+        oci_free_statement($stmt);
+        oci_close($conn);
         ?>
 
 </div>
-<!--menu of school-->
-<script>
-    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-    var dropdown = document.getElementsByClassName("dropdown-btn");
-    var i;
 
-    for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
-        });
-    }
-</script>
 
 
 </body>

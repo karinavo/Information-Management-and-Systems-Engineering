@@ -8,7 +8,6 @@ try {
     $conn = new PDO("mysql:host=$servername;$dbname", $username, $password);
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully";
     }
 catch(PDOException $e)
     {
@@ -16,21 +15,21 @@ catch(PDOException $e)
     }
 ?>
 
+
 <html>
 <title>Die Kochschule</title>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--icon-->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        /*text style*/
+         /*text style*/
         h1 {
             font-family:  "TeX Gyre ", serif; /* Гарнитура текста */
             font-size: 65%; /* Размер шрифта в процентах */
         }
-
     </style>
+
     <!--Dropdown botton-->
     <style>
         /*Fixed sidenav,full height*/
@@ -204,6 +203,24 @@ catch(PDOException $e)
         <a href="mitarbeiter.php">Mitarbeiter</a>
     </div>
 </div>
+<!--menu of school-->
+<script>
+    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
 <div class="main">
     <!--Insert Formular-->
     <div>
@@ -244,24 +261,18 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['Nummer'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO imse_db.imse_db.Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(?,?,?,?)";
-        //Parse and execute statement
-        $insert = $conn->prepare($sql);  //$conn->prepare($sql);
-        try {
-            $insert->execute(array($_GET['AbteilungsNr'], $_GET['Nummer'], $_GET['Fassungsvermoegen'], $_GET['Ausstattung']));
-            if($insert){
-                print("Successfully inserted");
-                print("<br>");
-            }
-        } catch(Exception $e) {
+        try{
+            $sql="INSERT INTO Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(".$_GET['AbteilungsNr'].",". $_GET['Nummer'] ."," . $_GET['Fassungsvermoegen'].",'" . $_GET['Ausstattung'] . "')";
+            //Parse and execute statement
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            echo "Successfully inserted";
+        } catch(PDOException $e){
             //Print potential errors and warnings
-            $conn_err=$conn->errorInfo();
-            $insert_err=$insert->errorInfo();
-            print($conn_err);
-            print_r($insert_err);
-            print("<br>");
+            echo  "Error: " + $e->getMessage();
         }
-        ////oci_free_statement($insert);
+
+
     }
     ?>
     <!--Suche-->
@@ -282,19 +293,20 @@ catch(PDOException $e)
     <!--IN SQL-->
     <?php
     // check if search view of list view
-    $search = $_GET['search'];
-    if (isset($search)) {
-        $sql = "SELECT * FROM imse_db.Kueche WHERE Nummer like '%?%'";
-        // execute sql statement
-        $stmt = $conn->prepare($sql);
-        $stmt->execute($search);
+    if (isset($_GET['search'])) {
+        $sql = "SELECT * FROM Kueche WHERE Nummer like '%" . $_GET['search'] . "%'";
     } else {
-        $sql = "SELECT * FROM imse_db.Kueche";
-        // execute sql statement
+        $sql = "SELECT * FROM Kueche";
+    }
+    // execute sql statement
+    try{
+        //Parse and execute statement
         $stmt = $conn->prepare($sql);
         $stmt->execute();
+    } catch(PDOException $e){
+        //Print potential errors and warnings
+        echo  "Error: " + $e->getMessage();
     }
-
     ?>
     <!--Ausgabe-->
     <table>
@@ -311,7 +323,7 @@ catch(PDOException $e)
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = $stmt->fetch()) {
+        while ($row = oci_fetch_assoc($stmt)) {
             echo "<tr>";
             echo "<td>" . $row['ABTEILUNGSNR'] . "</td>";
             echo "<td>" . $row['NUMMER'] . "</td>";
@@ -325,33 +337,11 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $stmt->rowCount(); ?> Küche(n) gefunden!
+        Insgesamt <?php echo oci_num_rows($stmt); ?> Küche(n) gefunden!
 
     </div>
-    <?php
-    ////oci_free_statement($stmt);
-    ////oci_close($conn);
-    //$conn->;
-    ?>
 </div>
-<!--menu of school-->
-<script>
-    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-    var dropdown = document.getElementsByClassName("dropdown-btn");
-    var i;
 
-    for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
-        });
-    }
-</script>
 
 
 </body>

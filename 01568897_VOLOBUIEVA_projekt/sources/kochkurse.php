@@ -305,7 +305,7 @@ catch(PDOException $e)
         $sproc->bindParam(':p6', $tlfnr,14);
 
 
-        $insert->execute($sproc);
+        $sproc->execute();
 
 
 

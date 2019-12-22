@@ -327,7 +327,7 @@ try {
         $sproc->bindParam(':p6', $tlfnr,14);
 
 
-        oci_execute($sproc);
+        $sproc->execute();
 
 
 

@@ -316,7 +316,7 @@ try {
         //Bind variables, p1=input (abt), p2=output (str)
         $sproc->bindParam(':p1', $abt);
         $sproc->bindParam(':p2', $str, 25);
-        $insert->execute($sproc);
+        $sproc->execute();
         $conn_err=$conn->errorInfo();
         $proc_err=$sproc->errorInfo();
         //If there have been no Connection or Database errors, print department

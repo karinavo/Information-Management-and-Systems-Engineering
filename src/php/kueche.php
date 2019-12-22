@@ -25,7 +25,7 @@ catch(PDOException $e)
     <style>
          /*text style*/
         h1 {
-            font-family:  "TeX Gyre ", serif; /* Гарнитура текста */
+            font-family:"Courier New", serif; /* Гарнитура текста */
             font-size: 65%; /* Размер шрифта в процентах */
         }
     </style>

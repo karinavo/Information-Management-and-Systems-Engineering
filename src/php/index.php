@@ -100,10 +100,10 @@
     <!--Dropdown botton-->
     <style>
 
-    /**Slideshow*/
+        /**Slideshow*/
 
         * {box-sizing:border-box }
-        body {font-family: "Courier New", sans-serif; margin:0}
+        body {sans-serif; margin:0}
         .mySlides {display: none}
         img {vertical-align: middle;}
 
@@ -143,8 +143,8 @@
 
         /* Caption text */
         .text {
-            color: whitesmoke;
-            font-size: 15px;
+            color: #ef5b20;
+            font-size: 20px;
             padding: 8px 12px;
             position: absolute;
             bottom: 8px;
@@ -201,7 +201,21 @@
         }
     </style>
 
-
+    <style>
+        /*Insert  Button*/
+        .buttoninsert{
+            background-color: #4d4d4d;
+            border:2px solid #4d4d4d;
+            color: bisque;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor:pointer;
+        }
+    </style>
 </head>
 
 
@@ -224,10 +238,17 @@
     </div>
 </div>
 <div class="main">
+    <!--Create Tables Button -->
+     <div>
+        <form id='createform' action='index.php' method='get'>
+           <div style="text-align: left"> Click on the button below to run DB filler script:
+            <br>
+            <input class="buttoninsert" id='submit1' type='submit' value='Run Filler Script'  />
+           </div>
+        </form>
+    </div>
+<br>
     <!--Slideshow-->
-
-
-
     <div class="slideshow-container">
 
         <div class="mySlides fade">
@@ -236,19 +257,18 @@
                  WOK Kurse <img src="Wok.jpg" style="width:100%"></a>
             <div class="text">Alles WOK!</div>
         </div>
-
         <div class="mySlides fade">
             <div class="numbertext"></div>
             <a href="http://.cs.univie.ac.at/~karynav98/dbs/kochkurse.php?search=Ganz">
-                Ganz schoen Wild<img src="Wild.jpg" style="width:100%"></a>
-            <div class="text">Ganz schön Wild</div>
+                Ganz schön Wild<img src="Wild.jpg" style="width:100%"></a>
+            <div class="text">Ganz schön Wild!</div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext"></div>
            <a href="http://wwwlab.cs.univie.ac.at/~karynav98/dbs/kochkurse.php?search=Festlicher+Osterbrunch">
                 Osterbrunch<img src="Osterbuffet.jpg" style="width:100%"> </a>
-            <div class="text">Festlicher Osterbrunch</div>
+            <div class="text">Festlicher Osterbrunch!</div>
         </div>
 
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>

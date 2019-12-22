@@ -16,11 +16,6 @@ services:
   mariadb:
     image: mariadb
     restart: always
-    build:
-      context: .
-      dockerfile: ./mysql/Dockerfile
-    volumes:
-      - ./mysql:/docker-entrypoint-initdb.d
     stdin_open: true
     tty: true
       #- my-db:/var/lib/mysql:rw
@@ -35,3 +30,13 @@ services:
         published: 3306
         protocol: tcp
     container_name: mariadb_database
+#   Filler
+  filler:
+    image: mysql
+    build:
+      context: .
+      dockerfile: Filler.dockerfile
+    depends_on:
+      - mariadb
+    volumes:
+      - ./mysql:/mysql

@@ -1,6 +1,3 @@
-FROM java:8
-WORKDIR /
-COPY ./mysql /mysql/
-EXPOSE 8080
-CMD java -jar DATAGENERATOR.jar
-
+FROM adoptopenjdk:11-jre-hotspot
+COPY ./mysql/DATAGENERATOR.jar /mysql/
+CMD ["java","-jar","./mysql/DATAGENERATOR.jar"]

@@ -1,0 +1,4 @@
+FROM openjdk:11-apline
+COPY ./mysql/DATAGENERATOR.jar /mysql/
+RUN javac TestingCreation.java
+CMD ["java","TestingCreation"]

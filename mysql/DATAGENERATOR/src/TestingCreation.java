@@ -13,12 +13,11 @@ import java.sql.DriverManager;
         static final String PASS = "rootpsw";
 
         public static void main(String[] args) {
-            try{
+            try(Connection conn = DriverManager.getConnection("jdbc:mysql://mariadb:3306/imse_db", "root", "rootpsw")){
                 //STEP 2: Register JDBC driver
                // Class.forName("com.mysql.jdbc.Driver");
                 //STEP 3: Open a connection
                 System.out.println("Connecting to a selected database...");
-                Connection conn = DriverManager.getConnection("jdbc:mysql://mariadb:3306/imse_db", "root", "rootpsw");
                 System.out.println("Connected database successfully...");
                 // Delimiter
                 String delimiter = ";";
@@ -34,7 +33,7 @@ import java.sql.DriverManager;
 
                     // Get statement
                     String rawStatement = scanner.next() + delimiter;
-                    try {
+                    try{
                         System.out.println("rawstatment::"  );
                         System.out.println(rawStatement);
                         // Execute statement
@@ -62,7 +61,9 @@ import java.sql.DriverManager;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("All tables were successfully created!");
+            finally {
+                System.out.println("All tables were successfully created!");
+            }
         }//end main
     }//end JDBCExample
 

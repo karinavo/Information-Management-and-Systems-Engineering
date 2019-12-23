@@ -13,15 +13,12 @@ import java.sql.DriverManager;
         static final String PASS = "rootpsw";
 
         public static void main(String[] args) {
-
-            Connection conn = null;
             try{
                 //STEP 2: Register JDBC driver
-                Class.forName(JDBC_DRIVER);
-
+                Class.forName("com.mysql.jdbc.Driver");
                 //STEP 3: Open a connection
                 System.out.println("Connecting to a selected database...");
-                conn = DriverManager.getConnection(DB_URL, USER, PASS);
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/imse_db", "root", "rootpsw");
                 System.out.println("Connected database successfully...");
                 // Delimiter
                 String delimiter = ";";
@@ -64,7 +61,7 @@ import java.sql.DriverManager;
                 //Handle errors for Class.forName
                 e.printStackTrace();
             }
-            System.out.println("Goodbye!");
+            System.out.println("All tables were successfully created!");
         }//end main
     }//end JDBCExample
 

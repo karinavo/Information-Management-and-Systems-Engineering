@@ -157,7 +157,7 @@ private static int randBetween(int start, int end) {
                     for(int j=1;j<50;j++) {
                         try {
                             String sets = "SELECT Nachname,Vorname,Geburtsdatum FROM Mitarbeiter WHERE MId="+j;
-                             rnachname= stmt.executeQuery(sets);
+                             rnachname= stmt.exe .executeQuery(sets);
                              String insertManager;
                                 String nname;
                                if(rnachname.next()) {
@@ -247,17 +247,17 @@ private static int randBetween(int start, int end) {
                            int count = rs6.getInt(1);
                           System.out.println("Number of datasets  Kochkurse: " + count);
                        }
-                        //-------------------------------------------------------------------------------------------------------------------------------------
+                                 //-------------------------------------------------------------------------------------------------------------------------------------
             //Names vor Kursteilnehmer
             String []kvorname={"Tiana" ,"Claretha", "Jenny", "Janina", "Prudence", "Scarlett", "Chanda", "Linwood", "Marg", "Dung", "Janeen", "Christia", "Reva",
                     "Debroah", "Augustina", "Marguerite", "Mariano", "Shari", "Chet", "Anne", "Eugenio", "Un", "Jules", "Li", "Alessandra",
                     "Darla", "Iva", "Justine", "Gilberto", "Clarice", "Giuseppe", "So", "Cuc", "Charla", "Fern", "Zachary", "Kandice", "Babara",
                     "Latoria", "Pansy", "Joann", "Kristel", "Giovanni", "Leona", "Christal", "Roscoe", "Brigid", "Gregoria", "Hipolito", "Jolene","Dovie",
                     "Jestine","Norma", "Lakisha", "Quintin","Diedre",
-                     "Mathilda","Valeria","Robyn","Adella","Teddy","Benedict","Pearl","Rosalina","Marin","Melia",
-                     "Gertie", "Sal","Alexandra" ,"Carolynn","Rena","Hayley","Tyron","Phyllis", "Leif",
-                     "Bettina","Lowell","Theda","Delphine","Patti","Adena","Verena","Adrian","Jacquelyn","Yasuko","Brittny","Della",
-                     "Cherryl","Malisa","Damien","Don","Stacey","Fred","Gertha","Kermit","Luanna","Matha","Yadira","Wilmer","Sarah"};
+                    "Mathilda","Valeria","Robyn","Adella","Teddy","Benedict","Pearl","Rosalina","Marin","Melia",
+                    "Gertie", "Sal","Alexandra" ,"Carolynn","Rena","Hayley","Tyron","Phyllis", "Leif",
+                    "Bettina","Lowell","Theda","Delphine","Patti","Adena","Verena","Adrian","Jacquelyn","Yasuko","Brittny","Della",
+                    "Cherryl","Malisa","Damien","Don","Stacey","Fred","Gertha","Kermit","Luanna","Matha","Yadira","Wilmer","Sarah"};
             String [] knachname={"Ballard","Lutz","Frederick", "Lopez", "May", "Pugh", "Bonilla",
                     "Mckee", "Clements", "Maldonado", "Cantrell", "Prince", "Chaney", "Brooks", "Pennington", "Burns", "Khan",
                     "Mcgrath", "Bush", "Anthony", "Yang", "Kemp", "Hawkins", "Fleming", "Hobbs", "Diaz", "Deleon", "Porter", "Bruce",

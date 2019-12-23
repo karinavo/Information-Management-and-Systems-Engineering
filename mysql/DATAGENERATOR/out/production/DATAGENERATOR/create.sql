@@ -29,9 +29,9 @@ CREATE TABLE Mitarbeiter(
   FOREIGN KEY (AbteilungsNr) REFERENCES Kochschule(AbteilungsNr)
 );
 CREATE TABLE Manager(
-  SVNummer INT(20),
+  SVNummer VARCHAR(90),
   EMail VARCHAR(90),
-  Telefonummer VARCHAR(20) UNIQUE,
+  Telefonummer VARCHAR(30) UNIQUE,
   MId INTEGER  UNIQUE NOT NULL,
   PRIMARY KEY(SVNummer),
   FOREIGN KEY(MId) REFERENCES Mitarbeiter(MId) ON DELETE CASCADE
@@ -48,7 +48,7 @@ CREATE TABLE Kochkurse(
   KursNr INTEGER AUTO_INCREMENT PRIMARY KEY,
   Preis  DECIMAL(5,2) DEFAULT 120,
   Thema VARCHAR(80),
-  SVNummer INT(20)  NOT NULL ,
+  SVNummer VARCHAR(90)  NOT NULL ,
   FOREIGN KEY(SVNummer) REFERENCES Manager(SVNummer) ON DELETE CASCADE
 );
 CREATE TABLE Kursteilnehmer(

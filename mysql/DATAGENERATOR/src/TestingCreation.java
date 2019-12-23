@@ -15,10 +15,10 @@ import java.sql.DriverManager;
         public static void main(String[] args) {
             try{
                 //STEP 2: Register JDBC driver
-                Class.forName("com.mysql.jdbc.Driver");
+               // Class.forName("com.mysql.jdbc.Driver");
                 //STEP 3: Open a connection
                 System.out.println("Connecting to a selected database...");
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/imse_db", "root", "rootpsw");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://mariadb:3306/imse_db", "root", "rootpsw");
                 System.out.println("Connected database successfully...");
                 // Delimiter
                 String delimiter = ";";
@@ -57,8 +57,9 @@ import java.sql.DriverManager;
 
                 }
                 scanner.close();
-            }catch(Exception e){
-                //Handle errors for Class.forName
+            }catch (SQLException e) {
+                System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             System.out.println("All tables were successfully created!");

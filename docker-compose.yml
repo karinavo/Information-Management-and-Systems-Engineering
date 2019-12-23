@@ -30,7 +30,7 @@ services:
     container_name: mariadb_database
 #   Filler
   filler:
-    image: filler_tables
+    image: tables_filler
     restart: unless-stopped
     build:
       context: .

@@ -303,14 +303,14 @@ catch(PDOException $e)
             $stmt = $conn->prepare($sql);
             $stmt->execute($search);
         } else {
-            $sql = "SELECT * FROM imse_db.imse_db.Kueche";
+            $sql = "SELECT * FROM imse_db.Kueche";
             // execute sql statement
             $stmt = $conn->prepare($sql);
             $stmt->execute();
         }
     } catch(PDOException $e){
         //Print potential errors and warnings
-        echo  "Error: " + $e->getMessage();
+        echo "Error: " . $e->getMessage();
     }
     ?>
     <!--Ausgabe-->

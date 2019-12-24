@@ -269,7 +269,7 @@ catch(PDOException $e)
             echo "Successfully inserted";
         } catch(PDOException $e){
             //Print potential errors and warnings
-            echo  "Error: " + $e->getMessage();
+            echo "Error: " . $e->getMessage();
         }
 
 

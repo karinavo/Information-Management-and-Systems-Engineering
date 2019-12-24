@@ -4,7 +4,6 @@ services:
 #       Webserver
   imse-app:
     image: kwindsor/php7-apache-ubuntu
-    container_name: imse-app
     restart: unless-stopped
     working_dir: /var/www
     ports:
@@ -12,19 +11,13 @@ services:
       - "443:443"
     volumes:
       - ./src/php:/var/www/html:rw
+    container_name: imse-app
 #      Database
   mariadb:
     image: mariadb
     restart: always
-    build:
-      context: .
-      dockerfile: ./mysql/Dockerfile
-    volumes:
-      - ./mysql:/docker-entrypoint-initdb.d
     stdin_open: true
     tty: true
-      #- my-db:/var/lib/mysql:rw
-      #- ./mysql:/docker-entrypoint-initdb.d
     environment: 
       - MYSQL_DATABASE=imse_db
       - MYSQL_ROOT_PASSWORD=rootpsw
@@ -35,3 +28,23 @@ services:
         published: 3308
         protocol: tcp
     container_name: mariadb_database
+#   Filler
+  filler:
+    image: tables_filler
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Filler.dockerfile
+    depends_on:
+      - mariadb
+#    entrypoint: ["./wait-for-it/wait-for-it.sh","-c","'./wait-for-it/wait-for-it.sh mariadb:3306'"]
+#    command: bash -c "./wait-for-it/wait-for-it.sh --timeout=0 mariadb:3306"
+#    deploy:
+#      restart_policy:
+#        condition: on-failure
+    volumes:
+      - ./mysql/DATAGENERATOR/src:/mysql/DATAGENERATOR/src
+      - ./wait-for-it:/wait-for-it
+    container_name: tables_filler
+    
+  

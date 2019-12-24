@@ -11,19 +11,29 @@ import java.sql.DriverManager;
         //  Database credentials
         static final String USER = "root";
         static final String PASS = "rootpsw";
-
+       // static  private  Connection conn=null;
+      /***  private static void connect() throws InterruptedException {
+            while(true) {
+                try{
+                    System.out.println("Connecting to a selected database...");
+                    conn = DriverManager.getConnection("jdbc:mysql://mariadb:3306/imse_db", "root", "rootpsw");
+                    System.out.println("Connected database successfully...");
+                    break;
+                }catch (SQLException e) {
+                    System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+                }
+                Thread.sleep(10);
+            }
+        }***/
         public static void main(String[] args) {
-
-            Connection conn = null;
             try{
-                //STEP 2: Register JDBC driver
-                Class.forName("com.mysql.jdbc.Driver");
+                //Open a connection
+             //   connect();
 
-                //STEP 3: Open a connection
                 System.out.println("Connecting to a selected database...");
-                conn = DriverManager.getConnection(DB_URL, USER, PASS);
+                Connection conn = DriverManager.getConnection("jdbc:mysql://mariadb:3306/imse_db", "root", "rootpsw");
                 System.out.println("Connected database successfully...");
-                // Delimiter
+                    // Delimiter
                 String delimiter = ";";
 
                 // Create scanner
@@ -37,7 +47,7 @@ import java.sql.DriverManager;
 
                     // Get statement
                     String rawStatement = scanner.next() + delimiter;
-                    try {
+                    try{
                         System.out.println("rawstatment::"  );
                         System.out.println(rawStatement);
                         // Execute statement
@@ -60,11 +70,14 @@ import java.sql.DriverManager;
 
                 }
                 scanner.close();
-            }catch(Exception e){
-                //Handle errors for Class.forName
+            }catch (SQLException e) {
+                 System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("Goodbye!");
+            finally {
+                System.out.println("All tables were successfully created!");
+            }
         }//end main
     }//end JDBCExample
 

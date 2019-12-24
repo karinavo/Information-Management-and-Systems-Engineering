@@ -10,8 +10,6 @@ try {
         $username,
         $password,
         array(PDO::ATTR_PERSISTENT => true));
-
-
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch(PDOException $e)

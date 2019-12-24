@@ -43,17 +43,20 @@
             text-align: left;
             cursor: pointer;
             outline: none;
+            overflow: hidden;
         };
-        }
-        .sidenav a:hover,.dropdown-btn:hover{
+
+        /* On mouse-over */
+        .sidenav a:hover, .dropdown-btn:hover {
             color: bisque;
         }
+
         .main{
             margin-left: 200px; /* Same as the width of the sidenav */
             font-size: 20px; /* Increased text to enable scrolling */
             padding: 0px 10px;
         }
-        .active{
+        .dropdown-btn.active{
             background-color: #4d4d4d;
             color: bisque;
         }
@@ -68,7 +71,6 @@
             float: right;
             padding-right: 8px;
         }
-
         @media screen and(max-height: 450px){
             .sidenav{padding-top: 15px;}
             .sidenav a {font-size: 18px;}
@@ -238,16 +240,6 @@
     </div>
 </div>
 <div class="main">
-    <!--Create Tables Button -->
-     <div>
-        <form id='createform' action='index.php' method='get'>
-           <div style="text-align: left"> Click on the button below to run DB filler script:
-            <br>
-            <input class="buttoninsert" id='submit1' type='submit' value='Run Filler Script'  />
-           </div>
-        </form>
-    </div>
-<br>
     <!--Slideshow-->
     <div class="slideshow-container">
 
@@ -312,14 +304,13 @@
         }
     </script>
 </div>
-    <!--menu of school-->
+<!--menu of school-->
 <script>
     /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
     var dropdown = document.getElementsByClassName("dropdown-btn");
     var i;
-
     for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function() {
+        dropdown[i].addEventListener("mouseover", function() {
             this.classList.toggle("active");
             var dropdownContent = this.nextElementSibling;
             if (dropdownContent.style.display === "block") {
@@ -328,9 +319,29 @@
                 dropdownContent.style.display = "block";
             }
         });
-    }
-</script>
+        dropdown[i].addEventListener("mouseleave", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "none") {
+                dropdownContent.style.display = "block";
+            } else {
+                dropdownContent.style.display = "none";
+            }
+        });
 
+    }
+    $(document).ready(function() {
+        $(".dropdown-btn").hide();
+        $(".hover").on({
+            "mouseenter": function() {
+                $(".overlay").show();
+            }
+            , "mouseleave": function() {
+                $(".overlay").hide();
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

@@ -293,23 +293,21 @@ catch(PDOException $e)
     <!--IN SQL-->
     <?php
     // check if search view of list view
-    $search = $_GET['search'];
-    if (isset($search)) {
-        $sql = "SELECT * FROM imse_db.Kueche WHERE Nummer like '%?%'";
-        // execute sql statement
-        $stmt = $conn->prepare($sql);
-        $stmt->execute($search);
-    } else {
-        $sql = "SELECT * FROM imse_db.imse_db.Kueche";
-        // execute sql statement
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-    }
+    
     // execute sql statement
     try{
-        //Parse and execute statement
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
+        $search = $_GET['search'];
+        if (isset($search)) {
+            $sql = "SELECT * FROM imse_db.Kueche WHERE Nummer like '%?%'";
+            // execute sql statement
+            $stmt = $conn->prepare($sql);
+            $stmt->execute($search);
+        } else {
+            $sql = "SELECT * FROM imse_db.imse_db.Kueche";
+            // execute sql statement
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+        }
     } catch(PDOException $e){
         //Print potential errors and warnings
         echo  "Error: " + $e->getMessage();

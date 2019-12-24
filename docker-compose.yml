@@ -24,8 +24,8 @@ services:
       - MYSQL_USER=imse_user
       - MYSQL_PASSWORD=userpsw
     ports:
-      - target: 3308
-        published: 3308
+      - target: 3306
+        published: 3306
         protocol: tcp
     container_name: mariadb_database
 #   Filler

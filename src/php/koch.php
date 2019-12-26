@@ -283,6 +283,8 @@ catch(PDOException $e)
                 </tbody>
             </table>
             <input class="buttoninsert" id='submit1' type='submit' value='Insert'  />
+            <input class="buttoninsert" id='reset' type='button' value='Clear'  onclick="resetForm()"/>
+
         </form>
     </div>
     <!--In SQL for Insert-->

@@ -232,6 +232,13 @@ catch(PDOException $e)
             cursor:pointer;
         }
     </style>
+
+    <script>
+        function resetForm() {
+            document.getElementById("insertform").reset();
+        }
+    </script>
+
 </head>
 
 
@@ -257,10 +264,10 @@ catch(PDOException $e)
 
 <div class="main">
     <!--Insert Formular-->
-    <div>
+    <div id="insertformular">
         <form id='insertform' action='mitarbeiter.php' method='get'>
             Neuer Mitarbeiter einfuegen:
-            <table>
+            <table >
                 <thead>
                 <tr>
                     <h1>
@@ -281,7 +288,7 @@ catch(PDOException $e)
                 <tbody>
                 <tr>
                     <td>
-                        <input id='Nachname' name='Nachname' type='text' size='10' value='<?php echo $_GET['Nachname']; ?>' />
+                        <input class="removeLater" id='Nachname' name='Nachname' type='text' size='10' value='<?php echo $_GET['Nachname']; ?>' />
                     </td>
                     <td>
                         <input id="Vorname" name="Vorname" type="text" size="10" value="<?php   echo $_GET['Vorname'];?>"/>
@@ -293,6 +300,7 @@ catch(PDOException $e)
                         <input id="Strasse" name="Strasse" type="text" size="10"
                                value="<?php echo $_GET['Nummer'];?>"/>
                     </td>
+
                     <td>
                         <input id="Ort" name="Ort" type="text" size="10"
                                value="<?php echo $_GET['Ort'];?>"/>
@@ -301,8 +309,9 @@ catch(PDOException $e)
                         <input id="PLZ" name="PLZ" type="number" size="10" value="<?php  echo $_GET['PLZ'];?>"/>
                     </td>
                     <td>
-                        <input id="Geburtsdatum" name="Geburtsdatum" type="text" size="10"
-                               value="<?php echo $_GET['Geburtsdatum'];?>"/>
+                        <form action="/action_page.php">
+                            <input id="Geburtsdatum" name="Geburtsdatum" type="date" size="10" value="<?php echo $_GET['Geburtsdatum'];?>"/>
+                        </form>
                     </td>
 
                     <td>
@@ -314,9 +323,11 @@ catch(PDOException $e)
                 </tr>
                 </tbody>
             </table>
-            <input class="buttoninsert" id='submit1' type='submit' value='Insert'  />
+            <input class="buttoninsert" id='submit1' type='submit' value='Insert'"/>
+            <input class="buttoninsert" id='reset' type='button' value='Clear'  onclick="resetForm()"/>
         </form>
     </div>
+
     <!--In SQL for Insert-->
     <?php
     //HANDLE insert
@@ -324,24 +335,20 @@ catch(PDOException $e)
         //Prepare insert statementd
         $sql="INSERT INTO imse_db.Mitarbeiter(Nachname,Vorname,Gehalt,Strasse,Ort,PLZ,Geburtsdatum,LeiterMId,AbteilungsNr) 
             VALUES('". $_GET['Nachname'] ."','". $_GET['Vorname']."',". $_GET['Gehalt'].",'".$_GET['Strasse']."','".$_GET['Ort']."',".
-            $_GET['PLZ'].",TO_DATE('" . $_GET['Geburtsdatum'] . "','YYYY/MM/DD')," . $_GET['LeiterMId'] . "," . $_GET['AbteilungsNr']. ")";
+            $_GET['PLZ'].",STR_TO_DATE('" . $_GET['Geburtsdatum'] . "','%Y-%m-%d')," . $_GET['LeiterMId'] . "," . $_GET['AbteilungsNr']. ")";
 
         //Parse and execute statement
         $insert = $conn->prepare($sql);
-        $insert->execute();
-        $conn_err=$conn->errorInfo();
-        $insert_err=$insert->errorInfo();
-        if(!$conn_err & !$insert_err){
-            print("Successfully inserted");
-            print("<br>");
+        try {
+            $conn->exec($sql);
+            echo "Successfully inserted!";
         }
-        //Print potential errors and warnings
-        else{
-            print($conn_err);
-            print_r($insert_err);
-            print("<br>");
+        catch(PDOException $e)
+        {
+            echo $sql . "<br>" . $e->getMessage();
         }
-        //oci_free_statement($insert);
+
+
     }
     ?>
 

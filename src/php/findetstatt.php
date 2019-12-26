@@ -291,6 +291,8 @@ try {
                 </tbody>
             </table>
             <input class="buttoninsert" id='submit' type='submit' value='Insert'  />
+            <input class="buttoninsert" id='reset' type='button' value='Clear'  onclick="resetForm()"/>
+
         </form>
     </div>
     <!--In SQL for Insert-->

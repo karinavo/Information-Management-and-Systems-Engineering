@@ -226,6 +226,11 @@ catch(PDOException $e)
             cursor:pointer;
         }
     </style>
+    <script>
+        function resetForm() {
+            document.getElementById("insertform").reset();
+        }
+    </script>
 </head>
 
 
@@ -282,6 +287,8 @@ catch(PDOException $e)
                 </tbody>
             </table>
             <input class="buttoninsert" id='submit1' type='submit' value='Insert'  />
+            <input class="buttoninsert" id='reset' type='button' value='Clear'  onclick="resetForm()"/>
+
         </form>
     </div>
     <!--In SQL for Insert-->
@@ -290,7 +297,7 @@ catch(PDOException $e)
     if(isset($_GET['Nummer'])) {
         //Prepare insert statementd
         try{
-            $sql="INSERT INTO Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(".$_GET['AbteilungsNr'].",". $_GET['Nummer'] ."," . $_GET['Fassungsvermoegen'].",'" . $_GET['Ausstattung'] . "')";
+            $sql="INSERT INTO Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(" . $_GET['AbteilungsNr'] . "," . $_GET['Nummer'] . "," . $_GET['Fassungsvermoegen']." , '" . $_GET['Ausstattung'] . "')";
             //Parse and execute statement
             $stmt = $conn->prepare($sql);
             $stmt->execute();

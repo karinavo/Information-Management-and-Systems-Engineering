@@ -230,6 +230,7 @@ try {
             cursor:pointer;
         }
     </style>
+
 </head>
 
 
@@ -284,10 +285,15 @@ try {
             </table>
 
             <input class="buttoninsert" id='submit3' type='submit' value='Insert'  />
-            <input class="buttoninsert" id='reset' type='button' value='Clear'  onclick="resetForm()"/>
+            <input class="buttoninsert" type="button" onclick="resetForm()" value="Clear fields">
 
         </form>
     </div>
+    <script>
+        function resetForm() {
+            document.getElementById("insertform").reset();
+        }
+    </script>
     <!--In SQL for Insert-->
     <?php
     //HANDLE insert
@@ -296,20 +302,15 @@ try {
         $sql="INSERT INTO imse_db.Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
         //Parse and execute statement
         $insert = $conn->prepare($sql);
-        $insert->execute();
-        $conn_err=$conn->errorInfo();
-        $insert_err=$insert->errorInfo();
-        if(!$conn_err & !$insert_err){
-            print("Successfully inserted");
-            print("<br>");
+        try {
+            $conn->exec($sql);
+            echo "Successfully inserted!";
         }
-        //Print potential errors and warnings
-        else{
-            print($conn_err);
-            print_r($insert_err);
-            print("<br>");
+        catch(PDOException $e)
+        {
+            echo $sql . "<br>" . $e->getMessage();
         }
-        //oci_free_statement($insert);
+
     }
     ?>
     <!--Stored Procedure-->

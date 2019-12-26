@@ -229,6 +229,11 @@ try {
             cursor:pointer;
         }
     </style>
+    <script>
+        function resetForm() {
+            document.getElementById("insertform").reset();
+        }
+    </script>
 </head>
 
 
@@ -291,7 +296,7 @@ try {
                 </tbody>
             </table>
             <input class="buttoninsert" id='submit' type='submit' value='Insert'  />
-            <input class="buttoninsert" id='reset' type='button' value='Clear'  onclick="resetForm()"/>
+            <input class="buttoninsert" type="button" onclick="resetForm()" value="Clear fields">
 
         </form>
     </div>

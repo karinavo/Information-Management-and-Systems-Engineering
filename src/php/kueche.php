@@ -287,7 +287,7 @@ catch(PDOException $e)
                 </tbody>
             </table>
             <input class="buttoninsert" id='submit1' type='submit' value='Insert'  />
-            <input class="buttoninsert" id='reset' type='button' value='Clear'  onclick="resetForm()"/>
+            <input class="buttoninsert" type="button" onclick="resetForm()" value="Clear fields">
 
         </form>
     </div>
@@ -297,7 +297,7 @@ catch(PDOException $e)
     if(isset($_GET['Nummer'])) {
         //Prepare insert statementd
         try{
-            $sql="INSERT INTO Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(" . $_GET['AbteilungsNr'] . "," . $_GET['Nummer'] . "," . $_GET['Fassungsvermoegen']." , '" . $_GET['Ausstattung'] . "')";
+            $sql="INSERT INTO imse_db.Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(" . $_GET['AbteilungsNr'] . "," . $_GET['Nummer'] . "," . $_GET['Fassungsvermoegen']." , '" . $_GET['Ausstattung'] . "')";
             //Parse and execute statement
             $stmt = $conn->prepare($sql);
             $stmt->execute();

@@ -29,14 +29,17 @@ try {
     <style>
         /*text style*/
         h1 {
-            font-family:  "TeX Gyre ", serif; 
-            font-size: 65%; 
+            font-family:  "TeX Gyre ", serif; /* Гарнитура текста */
+            font-size: 65%; /* Размер шрифта в процентах */
         }
 
     </style>
     <!--Dropdown botton-->
     <style>
-        /*Fixed sidenav,full height*/
+        body {
+            font-family:  "TeX Gyre ", serif;
+        }
+
         .sidenav{
             height: 100%;
             width:200px;
@@ -48,9 +51,12 @@ try {
             overflow-x: hidden;
             padding-top: 20px;
         }
-        /* Style the sidenav links and the dropdown button */
-        .sidenav a, .dropdown-btn{
-            padding: 6px 8px 6px 16px;
+        .dropdown-btn {
+            float: left;
+            overflow: hidden;
+        }
+        .dropdown .dropdown-btn {
+            padding: 0px 0px 0px 6px;
             text-decoration: none;
             font-size: 20px;
             color: bisque;
@@ -61,8 +67,27 @@ try {
             text-align: left;
             cursor: pointer;
             outline: none;
-        };
+            overflow: hidden;
+            margin-left: 0px;
+            margin-right: 0px;
         }
+        /* Style the sidenav links and the dropdown button */
+        .sidenav a, .dropdown-btn{
+            padding: 6px 8px 6px 16px;
+            overflow: hidden;
+            text-decoration: none;
+            font-size: 20px;
+            color: bisque;
+            display:block;
+            border:  bisque;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            margin: 0;
+        }
+
         .sidenav a:hover,.dropdown-btn:hover{
             color: bisque;
         }
@@ -71,16 +96,34 @@ try {
             font-size: 20px; /* Increased text to enable scrolling */
             padding: 0px 10px;
         }
-        .active{
+        .dropdown-content {
+            display: none;
             background-color: #4d4d4d;
-            color: bisque;
+            min-width: 200px;
         }
+
+        .dropdown-content a {
+            float: none;
+            color: bisque;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4d4d4d;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
         .dropdown-container{
             display: none;
             background-color: #4d4d4d;
             padding-left:8px;
         }
-
         .fa-caret-down{
             display: none;
             float: right;
@@ -186,48 +229,34 @@ try {
             cursor:pointer;
         }
     </style>
+    <script>
+        function resetForm() {
+            document.getElementById("insertform").reset();
+        }
+    </script>
 </head>
 
 
 <body>
 <!--background-->
 <div class="sidenav">
-
-    <button class="dropdown-btn"> &#9778;
-        <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-container" style="margin-left: 6%">
-
-        <a href="index.php">Home</a>
-        <a href="kueche.php">Küche</a>
-        <a href="kochkurse.php">Kochkurse</a>
-        <a href="koch.php">Unsere Köche</a>
-        <a href="findetstatt.php">Termine</a>
-        <a href="fuehrt.php">Fuehrung</a>
-        <a href="kursteilnehmer.php">Kursteilnehmer</a>
-        <a href="mitarbeiter.php">Mitarbeiter</a>
-
+    <div class="dropdown">
+        <button class="dropdown-btn"> &#9778
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" style="margin-left: 6%">
+            <a href="index.php">Home</a>
+            <a href="kueche.php">Küche</a>
+            <a href="kochkurse.php">Kochkurse</a>
+            <a href="koch.php">Unsere Köche</a>
+            <a href="findetstatt.php">Termine</a>
+            <a href="fuehrt.php">Fuehrung</a>
+            <a href="kursteilnehmer.php">Kursteilnehmer</a>
+            <a href="mitarbeiter.php">Mitarbeiter</a>
+        </div>
     </div>
 </div>
 
-<!--menu of school-->
-<script>
-    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-    var dropdown = document.getElementsByClassName("dropdown-btn");
-    var i;
-
-    for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
-        });
-    }
-</script>
 <div class="main">
     <!--Insert Formular-->
     <div>
@@ -267,6 +296,8 @@ try {
                 </tbody>
             </table>
             <input class="buttoninsert" id='submit' type='submit' value='Insert'  />
+            <input class="buttoninsert" type="button" onclick="resetForm()" value="Clear fields">
+
         </form>
     </div>
     <!--In SQL for Insert-->
@@ -376,11 +407,11 @@ try {
         // fetch rows of the executed sql query
         while ($row = $stmt->fetch()) {
             echo "<tr>";
-            echo "<td>" . $row['ZEITBLOCK'] . "</td>";
-            echo "<td>" . $row['DATUM'] . "</td>";
-            echo "<td>" . $row['KURSNR']. "</td>";
-            echo "<td>" . $row['NUMMER']. "</td>";
-            echo "<td>" . $row['ABTEILUNGSNR']. "</td>";
+            echo "<td>" . $row['ZeitBlock'] . "</td>";
+            echo "<td>" . $row['Datum'] . "</td>";
+            echo "<td>" . $row['KursNr']. "</td>";
+            echo "<td>" . $row['Nummer']. "</td>";
+            echo "<td>" . $row['AbteilungsNr']. "</td>";
             echo "</tr>";
         }
         ?>

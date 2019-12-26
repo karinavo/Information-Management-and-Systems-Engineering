@@ -328,19 +328,19 @@ catch(PDOException $e)
     <!--IN SQL-->
     <?php
     // check if search view of list view
-    
+
     // execute sql statement
     try{
         $search = $_GET['search'];
         if (isset($search)) {
             $sql = "SELECT * FROM imse_db.Kueche WHERE Nummer like '%?%'";
             // execute sql statement
-            $stmt = $conn->prepare($sql);
+            $stmt = $conn->query($sql);
             $stmt->execute($search);
         } else {
             $sql = "SELECT * FROM imse_db.Kueche";
             // execute sql statement
-            $stmt = $conn->prepare($sql);
+            $stmt = $conn->query($sql);
             $stmt->execute();
         }
     } catch(PDOException $e){
@@ -363,12 +363,12 @@ catch(PDOException $e)
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = $stmt->fetch()) {
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "<tr>";
-            echo "<td>" . $row['ABTEILUNGSNR'] . "</td>";
-            echo "<td>" . $row['NUMMER'] . "</td>";
-            echo "<td>" . $row['FASSUNGSVERMOEGEN']. "</td>";
-            echo "<td>" . $row['AUSSTATTUNG']. "</td>";
+            echo "<td>" . $row['AbteilungsNr '] . "</td>";
+            echo "<td>" . $row['Nummer'] . "</td>";
+            echo "<td>" . $row['Fassungsvermoegen']. "</td>";
+            echo "<td>" . $row['Ausstattung']. "</td>";
             echo "</tr>";
         }
         ?>

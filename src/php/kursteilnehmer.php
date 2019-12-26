@@ -147,10 +147,19 @@ catch(PDOException $e)
         }
     </style>
     <img src="Culinary.png" alt="Cooking courses logo" style="width:200px;height:200px;" class="center" align="top">
-
+    <style>
+        p.oblique {
+            font-style:oblique;
+        }
+        div.a{
+            text-align: center;
+        }
+    </style>
     <div class="a">
         <p class="oblique" > Die Kursteilnehmer</p>
     </div>
+
+
     <!--Search style-->
     <style>
         * {
@@ -370,13 +379,13 @@ catch(PDOException $e)
         // fetch rows of the executed sql query
         while ($row = $stmt->fetch()) {
             echo "<tr>";
-            echo "<td>" . $row['KURSTEILNEHMERNR'] . "</td>";
-            echo "<td>" . $row['VORNAME'] . "</td>";
-            echo "<td>" . $row['NACHNAME']. "</td>";
-            echo "<td>" . $row['EMAIL']. "</td>";
-            echo "<td>" . $row['TELEFONNR']. "</td>";
-            echo "<td>" . $row['ABTEILUNGSNR']. "</td>";
-            echo "<td>" . $row['KURSNR'] . "</td>";
+            echo "<td>" . $row['KursteilnehmerNr'] . "</td>";
+            echo "<td>" . $row['Vorname'] . "</td>";
+            echo "<td>" . $row['Nachname']. "</td>";
+            echo "<td>" . $row['EMail']. "</td>";
+            echo "<td>" . $row['TelefonNr']. "</td>";
+            echo "<td>" . $row['AbteilungsNr']. "</td>";
+            echo "<td>" . $row['KursNr'] . "</td>";
             echo "</tr>";
         }
         ?>

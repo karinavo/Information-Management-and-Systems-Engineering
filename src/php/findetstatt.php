@@ -407,11 +407,11 @@ try {
         // fetch rows of the executed sql query
         while ($row = $stmt->fetch()) {
             echo "<tr>";
-            echo "<td>" . $row['ZEITBLOCK'] . "</td>";
-            echo "<td>" . $row['DATUM'] . "</td>";
-            echo "<td>" . $row['KURSNR']. "</td>";
-            echo "<td>" . $row['NUMMER']. "</td>";
-            echo "<td>" . $row['ABTEILUNGSNR']. "</td>";
+            echo "<td>" . $row['ZeitBlock'] . "</td>";
+            echo "<td>" . $row['Datum'] . "</td>";
+            echo "<td>" . $row['KursNr']. "</td>";
+            echo "<td>" . $row['Nummer']. "</td>";
+            echo "<td>" . $row['AbteilungsNr']. "</td>";
             echo "</tr>";
         }
         ?>

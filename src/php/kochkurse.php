@@ -422,10 +422,10 @@ $stmt->execute();
         // fetch rows of the executed sql query
         while ($row = $stmt->fetch()) {
             echo "<tr>";
-            echo "<td>" . $row['KURSNR'] . "</td>";
-            echo "<td>" . $row['PREIS'] . "</td>";
-            echo "<td>" . $row['THEMA']. "</td>";
-            echo "<td>" . $row['SVNUMMER']. "</td>";
+            echo "<td>" . $row['KursNr'] . "</td>";
+            echo "<td>" . $row['Preis'] . "</td>";
+            echo "<td>" . $row['Thema']. "</td>";
+            echo "<td>" . $row['SVNummer']. "</td>";
             echo "</tr>";
         }
         ?>

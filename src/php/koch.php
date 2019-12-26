@@ -156,7 +156,7 @@ catch(PDOException $e)
         }
     </style>
     <div class="a">
-        <p class="oblique" > Die Koeche</p>
+        <p class="oblique" > Die Köche</p>
     </div>
 
 
@@ -360,10 +360,10 @@ catch(PDOException $e)
         // fetch rows of the executed sql query
         while ($row = $stmt->fetch()) {
             echo "<tr>";
-            echo "<td>" . $row['KOCHID'] . "</td>";
-            echo "<td>" . $row['RANG'] . "</td>";
-            echo "<td>" . $row['AUSBILDUNG']. "</td>";
-            echo "<td>" . $row['MID']. "</td>";
+            echo "<td>" . $row['KochID'] . "</td>";
+            echo "<td>" . $row['Rang'] . "</td>";
+            echo "<td>" . $row['Ausbildung']. "</td>";
+            echo "<td>" . $row['MId']. "</td>";
             echo "</tr>";
         }
         ?>

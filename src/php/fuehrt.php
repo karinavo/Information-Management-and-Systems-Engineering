@@ -351,8 +351,8 @@ catch(PDOException $e)
         // fetch rows of the executed sql query
         while ($row = $stmt->fetch()) {
             echo "<tr>";
-            echo "<td>" . $row['KOCHID'] . "</td>";
-            echo "<td>" . $row['KURSNR']. "</td>";
+            echo "<td>" . $row['KochID'] . "</td>";
+            echo "<td>" . $row['KursNr']. "</td>";
             echo "</tr>";
         }
         ?>

@@ -403,16 +403,16 @@ catch(PDOException $e)
         while ($row = $stmt->fetch()) {
             echo "<tr>";
 
-            echo "<td>" . $row['MID'] . "</td>";
-            echo "<td>" . $row['NACHNAME']. "</td>";
-            echo "<td>" . $row['VORNAME']. "</td>";
-            echo "<td>" . $row['GEHALT']. "</td>";
-            echo "<td>" . $row['STRASSE']. "</td>";
-            echo "<td>" . $row['ORT']. "</td>";
+            echo "<td>" . $row['MId'] . "</td>";
+            echo "<td>" . $row['Nachname']. "</td>";
+            echo "<td>" . $row['Vorname']. "</td>";
+            echo "<td>" . $row['Gehalt']. "</td>";
+            echo "<td>" . $row['Strasse']. "</td>";
+            echo "<td>" . $row['Ort']. "</td>";
             echo "<td>" . $row['PLZ']. "</td>";
-            echo "<td>" . $row['GEBURTSDATUM']. "</td>";
-            echo "<td>" . $row['LEITERMID']. "</td>";
-            echo "<td>" . $row['ABTEILUNGSNR'] . "</td>";
+            echo "<td>" . $row['Geburtsdatum']. "</td>";
+            echo "<td>" . $row['LeiterMId']. "</td>";
+            echo "<td>" . $row['AbteilungsNr'] . "</td>";
             echo "</tr>";
         }
         ?>

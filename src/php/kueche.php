@@ -333,10 +333,10 @@ catch(PDOException $e)
     try{
         $search = $_GET['search'];
         if (isset($search)) {
-            $sql = "SELECT * FROM imse_db.Kueche WHERE Nummer like '%?%'";
+            $sql = "SELECT * FROM imse_db.Kueche WHERE Nummer like '%" . $search ."%'";
             // execute sql statement
             $stmt = $conn->query($sql);
-            $stmt->execute($search);
+            $stmt->execute();
         } else {
             $sql = "SELECT * FROM imse_db.Kueche";
             // execute sql statement
@@ -363,9 +363,9 @@ catch(PDOException $e)
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while($row = $stmt->fetch()) {
             echo "<tr>";
-            echo "<td>" . $row['AbteilungsNr '] . "</td>";
+            echo "<td>" . $row['AbteilungsNr'] . "</td>";
             echo "<td>" . $row['Nummer'] . "</td>";
             echo "<td>" . $row['Fassungsvermoegen']. "</td>";
             echo "<td>" . $row['Ausstattung']. "</td>";

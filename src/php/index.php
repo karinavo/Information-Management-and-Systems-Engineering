@@ -273,20 +273,20 @@
 
         <div class="mySlides fade">
             <div class="numbertext"></div>
-            <a href="/var/kochkurse.php?search=Alles+WOK%21">
+            <a href="http://localhost:8080/kochkurse.php?search=Alles+Wok">
                  WOK Kurse <img src="Wok.jpg" style="width:100%"></a>
             <div class="text">Alles WOK!</div>
         </div>
         <div class="mySlides fade">
             <div class="numbertext"></div>
-            <a href="http://.cs.univie.ac.at/~karynav98/dbs/kochkurse.php?search=Ganz">
+            <a href="http://localhost:8080/kochkurse.php?search=Ganz+schoen+Wild">
                 Ganz schön Wild<img src="Wild.jpg" style="width:100%"></a>
             <div class="text">Ganz schön Wild!</div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext"></div>
-           <a href="http://wwwlab.cs.univie.ac.at/~karynav98/dbs/kochkurse.php?search=Festlicher+Osterbrunch">
+           <a href="http://localhost:8080/kochkurse.php?search=Festlicher+Osterbrunch">
                 Osterbrunch<img src="Osterbuffet.jpg" style="width:100%"> </a>
             <div class="text">Festlicher Osterbrunch!</div>
         </div>

@@ -1,11 +1,45 @@
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
-import java.sql.DriverManager;
 public class DataGenerator {
+
+    private static ComboPooledDataSource cpds = new ComboPooledDataSource();
+
+    public static void createPool()
+    {
+        try
+        {
+            cpds = new ComboPooledDataSource();
+            cpds.setDriverClass("com.mysql.jdbc.Driver");
+            cpds.setJdbcUrl("jdbc:mysql://mariadb:3306/imse_db");
+            cpds.setUser("root");
+            cpds.setPassword("rootpsw");
+            cpds.setMinPoolSize(100);
+            cpds.setMaxPoolSize(1000);
+            //cpds.setAcquireIncrement(5);
+            cpds.setAcquireRetryAttempts(100);
+            //cpds.setConnectionCustomizerClassName();
+        }
+        catch (PropertyVetoException ex)
+        {
+            System.err.println(ex.getMessage());
+        }
+
+    }
+
+    public static Connection getConnection() throws SQLException {
+
+        return cpds.getConnection();
+    }
+
+
     //random year
     private static int randBetween(int start, int end) {
 
@@ -21,9 +55,14 @@ public class DataGenerator {
 
     public static void main(String[] args) {
         try{
+            // Create connection pool
+            createPool();
+
             //Open a connection
             System.out.println("Connecting to a selected database...");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://mariadb:3306/imse_db", "root", "rootpsw");
+
+            Connection conn = getConnection();
+
             System.out.println("Connected database successfully...");
             // Delimiter
             String delimiter = ";";

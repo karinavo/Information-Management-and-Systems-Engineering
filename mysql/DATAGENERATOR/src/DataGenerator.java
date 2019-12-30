@@ -26,6 +26,8 @@ public class DataGenerator {
             //cpds.setAcquireIncrement(5);
             cpds.setAcquireRetryAttempts(100);
             //cpds.setConnectionCustomizerClassName();
+            //cpds.setAcquireRetryDelay();
+            //cpds.setBreakAfterAcquireFailure();
         }
         catch (PropertyVetoException ex)
         {

@@ -64,3 +64,13 @@ docker stack deploy -c docker-compose.yml imse
 docker swarm leave
 
 ```
+
+```
+docker-machine create imse-machine
+docker-machine ssh imse-machine "docker swarm init --advertise-addr <IP of machine>"
+docker-machine ssh imse-machine "docker node ls"
+docker-machine env imse-machine
+eval $(docker-machine env imse-machine)
+docker-machine ls
+docker stack deploy -c docker-compose.yml swarm-stack
+```

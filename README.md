@@ -52,3 +52,15 @@ For the java dockerfile to be able to run
 
 `sudo docker build -f filler/Dockerfile .`
 
+Archivieren
+`tar --exclude-vcs -zcvf foo.tar.gz ./FOLDER_NAME`
+
+
+For using docker swarm
+
+```
+docker swarm init
+docker stack deploy -c docker-compose.yml imse
+docker swarm leave
+
+```

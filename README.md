@@ -1,10 +1,14 @@
 # IMSE: Milestone 2
-## Description: Kochkurs
-by @author: Karina Volobuieva and @author: Lujza Lanyi
 
-:::info
-Read this for important remarks about our project!
-:::
+by 
+@author: Karina Volobuieva and 
+@author: Lujza Lanyi
+
+## Description: Kochkurs
+
+***
+Read this for important remarks about our project
+***
 
 ### 2.1 Infrastructure
 - **IS container, composition, isolation**
@@ -31,6 +35,9 @@ and deployment
     - Use Case 2:
     - Use Case 3:
     - Elaborate reporting use case:
+
+### Additional information
+- The work protocol can be found in /docs
 
 ## Instructions and troubleshooting
 

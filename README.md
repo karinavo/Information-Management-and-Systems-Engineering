@@ -66,3 +66,14 @@ docker swarm init
 docker stack deploy -c docker-compose.yml imse # this will take a while too
 docker swarm leave
 ```
+
+### Problem: Data did not get filled in when running docker-compose up
+
+1. Wait. Maybe it did not have enough time to be filled in yet
+
+2. try restarting the contaner 
+
+```
+docker ps # find out the id or name of the filler container
+docker restart <filler id/filler name>
+```

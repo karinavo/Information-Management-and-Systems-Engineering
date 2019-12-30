@@ -1,13 +1,18 @@
 # IMSE: Milestone 2
 
 by 
+
 @author: Karina Volobuieva and 
+
 @author: Lujza Lanyi
 
 ## Description: Kochkurs
 
+::: info
+
 Read this for important remarks about our project
-{: .alert .alert-info}
+
+:::
 
 ### 2.1 Infrastructure
 - **IS container, composition, isolation**
@@ -61,5 +66,3 @@ docker swarm init
 docker stack deploy -c docker-compose.yml imse # this will take a while too
 docker swarm leave
 ```
-
-{::options parse_block_html="true" /}

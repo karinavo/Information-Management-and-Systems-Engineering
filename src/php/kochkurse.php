@@ -254,6 +254,12 @@ try {
     </div>
 </div>
 <div class="main">
+    
+    <!-- Button for reporting use case -->
+    <div>
+        <input class="buttoninsert" id='reportsubmit' type='submit' value='Generiere Bericht'  />
+    </div>
+    
     <!--Insert Formular-->
     <div>
         <form id='insertform' action='kochkurse.php' method='get'>

@@ -6,9 +6,8 @@ by
 
 ## Description: Kochkurs
 
-***
 Read this for important remarks about our project
-***
+{: .alert .alert-info}
 
 ### 2.1 Infrastructure
 - **IS container, composition, isolation**

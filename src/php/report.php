@@ -7,9 +7,17 @@ header('Expires: 0');
 function gen_report_csv(PDO $conn) {
                 
     $result = $conn->query(
-            "SELECT Kochkurse.KursNr, Thema, ZeitBlock, Datum, COUNT(KursteilnehmerNr) AS Teilnehmerzahl 
-            FROM (imse_db.Findet_statt NATURAL JOIN ( imse_db.Kochkurse NATURAL JOIN imse_db.Kursteilnehmer)) 
-            ORDER BY Teilnehmerzahl;"
+            "SELECT Kochkurse.KursNr, Thema, Datum, ZeitBlock, COUNT(Kursteilnehmer.KursNr) AS Teilnehmerzahl
+            FROM
+                Kochkurse
+                    LEFT JOIN
+                Kursteilnehmer
+                    ON Kochkurse.KursNr = Kursteilnehmer.KursNr
+                    INNER JOIN 
+                Findet_statt
+                    ON Kursteilnehmer.KursNr = Findet_statt.KursNr
+                    GROUP BY Kochkurse.KursNr
+                    ORDER BY Teilnehmerzahl DESC;"
             ); 
 
         if (!$result) die('Couldn\'t fetch records'); 
@@ -20,7 +28,8 @@ function gen_report_csv(PDO $conn) {
         for ($i = 0; $i < $num_fields; $i++) 
         {     
             $col = $result->getColumnMeta($i);
-            $$headers[] = $col['name'];
+            $headers[] = $col['name'];
+            //print("Headers:\n" . $headers);
         } 
 
         //getting the data
@@ -29,7 +38,11 @@ function gen_report_csv(PDO $conn) {
         {     
             fputcsv($fp, $headers); 
             
-            while ($row = $result->fetch()) {
+            while ($row = $result->fetch(PDO::FETCH_NUM)) {
+                //printf("Row " . array_values($row));
+                //print("\n");
+                //echo 'console.log(' . json_encode($row, JSON_HEX_TAG) . ');';
+                //print("\n");
                 fputcsv($fp, array_values($row)); 
             }
         die; 
@@ -41,6 +54,7 @@ function gen_report_csv(PDO $conn) {
     $username = "root";
     $password = "rootpsw";
     $dbname = "imse_db";
+
 try {
     $conn = new PDO(
     "mysql:host=$servername;$dbname;charset=utf8",

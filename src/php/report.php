@@ -1,4 +1,9 @@
 <?php 
+header('Content-Type: text/x-csv');
+header('Content-Disposition: attachment; filename="report.csv"');
+header('Pragma: no-cache');    
+header('Expires: 0');
+
 function gen_report_csv(PDO $conn) {
                 
     $result = $conn->query(
@@ -27,12 +32,30 @@ function gen_report_csv(PDO $conn) {
             while ($row = $result->fetch()) {
                 fputcsv($fp, array_values($row)); 
             }
-
-            header('Content-Type: text/x-csv');
-            header('Content-Disposition: attachment; filename="report.csv"');
-            header('Pragma: no-cache');    
-            header('Expires: 0');
         die; 
         }
         return 'Succesfully created report.'; 
+    }
+
+    $servername = "mariadb";
+    $username = "root";
+    $password = "rootpsw";
+    $dbname = "imse_db";
+try {
+    $conn = new PDO(
+    "mysql:host=$servername;$dbname;charset=utf8",
+    $username,
+    $password,
+    array(PDO::ATTR_PERSISTENT => true));
+
+
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e)
+{
+    echo "Connection failed: " . $e->getMessage();
+}
+
+    if (isset($_POST['reportsubmit'])) {
+        gen_report_csv($conn);
     }

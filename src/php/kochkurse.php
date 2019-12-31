@@ -1,5 +1,4 @@
 <?php
-include 'report.php';
 
 $servername = "mariadb";
 $username = "root";
@@ -260,14 +259,9 @@ try {
 <div class="main">
     <!-- Button for reporting use case -->
     <div>
-        <form action="kochkurse.php" method="post">
+        <form action="report.php/?reportsubmit=true" method="post">
             <input class="buttoninsert" id='reportsubmit' name="reportsubmit" type='submit' value='Generiere Bericht'  />
         </form>
-        <?php
-            if (isset($_POST['reportsubmit'])) {
-                gen_report_csv($conn);
-            }
-        ?>
     </div>
     
     <!--Insert Formular-->

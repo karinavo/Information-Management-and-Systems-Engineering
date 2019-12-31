@@ -35,10 +35,10 @@ and deployment
  
 ### 2.4 Implementation of Web System (relational DBMS)
 - We implemented at least four use cases, since we are two people
-    - Main use case :
-    - Use Case 2:
-    - Use Case 3:
-    - Elaborate reporting use case:
+    - Main use case : Organise cooking course [X]
+    - Use Case 2: []
+    - Use Case 3: []
+    - Elaborate reporting use case: [X]
 
 ### Additional information
 - The work protocol can be found in /docs

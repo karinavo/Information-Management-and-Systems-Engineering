@@ -59,7 +59,7 @@ catch(PDOException $e)
             cursor: pointer;
             outline: none;
         };
-        }
+        
         .sidenav a:hover,.dropdown-btn:hover{
             color: bisque;
         }

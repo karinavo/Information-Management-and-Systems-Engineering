@@ -1,5 +1,6 @@
-<!DOCTYPE html>
 <?php
+include 'report.php';
+
 $servername = "mariadb";
 $username = "root";
 $password = "rootpsw";
@@ -14,11 +15,14 @@ try {
 
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch(PDOException $e)
-    {
+} catch(PDOException $e)
+{
     echo "Connection failed: " . $e->getMessage();
-    }
+}
+
 ?>
+
+<!DOCTYPE html>
 
 <html>
 <title>Die Kochschule</title>
@@ -254,10 +258,16 @@ try {
     </div>
 </div>
 <div class="main">
-    
     <!-- Button for reporting use case -->
     <div>
-        <input class="buttoninsert" id='reportsubmit' type='submit' value='Generiere Bericht'  />
+        <form action="kochkurse.php" method="post">
+            <input class="buttoninsert" id='reportsubmit' name="reportsubmit" type='submit' value='Generiere Bericht'  />
+        </form>
+        <?php
+            if (isset($_POST['reportsubmit'])) {
+                gen_report_csv($conn);
+            }
+        ?>
     </div>
     
     <!--Insert Formular-->
@@ -351,7 +361,7 @@ try {
         $email='';
         $tlfnr='';
 
-        $sproc = $conn->prepare($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
+        $sproc = $conn->prepare("begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
         //Bind variables
 
         $sproc->bindParam(':p1', $kursnr);
@@ -443,10 +453,13 @@ $stmt->execute();
             Insgesamt <?php echo $stmt->rowCount(); ?> Kochkurs(e) gefunden!
 
     </div>
+    
     <?php
-        //oci_free_statement($stmt);
-        //oci_close($conn);
-        ?>
+    //oci_free_statement($stmt);
+    //oci_close($conn);
+    $stmt = null;
+    $conn = null;
+    ?>
 
 </div>
 

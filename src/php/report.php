@@ -9,12 +9,12 @@ function gen_report_csv(PDO $conn) {
     $result = $conn->query(
             "SELECT Kochkurse.KursNr, Thema, Datum, ZeitBlock, COUNT(Kursteilnehmer.KursNr) AS Teilnehmerzahl
             FROM
-                Kochkurse
+                imse_db.Kochkurse
                     LEFT JOIN
-                Kursteilnehmer
+                imse_db.Kursteilnehmer
                     ON Kochkurse.KursNr = Kursteilnehmer.KursNr
                     INNER JOIN 
-                Findet_statt
+                imse_db.Findet_statt
                     ON Kursteilnehmer.KursNr = Findet_statt.KursNr
                     GROUP BY Kochkurse.KursNr
                     ORDER BY Teilnehmerzahl DESC;"

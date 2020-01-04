@@ -261,9 +261,11 @@ try {
 <div class="main">
     <!-- Button for reporting use case -->
     <div>
+        <br/>
         <form action="report.php/?reportsubmit=true" method="post">
             <input class="buttoninsert" id='reportsubmit' name="reportsubmit" type='submit' value='Generiere Bericht'  />
         </form>
+        <br/>
     </div>
     
     <!--Insert Formular-->
@@ -325,80 +327,31 @@ try {
 
     }
     ?>
-    <!--Stored Procedure-->
-    <div>
-        <form id="searchstr" action="kochkurse.php" method="get">
-            Suche der Nachname und der Vorname von Koch, der dieser Kurs führt(KursNr):
-            <br>
-            <input id="KursNr" name="KursNr" type="text" size="10"
-                   value="<?php echo $_GET['KursNr']; ?>"/>
-            <br>
-            und Kontakte von Manager, der dieser Kurs organisiert(SVNummer):<br>
-            <input id="SVNummer2" name="SVNummer" type="text" size="10"
-                   value="<?php echo $_GET['SVNummer']; ?>"/>
-            <br>
-            <input class ="buttoninsert" id='submit1' type='submit' value='Aufruf Stored Procedure!' />
-        </form>
-    </div>
-    <!-- PHP-Code mit dem Aufruf der Stored Procedure-->
-    <?php
-    //Handle Stored Procedure
-    if (isset($_GET['KursNr'])&&isset($_GET['SVNummer']))
-    {
-        //Call Stored Procedure
-        //IN
-
-        $kursnr = $_GET['KursNr'];
-        $svnr = $_GET['SVNummer'];
-
-        //OUT
-        $nachname='';
-        $vorname = '';
-        $email='';
-        $tlfnr='';
-
-        $sproc = $conn->prepare("begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
-        //Bind variables
-
-        $sproc->bindParam(':p1', $kursnr);
-        $sproc->bindParam(':p2', $svnr);
-        $sproc->bindParam(':p3', $nachname,30);
-        $sproc->bindParam(':p4', $vorname,30);
-        $sproc->bindParam(':p5', $email,80);
-        $sproc->bindParam(':p6', $tlfnr,14);
 
 
-        $sproc->execute();
-
-
-
-        $conn_err=$conn->errorInfo();
-        $proc_err=$sproc->errorInfo();
-        //If there have been no Connection or Database errors, print department
-        if(!$conn_err && !$proc_err){
-            echo("<br><b>". "Der Koch " . $nachname . " " . $vorname ." fuehrt Kurs " . $kursnr. "</b><br>" );  // prints OUT parameter of stored procedure
-            echo("<br><b>". "Jetz buchen: " . $tlfnr . " oder " . $email . "</b><br>" );
-        }
-        else{
-            //Print potential errors and warnings
-            print($conn_err);
-            print_r($proc_err);
-        }
-    }
-
-    // clean up connections
-    //oci_free_statement($sproc);
-   ;
-
-    ?>
    <!--Suche-->
+    <br/>
     <form id='searchform' class="example" action='kochkurse.php' method='get'>
 
         <a href="kochkurse.php">Alle Kochkurse</a>
         <br/>
+        <br/>
         <label for="focusedInput">Suche nach KursNr des Kochkurses: </label>
         <input class="form-control" id='search' type="text" name='search' placeholder="Search.." value='<?php if (isset($_GET['search']))
-                                                                                                echo $_GET['search'];?>'/>
+                                                                                     echo $_GET['search'];?>'/>
+
+
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+    <!--Suche2-->
+    <form id='searchform2' class="example" action='kochkurse.php' method='get'>
+
+
+        <br/>
+        <br/>
+        <label for="focusedInput">Suche nach Thema des Kochkurses: </label>
+        <input class="form-control" id='search1' type="text" name='search1' placeholder="Search.." value='<?php if (isset($_GET['search1']))
+            echo $_GET['search1'];?>'/>
 
         <button type="submit"><i class="fa fa-search"></i></button>
     </form>
@@ -417,6 +370,18 @@ if (isset($_GET['search'])) {
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 ?>
+    <!--for images-->
+    <?php
+    // check if search view of list view
+    if (isset($_GET['search1'])) {
+        $sql = "SELECT * FROM imse_db.Kochkurse WHERE Thema='" . $_GET['search1'] . "'";
+    } else {
+        $sql = "SELECT * FROM imse_db.Kochkurse";
+    }
+    // execute sql statement
+    $stmt1 = $conn->prepare($sql);
+    $stmt1->execute();
+    ?>
 <!--Ausgabe-->
 <table>
     <thead>
@@ -432,14 +397,20 @@ $stmt->execute();
     <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = $stmt->fetch()) {
-            echo "<tr>";
-            echo "<td>" . $row['KursNr'] . "</td>";
-            echo "<td>" . $row['Preis'] . "</td>";
-            echo "<td>" . $row['Thema']. "</td>";
-            echo "<td><a href='manager.php?search=" . $row['SVNummer'] . "'>" . $row['SVNummer'] . "</a></td>";
-            echo "</tr>";
+        if(isset($_GET['search'])) {
+            $res_stm = $stmt;
+        }else if(isset($_GET['search1'])){
+            $res_stm=$stmt1;
+        }else $res_stm=$stmt;
+        while ($row = $res_stm->fetch()) {
+                echo "<tr>";
+                echo "<td>" . $row['KursNr'] . "</td>";
+                echo "<td>" . $row['Preis'] . "</td>";
+                echo "<td>" . $row['Thema'] . "</td>";
+                echo "<td><a href='manager.php?search=" . $row['SVNummer'] . "'>" . $row['SVNummer'] . "</a></td>";
+                echo "</tr>";
         }
+
         ?>
     </tbody>
 </table>

@@ -322,49 +322,13 @@ try {
         }
 
     }
-    ?>  <!--Stored Procedure-->
-    <!--div>
-        <form id="searchstr" action="findetstatt.php" method="get">
-            Suche Strasse von Koschschule(AbteilungsNr):
-            <input id="AbteilungsNr" name="AbteilungsNr" type="text" size="10"
-                   value="<?php echo $_GET['AbteilungsNr']; ?>"/>
-            <input class ="buttoninsert" id='submit' type='submit' value='Aufruf Stored Procedure!' />
-            <br>
-        </form>
-    </div-->
-    <!-- PHP-Code mit dem Aufruf der Stored Procedure-->
-    <?php
-    //Handle Stored Procedure
-    /**if (isset($_GET['AbteilungsNr']))
-    {
-        //Call Stored Procedure
-        $abt = $_GET['AbteilungsNr'];
-        $str='';
-        $sproc = $conn->prepare('begin abt_strasse(:p1, :p2); end;');
-        //Bind variables, p1=input (abt), p2=output (str)
-        $sproc->bindParam(':p1', $abt);
-        $sproc->bindParam(':p2', $str, 25);
-        $sproc->execute();
-        $conn_err=$conn->errorInfo();
-        $proc_err=$sproc->errorInfo();
-        //If there have been no Connection or Database errors, print department
-        if(!$conn_err && !$proc_err){
-            echo("<br><b>". "Die Kochschule Nr." . $abt . " befindet sich auf der  " . $str . "</b><br>" );  // prints OUT parameter of stored procedure
-        }
-        else{
-            //Print potential errors and warnings
-            print($conn_err);
-            print_r($proc_err);
-        }
-    }***/
-    // clean up connections
-    //oci_free_statement($sproc);
-
     ?>
     <!--Suche-->
     <form id='searchform' class="example" action='findetstatt.php' method='get'>
+        <br/>
 
         <a href="findetstatt.php">Alle Termine</a>
+        <br/>
         <br/>
         <label for="focusedInput">Suche nach Datum des Termins: </label>
         <br/>

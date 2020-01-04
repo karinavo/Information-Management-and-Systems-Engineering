@@ -320,8 +320,9 @@ catch(PDOException $e)
     ?>
     <!--Suche-->
     <form id='searchform' class="example" action='koch.php' method='get'>
-
+        <br/>
         <a href="koch.php">Alle Koeche</a>
+        <br/>
         <br/>
         <label for="focusedInput">Suche nach KochID des Kochs: </label>
         <br/>

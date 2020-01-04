@@ -336,8 +336,9 @@ catch(PDOException $e)
     ?>
     <!--Suche-->
     <form id='searchform' class="example" action='kursteilnehmer.php' method='get'>
-
+        <br/>
         <a href="kursteilnehmer.php">Alle Kursteilnehmer</a>
+        <br/>
         <br/>
         <label for="focusedInput">Suche nach Nachname des Kursteilnehmers: </label>
         <br/>

@@ -330,8 +330,9 @@ catch(PDOException $e)
 
     <!--Suche-->
     <form id='searchform' class="example" action='manager.php' method='get'>
-
+        <br/>
         <a href="manager.php">Alle Manager</a>
+        <br/>
         <br/>
         <label for="focusedInput">Suche nach SVNummer der Manager: </label>
         <br/>

@@ -275,20 +275,20 @@
 
         <div class="mySlides fade">
             <div class="numbertext"></div>
-            <a href="http://localhost:8080/kochkurse.php?search=Alles+Wok">
+            <a href="http://localhost:8080/kochkurse.php?search1=Alles+WOK!">
                  WOK Kurse <img src="Wok.jpg" style="width:100%"></a>
             <div class="text">Alles WOK!</div>
         </div>
         <div class="mySlides fade">
             <div class="numbertext"></div>
-            <a href="http://localhost:8080/kochkurse.php?search=Ganz+schoen+Wild">
+            <a href="http://localhost:8080/kochkurse.php?search1=Ganz+schoen+Wild">
                 Ganz schön Wild<img src="Wild.jpg" style="width:100%"></a>
             <div class="text">Ganz schön Wild!</div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext"></div>
-           <a href="http://localhost:8080/kochkurse.php?search=Festlicher+Osterbrunch">
+           <a href="http://localhost:8080/kochkurse.php?search1=Festlicher+Osterbrunch">
                 Osterbrunch<img src="Osterbuffet.jpg" style="width:100%"> </a>
             <div class="text">Festlicher Osterbrunch!</div>
         </div>

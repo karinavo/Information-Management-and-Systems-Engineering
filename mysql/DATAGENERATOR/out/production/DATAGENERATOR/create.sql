@@ -77,7 +77,7 @@ CREATE TABLE Findet_statt(
   FOREIGN KEY(ZeitBlock,Datum)  REFERENCES Zeit(ZeitBlock,Datum) ON DELETE CASCADE,
   FOREIGN KEY(KursNr) REFERENCES Kochkurse(KursNr) ON DELETE CASCADE,
   FOREIGN KEY(AbteilungsNr,Nummer) REFERENCES Kueche(AbteilungsNr,Nummer) ON DELETE CASCADE,
-  PRIMARY KEY(ZeitBlock,Datum,KursNr)
+  PRIMARY KEY(ZeitBlock,Datum,Nummer)
 );
 CREATE TABLE Fuehrt(
   KochID INTEGER,

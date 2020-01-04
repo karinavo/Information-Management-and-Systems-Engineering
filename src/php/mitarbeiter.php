@@ -258,6 +258,8 @@ catch(PDOException $e)
             <a href="fuehrt.php">Fuehrung</a>
             <a href="kursteilnehmer.php">Kursteilnehmer</a>
             <a href="mitarbeiter.php">Mitarbeiter</a>
+            <a href="manager.php">Manager</a>
+
         </div>
     </div>
 </div>
@@ -266,7 +268,7 @@ catch(PDOException $e)
     <!--Insert Formular-->
     <div id="insertformular">
         <form id='insertform' action='mitarbeiter.php' method='get'>
-            Neuer Mitarbeiter einfuegen:
+            Neuer Manager einfuegen:
             <table >
                 <thead>
                 <tr>
@@ -371,7 +373,7 @@ catch(PDOException $e)
     <?php
     // check if search view of list view
     if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM imse_db.Mitarbeiter WHERE MId like '%" . $_GET['search'] . "%'";
+        $sql = "SELECT * FROM imse_db.Mitarbeiter WHERE MId='" . $_GET['search'] . "'";
     } else {
         $sql = "SELECT * FROM imse_db.Mitarbeiter";
     }

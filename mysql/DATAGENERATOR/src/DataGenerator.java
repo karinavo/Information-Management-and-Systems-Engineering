@@ -4,10 +4,13 @@ import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class DataGenerator {
 
     private static ComboPooledDataSource cpds = new ComboPooledDataSource();
@@ -44,7 +47,6 @@ public class DataGenerator {
 
     //random year
     private static int randBetween(int start, int end) {
-
         return start + (int)Math.round(Math.random() * (end - start));
     }
     private static LocalDate createRandomDate(int startYear, int endYear) {
@@ -82,10 +84,11 @@ public class DataGenerator {
             }
 
 
-            System.out.println(tables_counter + " Rows in set ");
+            System.out.println(tables_counter + " Tables in database ");
             if (tables_counter == 10) {
                 rs0.close();
                 System.out.println("Number of tables in database: " + tables_counter);
+
                 conn.close();
                 System.exit(0);
             } else {
@@ -383,15 +386,16 @@ public class DataGenerator {
 
                 for (int i = 0; i < 1000; i++) {
                     try {
-                        LocalDate randomDate = createRandomDate(2020, 2022);
+
+                        LocalDate randomDate = createRandomDate(2020, 2021);
                         LocalDate dt = randomDate;
                         String block = zeitblock[(int) (Math.random() * 3)];
 
                         String insertSql = "INSERT INTO Zeit SELECT '" + block + "', STR_TO_DATE('"
                                 + dt + "','%Y-%m-%d') FROM dual WHERE NOT EXISTS (SELECT * FROM Zeit WHERE Zeit.ZeitBlock = '" +
                                 block + "' AND Datum=STR_TO_DATE('" + dt + "','%Y-%m-%d'))";
-                        currentStatement.executeUpdate(insertSql);
 
+                        currentStatement.executeUpdate(insertSql);
                     } catch (Exception e) {
                         System.err.println("Fehler beim Einfuegen des Datensatzes Zeit: " + e.getMessage());
                     }
@@ -405,39 +409,34 @@ public class DataGenerator {
                 //-------------------------------------------------------------------------------------------------------
                 //Resultset
                 ResultSet zrs = null;
-                ResultSet zrs2 = null;
-                ResultSet zrs3 = null;
+
 
                 //Insert Findett_statt  1
                 for (int i = 1; i < 300; i++) {
+
+                    String zeit = "SELECT Datum FROM Zeit WHERE ZeitBlock= '1. 10:00-14:00'";
+                    zrs = currentStatement.executeQuery(zeit);
+
+                    String date_insert ="";
+                    String dtm;
+                    if (zrs.next()) {
+                        dtm = zrs.getString("Datum");
+                        String dtm1 = dtm.replace("00:00:00.0", "");
+                        date_insert=dtm1;
+                    }
+
+
+
+                    int kueche_nummer = (int) (Math.random() * 108 + 1);
+
                     try {
-                        String zb = zeitblock[(int) (Math.random() * 3)];
-                        String zeit = "SELECT Datum FROM Zeit WHERE ZeitBlock= '1. 10:00-14:00'";
-                        zrs = currentStatement.executeQuery(zeit);
-
-
-                        String dtm;
-
-                        ArrayList<String> dates = new ArrayList<String>();
-
-
-                        if (zrs.next()) {
-
-                            dtm = zrs.getString("Datum");
-
-                            String dtm1 = dtm.replace("00:00:00.0", "");
-                            dates.add(dtm1);
-
-                        }
-
-
-                        String insertSql1 = "INSERT INTO Findet_statt SELECT '1. 10:00-14:00', STR_TO_DATE('" +
-                                dates.get(0) + "','%Y-%m-%d')," +
+                        String insertSql1 = "INSERT IGNORE INTO Findet_statt SELECT '1. 10:00-14:00', STR_TO_DATE('" +
+                                date_insert + "','%Y-%m-%d')," +
                                 (int) (i) + "," +
-                                (int) (Math.random() * 108 + 1) + "," + 1 +
+                                kueche_nummer + "," + 1 +
                                 " FROM dual WHERE NOT EXISTS (SELECT * FROM Findet_statt WHERE ZeitBlock= '1. 10:00-14:00' AND Datum= STR_TO_DATE('" +
-                                dates.get(0) + "','%Y-%m-%d') AND KursNr=" + (int) (i) +
-                                " AND Nummer=" + (int) (i) + " AND AbteilungsNr=" + 1 + ")";
+                                date_insert + "','%Y-%m-%d') AND KursNr=" + (int) (i) +
+                                " AND Nummer=" +kueche_nummer + " AND AbteilungsNr=" + 1 + ")";
 
                         currentStatement.executeUpdate(insertSql1);
 
@@ -453,7 +452,53 @@ public class DataGenerator {
                 ResultSet rs9 = currentStatement.executeQuery("SELECT COUNT(*) FROM Findet_statt");
                 if (rs9.next()) {
                     int count = rs9.getInt(1);
-                    System.out.println("Number of datasets Findet_statt: " + count);
+                    System.out.println("Number of datasets Findet_statt after insertion zeitblock 1: " + count);
+                }
+
+                //Insert Findett_statt  2
+                ResultSet zrs2 = null;
+
+
+                for (int i = 1; i < 200; i++) {
+                    String zeit = "SELECT Datum FROM Zeit WHERE ZeitBlock= '2. 14:15-18:15'";
+                    zrs2 = currentStatement.executeQuery(zeit);
+
+                    String date_insert ="";
+                    String dtm;
+                    if (zrs2.next()) {
+                        dtm = zrs2.getString("Datum");
+                        String dtm1 = dtm.replace("00:00:00.0", "");
+                        date_insert=dtm1;
+                    }
+
+
+                    int kueche_nummer = (int) (Math.random() * 108 + 1);
+
+                    try {
+
+                        String insertSql = "INSERT IGNORE INTO Findet_statt SELECT '2. 14:15-18:15', STR_TO_DATE('" +
+                                date_insert+ "','%Y-%m-%d')," +
+                                (int) (i) + "," +
+                                kueche_nummer + "," + 1 +
+                                " FROM dual WHERE NOT EXISTS (SELECT * FROM Findet_statt WHERE ZeitBlock= '2. 14:15-18:15' AND Datum= STR_TO_DATE('" +
+                                date_insert + "','%Y-%m-%d') AND KursNr=" + (int) (i) +
+                                " AND Nummer=" + kueche_nummer + " AND AbteilungsNr=" + 1 + ")";
+
+                        currentStatement.executeUpdate(insertSql);
+
+                    } catch (Exception e) {
+                        System.err.println("Fehler beim Einfuegen des Datensatzes Findett_statt 2: " + e.getMessage());
+                    } finally {
+                        if (currentStatement != null) {
+                            zrs2.close();
+                        }
+
+                    }
+                }
+                ResultSet rs10 = currentStatement.executeQuery("SELECT COUNT(*) FROM Findet_statt");
+                if (rs10.next()) {
+                    int count = rs10.getInt(1);
+                    System.out.println("Number of datasets Findet_statt after insertion zeitblock 2: " + count);
                 }
                 //---------------------------------------------------------------------------------------------------------------------------------------
                 //insert in fuehrt
@@ -470,9 +515,9 @@ public class DataGenerator {
                     }
                 }
                 // check number of datasets in Fuehrt table
-                ResultSet rs10 = currentStatement.executeQuery("SELECT COUNT(*) FROM Fuehrt");
-                if (rs10.next()) {
-                    int count = rs10.getInt(1);
+                ResultSet rs11 = currentStatement.executeQuery("SELECT COUNT(*) FROM Fuehrt");
+                if (rs11.next()) {
+                    int count = rs11.getInt(1);
                     System.out.println("Number of datasets Fuehrt: " + count);
                 }
                 // clean up connections
@@ -486,6 +531,7 @@ public class DataGenerator {
                 rs8.close();
                 rs9.close();
                 rs10.close();
+                rs11.close();
                 currentStatement.close();
                 conn.close();
                 }

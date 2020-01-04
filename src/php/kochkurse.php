@@ -253,6 +253,8 @@ try {
             <a href="fuehrt.php">Fuehrung</a>
             <a href="kursteilnehmer.php">Kursteilnehmer</a>
             <a href="mitarbeiter.php">Mitarbeiter</a>
+            <a href="manager.php">Manager</a>
+
         </div>
     </div>
 </div>
@@ -394,7 +396,7 @@ try {
 
         <a href="kochkurse.php">Alle Kochkurse</a>
         <br/>
-        <label for="focusedInput">Suche nach Thema des Kochkurses: </label>
+        <label for="focusedInput">Suche nach KursNr des Kochkurses: </label>
         <input class="form-control" id='search' type="text" name='search' placeholder="Search.." value='<?php if (isset($_GET['search']))
                                                                                                 echo $_GET['search'];?>'/>
 
@@ -407,7 +409,7 @@ try {
 <?php
 // check if search view of list view
 if (isset($_GET['search'])) {
-    $sql = "SELECT * FROM imse_db.Kochkurse WHERE Thema like '%" . $_GET['search'] . "%'";
+    $sql = "SELECT * FROM imse_db.Kochkurse WHERE KursNr='" . $_GET['search'] . "'";
 } else {
     $sql = "SELECT * FROM imse_db.Kochkurse";
 }
@@ -435,7 +437,7 @@ $stmt->execute();
             echo "<td>" . $row['KursNr'] . "</td>";
             echo "<td>" . $row['Preis'] . "</td>";
             echo "<td>" . $row['Thema']. "</td>";
-            echo "<td>" . $row['SVNummer']. "</td>";
+            echo "<td><a href='manager.php?search=" . $row['SVNummer'] . "'>" . $row['SVNummer'] . "</a></td>";
             echo "</tr>";
         }
         ?>

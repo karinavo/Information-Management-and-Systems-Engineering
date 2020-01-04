@@ -40,14 +40,8 @@ services:
       dockerfile: Filler.dockerfile
     depends_on:
       - mariadb
-#    entrypoint: ["./wait-for-it/wait-for-it.sh","-c","'./wait-for-it/wait-for-it.sh mariadb:3306'"]
-#    command: bash -c "./wait-for-it/wait-for-it.sh --timeout=0 mariadb:3306"
-#    deploy:
-#      restart_policy:
-#        condition: on-failure
-    volumes:
-      - ./mysql/DATAGENERATOR/src:/mysql/DATAGENERATOR/src
-      - ./wait-for-it:/wait-for-it
+#    volumes:
+#      - ./mysql/DATAGENERATOR/src:/mysql/DATAGENERATOR/src
     container_name: tables_filler
 
   

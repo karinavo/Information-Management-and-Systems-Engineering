@@ -261,6 +261,8 @@ catch(PDOException $e)
             <a href="fuehrt.php">Fuehrung</a>
             <a href="kursteilnehmer.php">Kursteilnehmer</a>
             <a href="mitarbeiter.php">Mitarbeiter</a>
+            <a href="manager.php">Manager</a>
+
         </div>
     </div>
 </div>
@@ -351,7 +353,7 @@ catch(PDOException $e)
     <?php
     // check if search view of list view
     if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM imse_db.Kursteilnehmer WHERE Nachname like '%" . $_GET['search'] . "%'";
+        $sql = "SELECT * FROM imse_db.Kursteilnehmer WHERE Nachname='" . $_GET['search'] . "'";
     } else {
         $sql = "SELECT * FROM imse_db.Kursteilnehmer";
     }
@@ -385,7 +387,8 @@ catch(PDOException $e)
             echo "<td>" . $row['EMail']. "</td>";
             echo "<td>" . $row['TelefonNr']. "</td>";
             echo "<td>" . $row['AbteilungsNr']. "</td>";
-            echo "<td>" . $row['KursNr'] . "</td>";
+            echo "<td><a href='kochkurse.php?search=" . $row['KursNr'] . "'>" . $row['KursNr'] . "</a></td>";
+
             echo "</tr>";
         }
         ?>

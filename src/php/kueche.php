@@ -250,6 +250,8 @@ catch(PDOException $e)
             <a href="fuehrt.php">Fuehrung</a>
             <a href="kursteilnehmer.php">Kursteilnehmer</a>
             <a href="mitarbeiter.php">Mitarbeiter</a>
+            <a href="manager.php">Manager</a>
+
         </div>
     </div>
 </div>
@@ -333,7 +335,7 @@ catch(PDOException $e)
     try{
         $search = $_GET['search'];
         if (isset($search)) {
-            $sql = "SELECT * FROM imse_db.Kueche WHERE Nummer like '%" . $search ."%'";
+            $sql = "SELECT * FROM imse_db.Kueche WHERE Nummer='" . $search ."'";
             // execute sql statement
             $stmt = $conn->query($sql);
             $stmt->execute();

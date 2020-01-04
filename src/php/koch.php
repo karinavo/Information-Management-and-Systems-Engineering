@@ -255,6 +255,8 @@ catch(PDOException $e)
             <a href="fuehrt.php">Fuehrung</a>
             <a href="kursteilnehmer.php">Kursteilnehmer</a>
             <a href="mitarbeiter.php">Mitarbeiter</a>
+            <a href="manager.php">Manager</a>
+
         </div>
     </div>
 </div>
@@ -321,7 +323,7 @@ catch(PDOException $e)
 
         <a href="koch.php">Alle Koeche</a>
         <br/>
-        <label for="focusedInput">Suche nach MId des Kochs: </label>
+        <label for="focusedInput">Suche nach KochID des Kochs: </label>
         <br/>
         <input class="form-control" id='search' type="text" name='search' placeholder="Search.." value='<?php if (isset($_GET['search']))
             echo $_GET['search'];?>'/>
@@ -335,7 +337,7 @@ catch(PDOException $e)
     <?php
     // check if search view of list view
     if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM imse_db.Koch WHERE MId like '%" . $_GET['search'] . "%'";
+        $sql = "SELECT * FROM imse_db.Koch WHERE KochID='" . $_GET['search'] . "'";
     } else {
         $sql = "SELECT * FROM imse_db.Koch";
     }
@@ -363,7 +365,7 @@ catch(PDOException $e)
             echo "<td>" . $row['KochID'] . "</td>";
             echo "<td>" . $row['Rang'] . "</td>";
             echo "<td>" . $row['Ausbildung']. "</td>";
-            echo "<td>" . $row['MId']. "</td>";
+            echo "<td><a href='mitarbeiter.php?search=" . $row['MId'] . "'>" . $row['MId'] . "</a></td>";
             echo "</tr>";
         }
         ?>

@@ -253,6 +253,8 @@ try {
             <a href="fuehrt.php">Fuehrung</a>
             <a href="kursteilnehmer.php">Kursteilnehmer</a>
             <a href="mitarbeiter.php">Mitarbeiter</a>
+            <a href="manager.php">Manager</a>
+
         </div>
     </div>
 </div>
@@ -279,7 +281,9 @@ try {
                         <input id='ZeitBlock' name='ZeitBlock' type='text' size='10' value='<?php echo $_GET['ZeitBlock']; ?>' />
                     </td>
                     <td>
-                        <input id="Datum" name="Datum" type="text" size="10" value="<?php   echo $_GET['Datum'];?>"/>
+                        <form action="/action_page.php">
+                            <input id="Datum" name="Datum" type="date" size="10" value="<?php echo $_GET['Datum'];?>"/>
+                        </form>
                     </td>
                     <td>
                         <input id=" KursNr" name="KursNr" type="number" size="10" value="<?php  echo $_GET['KursNr'];?>"/>
@@ -303,28 +307,23 @@ try {
     <!--In SQL for Insert-->
     <?php
     //HANDLE insert
-    if(isset($_GET['ZeitBlock'])&&isset($_GET['Datum'])&&isset($_GET['KursNr'])) {
+    if(isset($_GET['ZeitBlock'])&&isset($_GET['Datum'])&&isset($_GET['KursNr'])&&isset($_GET['Nummer'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO imse_db.Findet_statt VALUES('". $_GET['ZeitBlock'] ."',TO_DATE('" . $_GET['Datum'] . "','YYYY/MM/DD')," . $_GET['KursNr'] . "," . $_GET['Nummer'] . "," . $_GET['AbteilungsNr'] . ")";
+        $sql="INSERT INTO imse_db.Findet_statt VALUES('". $_GET['ZeitBlock'] ."',STR_TO_DATE('" . $_GET['Datum'] . "','%Y-%m-%d')," . $_GET['KursNr'] . "," . $_GET['Nummer'] . "," . $_GET['AbteilungsNr'] . ")";
         //Parse and execute statement
         $insert = $conn->prepare($sql);
-        $insert->execute();
-        $conn_err=$conn->errorInfo();
-        $insert_err=$insert->errorInfo();
-        if(!$conn_err & !$insert_err){
-            print("Successfully inserted");
-            print("<br>");
+        try {
+            $conn->exec($sql);
+            echo "Successfully inserted!";
         }
-        //Print potential errors and warnings
-        else{
-            print($conn_err);
-            print_r($insert_err);
-            print("<br>");
+        catch(PDOException $e)
+        {
+            echo $sql . "<br>" . $e->getMessage();
         }
-        //oci_free_statement($insert);
+
     }
     ?>  <!--Stored Procedure-->
-    <div>
+    <!--div>
         <form id="searchstr" action="findetstatt.php" method="get">
             Suche Strasse von Koschschule(AbteilungsNr):
             <input id="AbteilungsNr" name="AbteilungsNr" type="text" size="10"
@@ -332,11 +331,11 @@ try {
             <input class ="buttoninsert" id='submit' type='submit' value='Aufruf Stored Procedure!' />
             <br>
         </form>
-    </div>
+    </div-->
     <!-- PHP-Code mit dem Aufruf der Stored Procedure-->
     <?php
     //Handle Stored Procedure
-    if (isset($_GET['AbteilungsNr']))
+    /**if (isset($_GET['AbteilungsNr']))
     {
         //Call Stored Procedure
         $abt = $_GET['AbteilungsNr'];
@@ -357,7 +356,7 @@ try {
             print($conn_err);
             print_r($proc_err);
         }
-    }
+    }***/
     // clean up connections
     //oci_free_statement($sproc);
 
@@ -381,7 +380,7 @@ try {
     <?php
     // check if search view of list view
     if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM imse_db.Findet_statt WHERE Datum like '%" . $_GET['search'] . "%'";
+        $sql = "SELECT * FROM imse_db.Findet_statt WHERE Datum='" . $_GET['search'] . "'";
     } else {
         $sql = "SELECT * FROM imse_db.Findet_statt";
     }
@@ -409,8 +408,8 @@ try {
             echo "<tr>";
             echo "<td>" . $row['ZeitBlock'] . "</td>";
             echo "<td>" . $row['Datum'] . "</td>";
-            echo "<td>" . $row['KursNr']. "</td>";
-            echo "<td>" . $row['Nummer']. "</td>";
+            echo "<td><a href='kochkurse.php?search=" . $row['KursNr'] . "'>" . $row['KursNr'] . "</a></td>";
+            echo "<td><a href='kueche.php?search=" . $row['Nummer'] . "'>" . $row['Nummer'] . "</a></td>";
             echo "<td>" . $row['AbteilungsNr']. "</td>";
             echo "</tr>";
         }

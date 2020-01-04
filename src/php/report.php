@@ -7,20 +7,32 @@ header('Expires: 0');
 function gen_report_csv(PDO $conn) {
                 
     $result = $conn->query(
-            "SELECT Kochkurse.KursNr, Thema, Datum, ZeitBlock, COUNT(Kursteilnehmer.KursNr) AS Teilnehmerzahl
+      /***      "SELECT Kochkurse.KursNr, Thema, Datum, ZeitBlock, COUNT(Kursteilnehmer.KursNr) AS Teilnehmerzahl
             FROM
                 imse_db.Kochkurse
                     LEFT JOIN
                 imse_db.Kursteilnehmer
                     ON Kochkurse.KursNr = Kursteilnehmer.KursNr
-                    INNER JOIN 
+                     INNER JOIN
                 imse_db.Findet_statt
                     ON Kursteilnehmer.KursNr = Findet_statt.KursNr
                     GROUP BY Kochkurse.KursNr
                     ORDER BY Teilnehmerzahl DESC;"
             ); 
-
-        if (!$result) die('Couldn\'t fetch records'); 
+***/
+        "SELECT Kochkurse.KursNr,  Thema, Datum, ZeitBlock,(SELECT COUNT(*) FROM imse_db.Kursteilnehmer WHERE imse_db.Findet_statt.KursNr=imse_db.Kursteilnehmer.KursNr) AS Teilnehmerzahl
+            FROM
+                imse_db.Kochkurse
+                    LEFT JOIN
+                imse_db.Kursteilnehmer
+                ON Kochkurse.KursNr = Kursteilnehmer.KursNr
+                    INNER JOIN 
+                imse_db.Findet_statt
+                    ON Kursteilnehmer.KursNr=Findet_statt.KursNr
+                    GROUP BY Kochkurse.KursNr
+                    ORDER BY Teilnehmerzahl DESC;"
+            );
+    if (!$result) die('Couldn\'t fetch records');
         $num_fields = $result->columnCount(); 
         $headers = array(); 
         

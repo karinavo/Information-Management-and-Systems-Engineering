@@ -417,8 +417,6 @@ $stmt->execute();
     </div>
     
     <?php
-    //oci_free_statement($stmt);
-    //oci_close($conn);
     $stmt = null;
     $conn = null;
     ?>

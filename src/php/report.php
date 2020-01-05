@@ -29,7 +29,7 @@ function gen_report_csv(PDO $conn) {
         {
             $col = $result->getColumnMeta($i);
             $headers[] = $col['name'];
-            //print("Headers:\n" . $headers);
+
         }
 
         //getting the data
@@ -39,10 +39,7 @@ function gen_report_csv(PDO $conn) {
             fputcsv($fp, $headers);
 
             while ($row = $result->fetch(PDO::FETCH_NUM)) {
-                //printf("Row " . array_values($row));
-                //print("\n");
-                //echo 'console.log(' . json_encode($row, JSON_HEX_TAG) . ');';
-                //print("\n");
+ 
                 fputcsv($fp, array_values($row));
             }
         die;

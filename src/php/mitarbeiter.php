@@ -429,9 +429,6 @@ catch(PDOException $e)
 
     </div>
     <?php
-    //oci_free_statement($stmt);
-    //oci_close($conn);
-    ?>  <?php
     $stmt = null;
     $conn = null;
     ?>

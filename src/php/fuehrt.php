@@ -365,7 +365,7 @@ catch(PDOException $e)
     <?php
     $stmt = null;
     $conn = null;
-        ?>
+    ?>
 
 </div>
 

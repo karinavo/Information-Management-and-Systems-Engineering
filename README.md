@@ -25,6 +25,11 @@ and deployment
     - Has been achieved by using a self-signed certificate, which is being copied over to the imse-app container via dockerfile
     - Open the website on <https:\\localhost:433>
     - Since it is a self-signed certificate there will be a warning screen displayed, it can be bypassed to access the website
+    - it is also possible to add the certificate manually to let it be displayed as secure
+    - in Firefox this is done in certificate settings:
+    		- Firefox `preferences` -> `privacy & security` -> `certificates` -> `view certificates` -> import -> select the certificate in the `web` folder (`server.crt`) -> select `University of Vienna: localhost` in the list -> `edit trust` -> check `this certificate can identify websites` -> `ok` -> refresh the page
+    - in other browsers you have to look up how to do this
+    - or you can add the certificate globally to the system to be trusted
 
 ### 2.2 Logical/Physical database design
 - we are using a MySQL database (mariadb), for further Information look in the */docs* directory

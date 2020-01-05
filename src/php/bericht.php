@@ -1,5 +1,5 @@
+<!DOCTYPE html>
 <?php
-
 $servername = "mariadb";
 $username = "root";
 $password = "rootpsw";
@@ -14,15 +14,12 @@ try {
 
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e)
+}
+catch(PDOException $e)
 {
     echo "Connection failed: " . $e->getMessage();
 }
-
-
 ?>
-
-<!DOCTYPE html>
 
 <html>
 <title>Die Kochschule</title>
@@ -270,6 +267,27 @@ try {
         }
     </script>
 
+
+
+
+
+
+
+
+    <?php
+    $query_zb = "SELECT DISTINCT ZeitBlock FROM imse_db.Zeit;";
+    $query_thema ="SELECT DISTINCT Thema FROM imse_db.Kochkurse;";
+    // execute sql for zeitbloc statement
+    $stmt_zb = $conn->prepare($query_zb);
+    $stmt_zb->execute();
+    // execute sql for thema statement
+    $stmt_thema= $conn->prepare($query_thema);
+    $stmt_thema->execute();
+    ?>
+
+
+
+
     <!-- Button for reporting use case -->
     <div>
         <br/>
@@ -293,7 +311,7 @@ try {
 
                     </td>
                     <td>
-                        <INPUT TYPE="tetx" name="Thema" VALUE="<?php $_GET['Thema'];?>">
+                        <INPUT TYPE="text" name="Thema" VALUE="<?php $_GET['Thema'];?>">
                     </td>
                     <td>
                         <INPUT TYPE="text" name="ZeitBlock" VALUE="<?php $_GET['ZeitBlock'];?>">

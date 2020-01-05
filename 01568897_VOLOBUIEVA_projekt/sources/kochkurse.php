@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <?php
-$user = 'a01568897';
-$pass = 'karina39';
-$database = 'lab';
-
-// establish database connection
-$conn = oci_connect($user, $pass, $database);
-if (!$conn) exit;
+$servername = "mariadb";
+$username = "root";
+$password = "rootpsw";
+$dbname = "imse_db";
+try {
+    $conn = new PDO("mysql:host=$servername;$dbname", $username, $password);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully";
+    }
+catch(PDOException $e)
+    {
+    echo "Connection failed: " . $e->getMessage();
+    }
 ?>
 
 <html>
@@ -52,7 +59,7 @@ if (!$conn) exit;
             cursor: pointer;
             outline: none;
         };
-        }
+        
         .sidenav a:hover,.dropdown-btn:hover{
             color: bisque;
         }
@@ -236,12 +243,12 @@ if (!$conn) exit;
     //HANDLE insert
     if(isset($_GET['Thema'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
+        $sql="INSERT INTO imse_db.Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
         //Parse and execute statement
-        $insert = oci_parse($conn, $sql);
-        oci_execute($insert);
-        $conn_err=oci_error($conn);
-        $insert_err=oci_error($insert);
+        $insert = $conn->prepare($sql);
+        $insert->execute();
+        $conn_err=$conn->errorInfo();
+        $insert_err=$insert->errorInfo();
         if(!$conn_err & !$insert_err){
             print("Successfully inserted");
             print("<br>");
@@ -252,7 +259,7 @@ if (!$conn) exit;
             print_r($insert_err);
             print("<br>");
         }
-        oci_free_statement($insert);
+        //oci_free_statement($insert);
     }
     ?>
     <!--Stored Procedure-->
@@ -287,23 +294,23 @@ if (!$conn) exit;
         $email='';
         $tlfnr='';
 
-        $sproc = oci_parse($conn, "begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
+        $sproc = $conn->prepare("begin kontakten(:p1, :p2,:p3,:p4,:p5,:p6); end;");
         //Bind variables
 
-        oci_bind_by_name($sproc, ':p1', $kursnr);
-        oci_bind_by_name($sproc, ':p2', $svnr);
-        oci_bind_by_name($sproc, ':p3', $nachname,30);
-        oci_bind_by_name($sproc, ':p4', $vorname,30);
-        oci_bind_by_name($sproc, ':p5', $email,80);
-        oci_bind_by_name($sproc, ':p6', $tlfnr,14);
+        $sproc->bindParam(':p1', $kursnr);
+        $sproc->bindParam(':p2', $svnr);
+        $sproc->bindParam(':p3', $nachname,30);
+        $sproc->bindParam(':p4', $vorname,30);
+        $sproc->bindParam(':p5', $email,80);
+        $sproc->bindParam(':p6', $tlfnr,14);
 
 
-        oci_execute($sproc);
+        $sproc->execute();
 
 
 
-        $conn_err=oci_error($conn);
-        $proc_err=oci_error($sproc);
+        $conn_err=$conn->errorInfo();
+        $proc_err=$sproc->errorInfo();
         //If there have been no Connection or Database errors, print department
         if(!$conn_err && !$proc_err){
             echo("<br><b>". "Der Koch " . $nachname . " " . $vorname ." fuehrt Kurs " . $kursnr. "</b><br>" );  // prints OUT parameter of stored procedure
@@ -317,7 +324,7 @@ if (!$conn) exit;
     }
 
     // clean up connections
-    oci_free_statement($sproc);
+    //oci_free_statement($sproc);
    ;
 
     ?>
@@ -339,13 +346,13 @@ if (!$conn) exit;
 <?php
 // check if search view of list view
 if (isset($_GET['search'])) {
-    $sql = "SELECT * FROM Kochkurse WHERE Thema like '%" . $_GET['search'] . "%'";
+    $sql = "SELECT * FROM imse_db.Kochkurse WHERE Thema like '%" . $_GET['search'] . "%'";
 } else {
-    $sql = "SELECT * FROM Kochkurse";
+    $sql = "SELECT * FROM imse_db.Kochkurse";
 }
 // execute sql statement
-$stmt = oci_parse($conn, $sql);
-oci_execute($stmt);
+$stmt = $conn->prepare($sql);
+$stmt->execute();
 ?>
 <!--Ausgabe-->
 <table>
@@ -362,7 +369,7 @@ oci_execute($stmt);
     <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = oci_fetch_assoc($stmt)) {
+        while ($row = $stmt->fetch()) {
             echo "<tr>";
             echo "<td>" . $row['KURSNR'] . "</td>";
             echo "<td>" . $row['PREIS'] . "</td>";
@@ -376,12 +383,12 @@ oci_execute($stmt);
     <!--ANZAHL-->
     <div>
 
-            Insgesamt <?php echo oci_num_rows($stmt); ?> Kochkurs(e) gefunden!
+            Insgesamt <?php echo $stmt->rowCount(); ?> Kochkurs(e) gefunden!
 
     </div>
     <?php
-        oci_free_statement($stmt);
-        oci_close($conn);
+        //oci_free_statement($stmt);
+        //oci_close($conn);
         ?>
 
 </div>

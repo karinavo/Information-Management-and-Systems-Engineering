@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <?php
-$user = 'a01568897';
-$pass = 'karina39';
-$database = 'lab';
-
-// establish database connection
-$conn = oci_connect($user, $pass, $database);
-if (!$conn) exit;
+$servername = "mariadb";
+$username = "root";
+$password = "rootpsw";
+$dbname = "imse_db";
+try {
+    $conn = new PDO("mysql:host=$servername;$dbname", $username, $password);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully";
+    }
+catch(PDOException $e)
+    {
+    echo "Connection failed: " . $e->getMessage();
+    }
 ?>
 
 <html>
@@ -233,12 +240,12 @@ if (!$conn) exit;
     //HANDLE insert
     if(isset($_GET['MId'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
+        $sql="INSERT INTO imse_db.Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
         //Parse and execute statement
-        $insert = oci_parse($conn, $sql);
-        oci_execute($insert);
-        $conn_err=oci_error($conn);
-        $insert_err=oci_error($insert);
+        $insert = $conn->prepare($sql);
+        $insert->execute();
+        $conn_err=$conn->errorInfo();
+        $insert_err=$insert->errorInfo();
         if(!$conn_err & !$insert_err){
             print("Successfully inserted");
             print("<br>");
@@ -249,7 +256,7 @@ if (!$conn) exit;
             print_r($insert_err);
             print("<br>");
         }
-        oci_free_statement($insert);
+        //oci_free_statement($insert);
     }
     ?>
     <!--Suche-->
@@ -271,13 +278,13 @@ if (!$conn) exit;
     <?php
     // check if search view of list view
     if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM Koch WHERE MId like '%" . $_GET['search'] . "%'";
+        $sql = "SELECT * FROM imse_db.Koch WHERE MId like '%" . $_GET['search'] . "%'";
     } else {
-        $sql = "SELECT * FROM Koch";
+        $sql = "SELECT * FROM imse_db.Koch";
     }
     // execute sql statement
-    $stmt = oci_parse($conn, $sql);
-    oci_execute($stmt);
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
     ?>
     <!--Ausgabe-->
     <table>
@@ -294,7 +301,7 @@ if (!$conn) exit;
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = oci_fetch_assoc($stmt)) {
+        while ($row = $stmt->fetch()) {
             echo "<tr>";
             echo "<td>" . $row['KOCHID'] . "</td>";
             echo "<td>" . $row['RANG'] . "</td>";
@@ -308,12 +315,12 @@ if (!$conn) exit;
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo oci_num_rows($stmt); ?> Koch(e) gefunden!
+        Insgesamt <?php echo $stmt->rowCount(); ?> Koch(e) gefunden!
 
     </div>
     <?php
-        oci_free_statement($stmt);
-        oci_close($conn);
+        //oci_free_statement($stmt);
+        //oci_close($conn);
     ?>
 </div>
 <!--menu of school-->

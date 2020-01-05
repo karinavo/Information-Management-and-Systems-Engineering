@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+#       Webserver
+  imse-app:
+    image: kwindsor/php7-apache-ubuntu
+    restart: unless-stopped
+    build:
+      context: ./web/
+      dockerfile: Dockerfile
+    working_dir: /var/www
+    ports:
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - ./src/php:/var/www/html:rw
+    container_name: imse-app
+#      Database
+  mariadb:
+    image: mariadb
+    restart: always
+    stdin_open: true
+    tty: true
+    environment: 
+      - MYSQL_DATABASE=imse_db
+      - MYSQL_ROOT_PASSWORD=rootpsw
+      - MYSQL_USER=imse_user
+      - MYSQL_PASSWORD=userpsw
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+    container_name: mariadb_database
+#   Filler
+  filler:
+    image: tables_filler
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Filler.dockerfile
+    depends_on:
+      - mariadb
+#    volumes:
+#      - ./mysql/DATAGENERATOR/src:/mysql/DATAGENERATOR/src
+    container_name: tables_filler
+
+  

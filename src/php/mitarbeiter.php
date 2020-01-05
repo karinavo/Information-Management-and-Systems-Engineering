@@ -269,7 +269,7 @@ catch(PDOException $e)
     <!--Insert Formular-->
     <div id="insertformular">
         <form id='insertform' action='mitarbeiter.php' method='get'>
-            Neuer Manager einfuegen:
+            Neuer Mitarbeiter einfuegen:
             <table >
                 <thead>
                 <tr>

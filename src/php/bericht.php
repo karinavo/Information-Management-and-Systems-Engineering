@@ -311,10 +311,26 @@ catch(PDOException $e)
 
                     </td>
                     <td>
-                        <INPUT TYPE="text" name="Thema" VALUE="<?php $_GET['Thema'];?>">
+                        <INPUT TYPE="text" name="Thema" list="themas">
+                        <datalist id="themas">
+                        <?php
+                            while ($row = $stmt_thema->fetch())
+                        {
+                            echo '<option value=" '.$row['Thema'].' " </option>';
+                        }
+                        ?>
+                        </datalist>
                     </td>
                     <td>
-                        <INPUT TYPE="text" name="ZeitBlock" VALUE="<?php $_GET['ZeitBlock'];?>">
+                        <INPUT TYPE="text" name="ZeitBlock" list="zeitblocks">
+                        <datalist id="zeitblocks">
+                        <?php
+                            while ($row = $stmt_zb->fetch())
+                            {
+                            echo '<option value=" '.$row['ZeitBlock'].' " </option>';
+                        }
+                        ?>
+                        </datalist>
                     </td>
                 </tr>
                 </tbody>

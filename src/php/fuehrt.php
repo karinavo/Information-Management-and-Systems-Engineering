@@ -295,20 +295,14 @@ catch(PDOException $e)
         $sql="INSERT INTO imse_db.Fuehrt VALUES(". $_GET['KochID'] . "," . $_GET['KursNr'] . ")";
         //Parse and execute statement
         $insert = $conn->prepare($sql);
-        $insert->execute();
-        $conn_err=$conn->errorInfo();
-        $insert_err=$insert->errorInfo();
-        if(!$conn_err & !$insert_err){
-            print("Successfully inserted");
-            print("<br>");
+        try {
+            $conn->exec($sql);
+            echo "Successfully inserted!";
         }
-        //Print potential errors and warnings
-        else{
-            print($conn_err);
-            print_r($insert_err);
-            print("<br>");
+        catch(PDOException $e)
+        {
+            echo $sql . "<br>" . $e->getMessage();
         }
-        //oci_free_statement($insert);
     }
     ?>
     <!--Suche-->

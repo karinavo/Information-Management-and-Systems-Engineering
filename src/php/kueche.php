@@ -303,7 +303,7 @@ catch(PDOException $e)
             //Parse and execute statement
             $stmt = $conn->prepare($sql);
             $stmt->execute();
-            echo "Successfully inserted";
+            echo "Successfully inserted!";
         } catch(PDOException $e){
             //Print potential errors and warnings
             echo "Error: " . $e->getMessage();

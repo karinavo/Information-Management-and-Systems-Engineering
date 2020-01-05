@@ -330,7 +330,9 @@ try {
         <a href="kochkurse.php">Alle Kochkurse</a>
         <br/>
         <br/>
+        <p>
         <label for="focusedInput">Suche nach KursNr des Kochkurses: </label>
+        </p>
         <input class="form-control" id='search' type="text" name='search' placeholder="Search.." value='<?php if (isset($_GET['search']))
                                                                                      echo $_GET['search'];?>'/>
 
@@ -340,10 +342,9 @@ try {
     <!--Suche2-->
     <form id='searchform2' class="example" action='kochkurse.php' method='get'>
 
-
-        <br/>
-        <br/>
+        <p>
         <label for="focusedInput">Suche nach Thema des Kochkurses: </label>
+        </p>
         <input class="form-control" id='search1' type="text" name='search1' placeholder="Search.." value='<?php if (isset($_GET['search1']))
             echo $_GET['search1'];?>'/>
 

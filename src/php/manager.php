@@ -266,70 +266,7 @@ catch(PDOException $e)
 </div>
 
 <div class="main">
-    <!--Insert Formular-->
-    <div id="insertformular">
-        <form id='insertform' action='manager.php' method='get'>
-            Neuer Manager einfuegen:
-            <table >
-                <thead>
-                <tr>
-                    <h1>
-
-                        <th>SVNummer</th>
-                        <th>EMail</th>
-                        <th>Telefonummer</th>
-                        <th>MId</th>
-
-                    </h1>
-
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <input class="removeLater" id='SVNummer' name='SVNummer' type='text' size='10' value='<?php echo $_GET['SVNummer']; ?>' />
-                    </td>
-                    <td>
-                        <input id="EMail" name="EMail" type="text" size="10" value="<?php   echo $_GET['EMail'];?>"/>
-                    </td>
-                    <td>
-                        <input id="Telefonummer" name="Telefonummer" type="text" size="10"  value="<?php echo $_GET['Telefonummer'];?>"/>
-                    </td>
-
-                    <td>
-                        <input id="MId" name="MId" type="number" size="10" value="<?php  echo $_GET['MId'];?>"/>
-                    </td>
-
-                </tr>
-                </tbody>
-            </table>
-            <input class="buttoninsert" id='submit1' type='submit' value='Insert'"/>
-            <input class="buttoninsert" type="button" onclick="resetForm()" value="Clear fields">
-        </form>
-    </div>
-
-    <!--In SQL for Insert-->
-    <?php
-    //HANDLE insert
-    if(isset($_GET['SVNummer'])) {
-        //Prepare insert statementd
-        $sql="INSERT INTO imse_db.Manager(SVNummer,EMail,Telefonummer,MId) VALUES('". $_GET['SVNummer'] ."','". $_GET['EMail']."','". $_GET['Telefonummer']."',".  $_GET['MId'].")";
-
-        //Parse and execute statement
-        $insert = $conn->prepare($sql);
-        try {
-            $conn->exec($sql);
-            echo "Successfully inserted!";
-        }
-        catch(PDOException $e)
-        {
-            echo $sql . "<br>" . $e->getMessage();
-        }
-
-
-    }
-    ?>
-
+  
     <!--Suche-->
     <form id='searchform' class="example" action='manager.php' method='get'>
         <br/>

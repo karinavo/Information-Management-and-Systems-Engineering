@@ -159,7 +159,7 @@ try {
         }
     </style>
     <div class="a">
-        <p class="oblique" > Die Kochkurse</p>
+        <p class="oblique" > Der Bericht</p>
     </div>
 
 
@@ -309,7 +309,7 @@ try {
         </form>
     </div>
     <?php
-  
+
     $stmt = null;
     $conn = null;
     ?>

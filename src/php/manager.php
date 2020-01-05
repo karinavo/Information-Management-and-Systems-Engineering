@@ -266,7 +266,7 @@ catch(PDOException $e)
 </div>
 
 <div class="main">
-  
+
     <!--Suche-->
     <form id='searchform' class="example" action='manager.php' method='get'>
         <br/>

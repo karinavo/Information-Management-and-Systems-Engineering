@@ -254,6 +254,7 @@ try {
             <a href="kursteilnehmer.php">Kursteilnehmer</a>
             <a href="mitarbeiter.php">Mitarbeiter</a>
             <a href="manager.php">Manager</a>
+            <a href="bericht.php">Bericht</a>
 
         </div>
     </div>
@@ -386,7 +387,10 @@ try {
         Insgesamt <?php echo $stmt->rowCount(); ?> Termin(e) gefunden!
 
     </div>
-    <?php  //oci_free_statement($stmt); //oci_close($conn); ?>
+    <?php
+    $stmt = null;
+    $conn = null;
+    ?>
 </div>
 
 

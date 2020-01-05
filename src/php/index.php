@@ -265,6 +265,7 @@
         <a href="kursteilnehmer.php">Kursteilnehmer</a>
         <a href="mitarbeiter.php">Mitarbeiter</a>
          <a href="manager.php">Manager</a>
+         <a href="bericht.php">Bericht</a>
 
      </div>
     </div>

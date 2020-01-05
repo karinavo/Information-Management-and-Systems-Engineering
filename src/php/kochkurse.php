@@ -254,19 +254,13 @@ try {
             <a href="kursteilnehmer.php">Kursteilnehmer</a>
             <a href="mitarbeiter.php">Mitarbeiter</a>
             <a href="manager.php">Manager</a>
+            <a href="bericht.php">Bericht</a>
 
         </div>
     </div>
 </div>
 <div class="main">
-    <!-- Button for reporting use case -->
-    <div>
-        <br/>
-        <form action="report.php/?reportsubmit=true" method="post">
-            <input class="buttoninsert" id='reportsubmit' name="reportsubmit" type='submit' value='Generiere Bericht'  />
-        </form>
-        <br/>
-    </div>
+
     
     <!--Insert Formular-->
     <div>

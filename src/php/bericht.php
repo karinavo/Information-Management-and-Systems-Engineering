@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <?php
+
 $servername = "mariadb";
 $username = "root";
 $password = "rootpsw";
@@ -14,13 +14,15 @@ try {
 
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
+} catch(PDOException $e)
 {
     echo "Connection failed: " . $e->getMessage();
 }
+
+
 ?>
 
+<!DOCTYPE html>
 
 <html>
 <title>Die Kochschule</title>
@@ -157,7 +159,7 @@ catch(PDOException $e)
         }
     </style>
     <div class="a">
-        <p class="oblique" > Die Manager</p>
+        <p class="oblique" > Die Kochkurse</p>
     </div>
 
 
@@ -233,12 +235,6 @@ catch(PDOException $e)
         }
     </style>
 
-    <script>
-        function resetForm() {
-            document.getElementById("insertform").reset();
-        }
-    </script>
-
 </head>
 
 
@@ -264,139 +260,62 @@ catch(PDOException $e)
         </div>
     </div>
 </div>
-
 <div class="main">
-    <!--Insert Formular-->
-    <div id="insertformular">
-        <form id='insertform' action='manager.php' method='get'>
-            Neuer Manager einfuegen:
-            <table >
+
+    <!--Report Formular-->
+
+    <script>
+        function resetForm() {
+            document.getElementById("berichtform").reset();
+        }
+    </script>
+
+    <!-- Button for reporting use case -->
+    <div>
+        <br/>
+        <form id="berichtform" action="report.php/?reportsubmit=true" method="post">
+            Wählen Sie bitte aus:
+            <table>
                 <thead>
                 <tr>
-                    <h1>
 
-                        <th>SVNummer</th>
-                        <th>EMail</th>
-                        <th>Telefonummer</th>
-                        <th>MId</th>
-
-                    </h1>
+                    <th>Datum</th>
+                    <th>Thema</th>
+                    <th>ZeitBlock</th>
 
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>
-                        <input class="removeLater" id='SVNummer' name='SVNummer' type='text' size='10' value='<?php echo $_GET['SVNummer']; ?>' />
-                    </td>
-                    <td>
-                        <input id="EMail" name="EMail" type="text" size="10" value="<?php   echo $_GET['EMail'];?>"/>
-                    </td>
-                    <td>
-                        <input id="Telefonummer" name="Telefonummer" type="text" size="10"  value="<?php echo $_GET['Telefonummer'];?>"/>
-                    </td>
 
                     <td>
-                        <input id="MId" name="MId" type="number" size="10" value="<?php  echo $_GET['MId'];?>"/>
-                    </td>
+                        <INPUT TYPE="date" name="Datum" VALUE="<?php $_GET['Datum'];?>"">
 
+                    </td>
+                    <td>
+                        <INPUT TYPE="tetx" name="Thema" VALUE="<?php $_GET['Thema'];?>">
+                    </td>
+                    <td>
+                        <INPUT TYPE="text" name="ZeitBlock" VALUE="<?php $_GET['ZeitBlock'];?>">
+                    </td>
                 </tr>
                 </tbody>
             </table>
-            <input class="buttoninsert" id='submit1' type='submit' value='Insert'"/>
+
+            <input type="submit" class="buttoninsert"  name="reportsubmit"  value='Generiere Bericht'  />
+
             <input class="buttoninsert" type="button" onclick="resetForm()" value="Clear fields">
+
         </form>
     </div>
-
-    <!--In SQL for Insert-->
     <?php
-    //HANDLE insert
-    if(isset($_GET['SVNummer'])) {
-        //Prepare insert statementd
-        $sql="INSERT INTO imse_db.Manager(SVNummer,EMail,Telefonummer,MId) VALUES('". $_GET['SVNummer'] ."','". $_GET['EMail']."','". $_GET['Telefonummer']."',".  $_GET['MId'].")";
-
-        //Parse and execute statement
-        $insert = $conn->prepare($sql);
-        try {
-            $conn->exec($sql);
-            echo "Successfully inserted!";
-        }
-        catch(PDOException $e)
-        {
-            echo $sql . "<br>" . $e->getMessage();
-        }
-
-
-    }
-    ?>
-
-    <!--Suche-->
-    <form id='searchform' class="example" action='manager.php' method='get'>
-        <br/>
-        <a href="manager.php">Alle Manager</a>
-        <br/>
-        <br/>
-        <label for="focusedInput">Suche nach SVNummer der Manager: </label>
-        <br/>
-        <input class="form-control" id='search' type="text" name='search' placeholder="Search.." value='<?php if (isset($_GET['search']))
-            echo $_GET['search'];?>'/>
-
-        <button type="submit"><i class="fa fa-search"></i></button>
-    </form>
-
-
-
-    <!--IN SQL-->
-    <?php
-    // check if search view of list view
-    if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM imse_db.Manager WHERE SVNummer='" . $_GET['search'] . "'";
-    } else {
-        $sql = "SELECT * FROM imse_db.Manager";
-    }
-    // execute sql statement
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    ?>
-    <!--Ausgabe-->
-    <table>
-        <thead>
-        <tr>
-            <h1>
-                <th>SVNummer</th>
-                <th>EMail</th>
-                <th>Telefonummer</th>
-                <th>MId</th>
-
-            </h1>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        // fetch rows of the executed sql query
-        while ($row = $stmt->fetch()) {
-            echo "<tr>";
-
-            echo "<td>" . $row['SVNummer'] . "</td>";
-            echo "<td>" . $row['EMail']. "</td>";
-            echo "<td>" . $row['Telefonummer']. "</td>";
-            echo "<td><a href='mitarbeiter.php?search=" . $row['MId'] . "'>" . $row['MId'] . "</a></td>";
-            echo "</tr>";
-        }
-        ?>
-        </tbody>
-    </table>
-    <!--ANZAHL-->
-    <div>
-
-        Insgesamt <?php echo $stmt->rowCount(); ?> Manager gefunden!
-
-    </div>
-    <?php
+  
     $stmt = null;
     $conn = null;
     ?>
+
 </div>
+
 
 
 </body>

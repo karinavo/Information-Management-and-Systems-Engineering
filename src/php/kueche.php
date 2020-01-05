@@ -251,6 +251,7 @@ catch(PDOException $e)
             <a href="kursteilnehmer.php">Kursteilnehmer</a>
             <a href="mitarbeiter.php">Mitarbeiter</a>
             <a href="manager.php">Manager</a>
+            <a href="bericht.php">Bericht</a>
 
         </div>
     </div>
@@ -383,6 +384,10 @@ catch(PDOException $e)
         Insgesamt <?php echo $stmt->rowCount(); ?> Küche(n) gefunden!
 
     </div>
+    <?php
+    $stmt = null;
+    $conn = null;
+    ?>
 </div>
 
 

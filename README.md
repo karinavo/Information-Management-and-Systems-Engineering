@@ -36,8 +36,8 @@ and deployment
 ### 2.4 Implementation of Web System (relational DBMS)
 - We implemented at least four use cases, since we are two people
     - Main use case : Organise cooking course [X]
-    - Use Case 2: []
-    - Use Case 3: []
+    - Use Case 2: Lead cooking course [x]
+    - Use Case 3: Sign up for cooking course [x]
     - Elaborate reporting use case: [X]
 
 ### Additional information
@@ -66,6 +66,10 @@ docker swarm init
 docker stack deploy -c docker-compose.yml imse # this will take a while too
 docker swarm leave
 ```
+
+### Problem: Tables did not get created (errors show up in the php instead of displaying a table with data) when using docker stack deploy
+
+1. run `docker-compose build` in the root directory
 
 ### Problem: Data did not get filled in when running docker-compose up
 

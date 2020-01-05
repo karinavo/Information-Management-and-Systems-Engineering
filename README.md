@@ -18,7 +18,7 @@ Read this for important remarks about our project
 - **IS container, composition, isolation**
 and deployment
     - We have 3 containers:
-        - imse-app containing the webserver; it enables the php files to be accessed over <http:\\localhost:8080>
+        - imse-app containing the webserver; it enables the php files to be accessed over <http:\\localhost:8080> and <https:\\localhost> for https
         - mariadb - the database on port 3306
         - filler - which is a java container. It fills the database
 - **Secure webserver (https)**

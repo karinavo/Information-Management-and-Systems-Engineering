@@ -249,7 +249,7 @@ try {
             <a href="kueche.php">Küche</a>
             <a href="kochkurse.php">Kochkurse</a>
             <a href="koch.php">Unsere Köche</a>
-            <a href="findetstatt.php">Termine</a>
+            <a href="termine.php">Termine</a>
             <a href="fuehrt.php">Fuehrung</a>
             <a href="kursteilnehmer.php">Kursteilnehmer</a>
             <a href="mitarbeiter.php">Mitarbeiter</a>
@@ -263,7 +263,7 @@ try {
 <div class="main">
     <!--Insert Formular-->
     <div>
-        <form id='insertform' action='findetstatt.php' method='get'>
+        <form id='insertform' action='termine.php' method='get'>
             Neuer Termin einfuegen:
             <table>
                 <thead>
@@ -325,10 +325,10 @@ try {
     }
     ?>
     <!--Suche-->
-    <form id='searchform' class="example" action='findetstatt.php' method='get'>
+    <form id='searchform' class="example" action='termine.php' method='get'>
         <br/>
 
-        <a href="findetstatt.php">Alle Termine</a>
+        <a href="termine.php">Alle Termine</a>
         <br/>
         <br/>
         <label for="focusedInput">Suche nach Datum des Termins: </label>

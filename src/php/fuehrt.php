@@ -251,7 +251,7 @@ catch(PDOException $e)
             <a href="kueche.php">Küche</a>
             <a href="kochkurse.php">Kochkurse</a>
             <a href="koch.php">Unsere Köche</a>
-            <a href="findetstatt.php">Termine</a>
+            <a href="termine.php">Termine</a>
             <a href="fuehrt.php">Fuehrung</a>
             <a href="kursteilnehmer.php">Kursteilnehmer</a>
             <a href="mitarbeiter.php">Mitarbeiter</a>

@@ -64,7 +64,7 @@ services:
     ports:
       - 9000:9000
 
-    #   Filler
+#   Filler
   migration:
 #    image: migration
     restart: on-failure
@@ -74,4 +74,4 @@ services:
     depends_on:
       - mongo
       - filler
-#    container_name: migration
+    container_name: migration

@@ -1,6 +1,10 @@
 # IMSE: Milestone 2
 
-https://docs.google.com/spreadsheets/d/1PpaXgwWq_DQRdT-fLpN3_n-p3j1A6-5r_w8TBwxpkiI/edit#gid=0
+Work protocol
+https://docs.google.com/spreadsheets/d/1PpaXgwWq_DQRdT-fLpN3_n-p3j1A6-5r_w8TBwxpkiI/edit?usp=sharing
+
+Beschreibungsprotokoll
+https://docs.google.com/document/d/1Y5EHAlNZFmE4NzByXeuivZG0mvN3e2SYq4aQyD3tEwU/edit?usp=sharing
 
 by 
 

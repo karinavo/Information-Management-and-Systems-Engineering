@@ -66,12 +66,12 @@ services:
 
     #   Filler
   migration:
-    image: migration
+#    image: migration
     restart: on-failure
     build:
       context: .
       dockerfile: Migration.dockerfile
     depends_on:
       - mongo
-    container_name: migration
-  
+      - filler
+#    container_name: migration

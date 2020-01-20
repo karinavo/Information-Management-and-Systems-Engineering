@@ -64,4 +64,14 @@ services:
     ports:
       - 9000:9000
 
+    #   Filler
+  migration:
+    image: migration
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Migration.dockerfile
+    depends_on:
+      - mongo
+    container_name: migration
   

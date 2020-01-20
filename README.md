@@ -1,5 +1,7 @@
 # IMSE: Milestone 2
 
+https://docs.google.com/spreadsheets/d/1PpaXgwWq_DQRdT-fLpN3_n-p3j1A6-5r_w8TBwxpkiI/edit#gid=0
+
 by 
 
 @author: Karina Volobuieva and 

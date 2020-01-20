@@ -63,18 +63,19 @@ docker-compose down
 ```
 
 
-With docker stack
+With docker stack 
 
 ```bash
 cd /imse
-docker swarm init 
+docker-compose build
+docker swarm init
 docker stack deploy -c docker-compose.yml imse # this will take a while too
 docker swarm leave
 ```
 
 ### Problem: Tables did not get created (errors show up in the php instead of displaying a table with data) when using docker stack deploy
 
-1. run `docker-compose build` in the root directory
+1. run `docker-compose build --no-cache` in the root directory
 
 ### Problem: Data did not get filled in when running docker-compose up
 

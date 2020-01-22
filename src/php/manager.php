@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <?php
+   ////////// MONGO DB CONNECTION ///////////
+   // connect to mongodb
+   $m = new MongoClient();
+
+   echo "Connection to database successfully";
+   // select a database
+   $db = $m->mydb;
+
+   echo "Database mydb selected";
+   ////////// MONGO DB CONNECTION ///////////
+?>
+<?php/*
 $servername = "mariadb";
 $username = "root";
 $password = "rootpsw";
@@ -18,7 +30,7 @@ try {
 catch(PDOException $e)
 {
     echo "Connection failed: " . $e->getMessage();
-}
+}*/
 ?>
 
 
@@ -266,7 +278,7 @@ catch(PDOException $e)
 </div>
 
 <div class="main">
-  
+
     <!--Suche-->
     <form id='searchform' class="example" action='manager.php' method='get'>
         <br/>
@@ -287,13 +299,16 @@ catch(PDOException $e)
     <?php
     // check if search view of list view
     if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM imse_db.Manager WHERE SVNummer='" . $_GET['search'] . "'";
+        //$sql = "SELECT * FROM imse_db.Manager WHERE SVNummer='" . $_GET['search'] . "'";
+        $query = array('SVNUmmer' => $_GET['search']);
+        $cursor = $db->Manager->find($query);
     } else {
-        $sql = "SELECT * FROM imse_db.Manager";
+        //$sql = "SELECT * FROM imse_db.Manager";
+        $cursor = $db->Manager->find();
     }
     // execute sql statement
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
+    //$stmt = $conn->prepare($sql);
+    //$stmt->execute();
     ?>
     <!--Ausgabe-->
     <table>
@@ -311,7 +326,7 @@ catch(PDOException $e)
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = $stmt->fetch()) {
+        foreach ($cursor as $row) {
             echo "<tr>";
 
             echo "<td>" . $row['SVNummer'] . "</td>";
@@ -326,7 +341,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $stmt->rowCount(); ?> Manager gefunden!
+        Insgesamt <?php echo $cursor->count(); ?> Manager gefunden!
 
     </div>
     <?php

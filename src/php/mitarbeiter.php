@@ -336,7 +336,7 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['AbteilungsNr'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO imse_db.Mitarbeiter(Nachname,Vorname,Gehalt,Strasse,Ort,PLZ,Geburtsdatum,LeiterMId,AbteilungsNr) 
+        $sql="INSERT INTO imse_db.Mitarbeiter(Nachname,Vorname,Gehalt,Strasse,Ort,PLZ,Geburtsdatum,LeiterMId,AbteilungsNr)
             VALUES('". $_GET['Nachname'] ."','". $_GET['Vorname']."',". $_GET['Gehalt'].",'".$_GET['Strasse']."','".$_GET['Ort']."',".
             $_GET['PLZ'].",STR_TO_DATE('" . $_GET['Geburtsdatum'] . "','%Y-%m-%d')," . $_GET['LeiterMId'] . "," . $_GET['AbteilungsNr']. ")";
 
@@ -404,7 +404,7 @@ catch(PDOException $e)
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = $stmt->fetch()) {
+        foreach ($cursor as $row) {
             echo "<tr>";
 
             echo "<td>" . $row['MId'] . "</td>";
@@ -425,7 +425,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $stmt->rowCount(); ?> Mitarbeiter gefunden!
+        Insgesamt <?php echo $cursor->count(); ?> Mitarbeiter gefunden!
 
     </div>
     <?php

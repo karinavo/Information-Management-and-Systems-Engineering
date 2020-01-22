@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-$servername = "mariadb";
+/*$servername = "mariadb";
 $username = "root";
 $password = "rootpsw";
 $dbname = "imse_db";
@@ -15,7 +15,7 @@ try {
 } catch(PDOException $e)
 {
     echo "Connection failed: " . $e->getMessage();
-}
+}*/
 ?>
 
 
@@ -310,17 +310,25 @@ try {
     //HANDLE insert
     if(isset($_GET['ZeitBlock'])&&isset($_GET['Datum'])&&isset($_GET['KursNr'])&&isset($_GET['Nummer'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO imse_db.Findet_statt VALUES('". $_GET['ZeitBlock'] ."',STR_TO_DATE('" . $_GET['Datum'] . "','%Y-%m-%d')," . $_GET['KursNr'] . "," . $_GET['Nummer'] . "," . $_GET['AbteilungsNr'] . ")";
+        //$sql="INSERT INTO imse_db.Findet_statt VALUES('". $_GET['ZeitBlock'] ."',STR_TO_DATE('" . $_GET['Datum'] . "','%Y-%m-%d')," . $_GET['KursNr'] . "," . $_GET['Nummer'] . "," . $_GET['AbteilungsNr'] . ")";
         //Parse and execute statement
-        $insert = $conn->prepare($sql);
-        try {
+        //$insert = $conn->prepare($sql);
+        $values = array(
+            'ZeitBlock' => $_GET['ZeitBlock'],
+            'Datum' => $_GET['Datum'],
+            'KursNr' => $_GET['KursNr'],
+            'Nummer' => $_GET['Nummer'],
+            'AbteilungsNr' => $_GET['AbteilungsNr']
+         );
+        $db->Findet_statt->insert($values);
+        /*try {
             $conn->exec($sql);
             echo "Successfully inserted!";
         }
         catch(PDOException $e)
         {
             echo $sql . "<br>" . $e->getMessage();
-        }
+        }*/
 
     }
     ?>
@@ -345,13 +353,16 @@ try {
     <?php
     // check if search view of list view
     if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM imse_db.Findet_statt WHERE Datum='" . $_GET['search'] . "'";
+        //$sql = "SELECT * FROM imse_db.Findet_statt WHERE Datum='" . $_GET['search'] . "'";
+        $where = array(Datum'' => $_GET['search']);
+        $cursor = $db->Findet_statt->find($where);
     } else {
-        $sql = "SELECT * FROM imse_db.Findet_statt";
+        //$sql = "SELECT * FROM imse_db.Findet_statt";
+        $cursor = $db->Findet_statt->find();
     }
     // execute sql statement
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
+    //$stmt = $conn->prepare($sql);
+    //$stmt->execute();
     ?>
     <!--Ausgabe-->
     <table>
@@ -369,7 +380,7 @@ try {
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = $stmt->fetch()) {
+        foreach ($cursor as $row) {
             echo "<tr>";
             echo "<td>" . $row['ZeitBlock'] . "</td>";
             echo "<td>" . $row['Datum'] . "</td>";
@@ -384,7 +395,7 @@ try {
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $stmt->rowCount(); ?> Termin(e) gefunden!
+        Insgesamt <?php echo $cursor->count(); ?> Termin(e) gefunden!
 
     </div>
     <?php

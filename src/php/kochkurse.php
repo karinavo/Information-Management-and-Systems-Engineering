@@ -1,4 +1,16 @@
 <?php
+   ////////// MONGO DB CONNECTION ///////////
+   // connect to mongodb
+   $m = new MongoClient();
+
+   echo "Connection to database successfully";
+   // select a database
+   $db = $m->mydb;
+
+   echo "Database mydb selected";
+   ////////// MONGO DB CONNECTION ///////////
+?>
+<?php /*
 
 $servername = "mariadb";
 $username = "root";
@@ -18,7 +30,7 @@ try {
 {
     echo "Connection failed: " . $e->getMessage();
 }
-
+*/
 ?>
 
 <!DOCTYPE html>
@@ -261,7 +273,7 @@ try {
 </div>
 <div class="main">
 
-    
+
     <!--Insert Formular-->
     <div>
         <form id='insertform' action='kochkurse.php' method='get'>
@@ -307,18 +319,15 @@ try {
     //HANDLE insert
     if(isset($_GET['Thema'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO imse_db.Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
+        //$sql="INSERT INTO imse_db.Kochkurse(Preis,Thema,SVNummer) VALUES(" . $_GET['Preis'] . ",'" . $_GET['Thema'] . "'," . $_GET['SVNummer'] . ")";
         //Parse and execute statement
-        $insert = $conn->prepare($sql);
-        try {
-            $conn->exec($sql);
-            echo "Successfully inserted!";
-        }
-        catch(PDOException $e)
-        {
-            echo $sql . "<br>" . $e->getMessage();
-        }
-
+        //$insert = $conn->prepare($sql);
+        $insert = array(
+            'Preis' => $_GET['Preis'],
+            'Thema' => $_GET['Thema'],
+            'SVNummer' => $_GET['SVNUmmer']
+        );
+        $db->Kochkurse->insert($insert);
     }
     ?>
 
@@ -357,25 +366,31 @@ try {
 <?php
 // check if search view of list view
 if (isset($_GET['search'])) {
-    $sql = "SELECT * FROM imse_db.Kochkurse WHERE KursNr='" . $_GET['search'] . "'";
+    //$sql = "SELECT * FROM imse_db.Kochkurse WHERE KursNr='" . $_GET['search'] . "'";
+    $where = array('KursNr' => $_GET['search']);
+    $query = $db->Kochkurse->find($where);
 } else {
-    $sql = "SELECT * FROM imse_db.Kochkurse";
+    //$sql = "SELECT * FROM imse_db.Kochkurse";
+    $query = $db->Kochkurse->find();
 }
 // execute sql statement
-$stmt = $conn->prepare($sql);
-$stmt->execute();
+//$stmt = $conn->prepare($sql);
+//$stmt->execute();
 ?>
     <!--for images-->
     <?php
     // check if search view of list view
     if (isset($_GET['search1'])) {
-        $sql = "SELECT * FROM imse_db.Kochkurse WHERE Thema='" . $_GET['search1'] . "'";
+        //$sql = "SELECT * FROM imse_db.Kochkurse WHERE Thema='" . $_GET['search1'] . "'";
+        $where = array('Thema' => $_GET['search1']);
+        $query1 = $db->Kochkurse->find($where);
     } else {
-        $sql = "SELECT * FROM imse_db.Kochkurse";
+        //$sql = "SELECT * FROM imse_db.Kochkurse";
+        $query1 = $db->Kochkurse->find();
     }
     // execute sql statement
-    $stmt1 = $conn->prepare($sql);
-    $stmt1->execute();
+    //$stmt1 = $conn->prepare($sql);
+    //$stmt1->execute();
     ?>
 <!--Ausgabe-->
 <table>
@@ -393,11 +408,11 @@ $stmt->execute();
         <?php
         // fetch rows of the executed sql query
         if(isset($_GET['search'])) {
-            $res_stm = $stmt;
+            $cursor = $query;
         }else if(isset($_GET['search1'])){
-            $res_stm=$stmt1;
-        }else $res_stm=$stmt;
-        while ($row = $res_stm->fetch()) {
+            $cursor = $query1;
+        }else
+        foreach ($cursor as $row) {
                 echo "<tr>";
                 echo "<td>" . $row['KursNr'] . "</td>";
                 echo "<td>" . $row['Preis'] . "</td>";
@@ -412,13 +427,14 @@ $stmt->execute();
     <!--ANZAHL-->
     <div>
 
-            Insgesamt <?php echo $stmt->rowCount(); ?> Kochkurs(e) gefunden!
+            Insgesamt <?php echo $cursor->count(); ?> Kochkurs(e) gefunden!
 
     </div>
-    
+
     <?php
-    $stmt = null;
-    $conn = null;
+    //$stmt = null;
+    //$conn = null;
+    $cursor = null;
     ?>
 
 </div>

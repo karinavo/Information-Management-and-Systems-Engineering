@@ -381,7 +381,7 @@ catch(PDOException $e)
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = $stmt->fetch()) {
+        foreach ($cursor as $row) {
             echo "<tr>";
             echo "<td>" . $row['KursteilnehmerNr'] . "</td>";
             echo "<td>" . $row['Vorname'] . "</td>";
@@ -399,7 +399,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $stmt->rowCount(); ?> Kursteilnehmer gefunden!
+        Insgesamt <?php echo $cursor->count(); ?> Kursteilnehmer gefunden!
 
     </div>
     <?php

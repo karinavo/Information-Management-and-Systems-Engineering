@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <?php
+   ////////// MONGO DB CONNECTION ///////////
+   // connect to mongodb
+   $m = new MongoClient();
+
+   echo "Connection to database successfully";
+   // select a database
+   $db = $m->mydb;
+
+   echo "Database mydb selected";
+   ////////// MONGO DB CONNECTION ///////////
+?>
+
+<?php/*
 $servername = "mariadb";
 $username = "root";
 $password = "rootpsw";
 $dbname = "imse_db";
+
 try {
     $conn = new PDO(
         "mysql:host=$servername;$dbname;charset=utf8",
@@ -11,14 +25,13 @@ try {
         $password,
         array(PDO::ATTR_PERSISTENT => true));
 
-
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(PDOException $e)
 {
     echo "Connection failed: " . $e->getMessage();
-}
+}*/
 ?>
 
 <html>
@@ -239,7 +252,7 @@ catch(PDOException $e)
 <!--background-->
 <div class="sidenav">
     <div class="dropdown">
-        <button class="dropdown-btn"> &#9778
+        <button class="dropdown-btn">
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content" style="margin-left: 6%">
@@ -275,16 +288,20 @@ catch(PDOException $e)
 
 
     <?php
-    $query_zb = "SELECT DISTINCT ZeitBlock FROM imse_db.Zeit;";
-    $query_thema ="SELECT DISTINCT Thema FROM imse_db.Kochkurse;";
+    //$query_zb = "SELECT DISTINCT ZeitBlock FROM imse_db.Zeit;";
+    //$query_thema ="SELECT DISTINCT Thema FROM imse_db.Kochkurse;";
     // execute sql for zeitbloc statement
-    $stmt_zb = $conn->prepare($query_zb);
-    $stmt_zb->execute();
+    //$stmt_zb = $conn->prepare($query_zb);
+    //$stmt_zb->execute();
     // execute sql for thema statement
-    $stmt_thema= $conn->prepare($query_thema);
-    $stmt_thema->execute();
+    //$stmt_thema= $conn->prepare($query_thema);
+    //$stmt_thema->execute();
     ?>
 
+    <?php
+    $query_zb = $db->Zeit->find(array(), ['ZeitBlock' => true])->distinct();
+    $query_thema =$db->Kochkurse->find(array(), ['Thema' => true])->distinct();
+     ?>
 
 
 
@@ -314,7 +331,7 @@ catch(PDOException $e)
                         <INPUT TYPE="text" name="Thema" list="themas">
                         <datalist id="themas">
                         <?php
-                            while ($row = $stmt_thema->fetch())
+                            foreach ($query_thema as $row)
                         {
                             echo '<option value=" '.$row['Thema'].' " </option>';
                         }
@@ -325,8 +342,8 @@ catch(PDOException $e)
                         <INPUT TYPE="text" name="ZeitBlock" list="zeitblocks">
                         <datalist id="zeitblocks">
                         <?php
-                            while ($row = $stmt_zb->fetch())
-                            {
+                        foreach ($query_zb as $row)
+                        {
                             echo '<option value=" '.$row['ZeitBlock'].' " </option>';
                         }
                         ?>
@@ -344,8 +361,8 @@ catch(PDOException $e)
     </div>
     <?php
 
-    $stmt = null;
-    $conn = null;
+    //$stmt = null;
+    //$conn = null;
     ?>
 
 </div>

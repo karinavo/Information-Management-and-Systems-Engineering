@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <?php
+   ////////// MONGO DB CONNECTION ///////////
+   // connect to mongodb
+   $m = new MongoClient();
+
+   echo "Connection to database successfully";
+   // select a database
+   $db = $m->mydb;
+
+   echo "Database mydb selected";
+   ////////// MONGO DB CONNECTION ///////////
+?>
+<?php/*
 $servername = "mariadb";
 $username = "root";
 $password = "rootpsw";
@@ -18,7 +30,7 @@ try {
 catch(PDOException $e)
 {
     echo "Connection failed: " . $e->getMessage();
-}
+}*/
 ?>
 
 <html>
@@ -300,17 +312,15 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['MId'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO imse_db.Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
+        //$sql="INSERT INTO imse_db.Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
         //Parse and execute statement
-        $insert = $conn->prepare($sql);
-        try {
-            $conn->exec($sql);
-            echo "Successfully inserted!";
-        }
-        catch(PDOException $e)
-        {
-            echo $sql . "<br>" . $e->getMessage();
-        }
+        //$insert = $conn->prepare($sql);
+        $values = arrray(
+            'Rand' => $_GET['Rang'],
+            'Ausbildung' => $_GET['Ausbildung'],
+            'MId' => $_GET['MId']
+        );
+        $db->Koch->insert($values);
     }
     ?>
     <!--Suche-->
@@ -333,13 +343,16 @@ catch(PDOException $e)
     <?php
     // check if search view of list view
     if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM imse_db.Koch WHERE KochID='" . $_GET['search'] . "'";
+        //$sql = "SELECT * FROM imse_db.Koch WHERE KochID='" . $_GET['search'] . "'";
+        $where = array('KochID' => $_GET['search']);
+        $cursor = $db->Koch->find($where);
     } else {
-        $sql = "SELECT * FROM imse_db.Koch";
+        //$sql = "SELECT * FROM imse_db.Koch";
+        $cursor = $db->Koch->find();
     }
     // execute sql statement
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
+    //$stmt = $conn->prepare($sql);
+    //$stmt->execute();
     ?>
     <!--Ausgabe-->
     <table>
@@ -356,7 +369,7 @@ catch(PDOException $e)
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while ($row = $stmt->fetch()) {
+        foreach ($cursor as $row) {
             echo "<tr>";
             echo "<td>" . $row['KochID'] . "</td>";
             echo "<td>" . $row['Rang'] . "</td>";
@@ -370,12 +383,13 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $stmt->rowCount(); ?> Koch(e) gefunden!
+        Insgesamt <?php echo $cursor->count(); ?> Koch(e) gefunden!
 
     </div>
     <?php
-    $stmt = null;
-    $conn = null;
+    //$stmt = null;
+    //$conn = null;
+    $cursor = null;
     ?>
 
 </div>

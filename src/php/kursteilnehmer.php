@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <?php
+   ////////// MONGO DB CONNECTION ///////////
+   // connect to mongodb
+   $m = new MongoClient();
+
+   echo "Connection to database successfully";
+   // select a database
+   $db = $m->mydb;
+
+   echo "Database mydb selected";
+   ////////// MONGO DB CONNECTION ///////////
+?>
+<?php/*
 $servername = "mariadb";
 $username = "root";
 $password = "rootpsw";
@@ -18,7 +30,7 @@ try {
 catch(PDOException $e)
 {
     echo "Connection failed: " . $e->getMessage();
-}
+}*/
 ?>
 
 <html>
@@ -321,17 +333,25 @@ catch(PDOException $e)
     if(isset($_GET['AbteilungsNr'])&&isset($_GET['KursNr'])) {
         //Prepare insert statementd
         $sql="INSERT INTO imse_db.Kursteilnehmer(Vorname,Nachname,EMail,TelefonNr,AbteilungsNr,KursNr) VALUES('". $_GET['Vorname'] ."','" . $_GET['Nachname'] . "','" . $_GET['EMail'] . "','" . $_GET['TelefonNr'] . "'," . $_GET['AbteilungsNr'] .",".$_GET['KursNr']. ")";
-
+        $insert = array(
+            'Vorname' => $_GET['Vorname'],
+            'Nachname' => $_GET['Nachname'],
+            'EMail' => $_GET['EMail'],
+            'TelefonNr' => $_GET['TelefonNr'],
+            'AbteilungsNr' => $_GET['AbteilungsNr'],
+            'KursNr' => $_GET['KursNr']
+        );
         //Parse and execute statement
-        $insert = $conn->prepare($sql);
-        try {
+        //$insert = $conn->prepare($sql);
+        $db->Kursteilnehmer->insert($insert);
+        /*try {
             $conn->exec($sql);
             echo "Successfully inserted!";
         }
         catch(PDOException $e)
         {
             echo $sql . "<br>" . $e->getMessage();
-        }
+        }*/
 
     }
     ?>
@@ -355,13 +375,16 @@ catch(PDOException $e)
     <?php
     // check if search view of list view
     if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM imse_db.Kursteilnehmer WHERE Nachname='" . $_GET['search'] . "'";
+        //$sql = "SELECT * FROM imse_db.Kursteilnehmer WHERE Nachname='" . $_GET['search'] . "'";
+        $query = array('Nachname' => $_GET['search']);
+        $cursor = $db->Kursteilnehmer->find($query);
     } else {
-        $sql = "SELECT * FROM imse_db.Kursteilnehmer";
+        //$sql = "SELECT * FROM imse_db.Kursteilnehmer";
+        $cursor = $db->Kursteilnehmer->find();
     }
     // execute sql statement
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
+    //$stmt = $conn->prepare($sql);
+    //$stmt->execute();
     ?>
     <!--Ausgabe-->
     <table>
@@ -403,8 +426,8 @@ catch(PDOException $e)
 
     </div>
     <?php
-    $stmt = null;
-    $conn = null;
+    //$stmt = null;
+    //$conn = null;
     ?>
 
 

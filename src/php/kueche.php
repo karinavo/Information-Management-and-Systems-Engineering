@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <?php
+   ////////// MONGO DB CONNECTION ///////////
+   // connect to mongodb
+   $m = new MongoClient();
+
+   echo "Connection to database successfully";
+   // select a database
+   $db = $m->mydb;
+
+   echo "Database mydb selected";
+   ////////// MONGO DB CONNECTION ///////////
+?>
+<?php /*
 $servername = "mariadb";
 $username = "root";
 $password = "rootpsw";
@@ -12,7 +24,7 @@ try {
 catch(PDOException $e)
     {
     echo "Connection failed: " . $e->getMessage();
-    }
+}*/
 ?>
 
 
@@ -300,16 +312,18 @@ catch(PDOException $e)
     if(isset($_GET['Nummer'])) {
         //Prepare insert statementd
         try{
-            $sql="INSERT INTO imse_db.Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(" . $_GET['AbteilungsNr'] . "," . $_GET['Nummer'] . "," . $_GET['Fassungsvermoegen']." , '" . $_GET['Ausstattung'] . "')";
+            //$sql="INSERT INTO imse_db.Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(" . $_GET['AbteilungsNr'] . "," . $_GET['Nummer'] . "," . $_GET['Fassungsvermoegen']." , '" . $_GET['Ausstattung'] . "')";
             //Parse and execute statement
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            echo "Successfully inserted!";
-        } catch(PDOException $e){
-            //Print potential errors and warnings
-            echo "Error: " . $e->getMessage();
-        }
-
+            //$stmt = $conn->prepare($sql);
+            //$stmt->execute();
+            $values = array(
+                'AbteilungsNr' => $_GET['AbteilungsNr'],
+                'Nummer' => $_GET['Nummer'],
+                'Fassungsvermoegen' => $_GET['Fassungsvermoegen'],
+                'Austattung' => $_GET['Austattung']
+            );
+            $db->Kueche->insert($values);
+            echo "Successfully inserted!"
 
     }
     ?>
@@ -339,13 +353,16 @@ catch(PDOException $e)
         if (isset($search)) {
             $sql = "SELECT * FROM imse_db.Kueche WHERE Nummer='" . $search ."'";
             // execute sql statement
-            $stmt = $conn->query($sql);
-            $stmt->execute();
+            //$stmt = $conn->query($sql);
+            //$stmt->execute();
+            $query = array('Nummer' => $_GET['search']);
+            $cursor = $db->Kueche->find($query);
         } else {
-            $sql = "SELECT * FROM imse_db.Kueche";
+            //$sql = "SELECT * FROM imse_db.Kueche";
             // execute sql statement
-            $stmt = $conn->query($sql);
-            $stmt->execute();
+            //$stmt = $conn->query($sql);
+            //$stmt->execute();
+            $cursor = $db->Kueche->find();
         }
     } catch(PDOException $e){
         //Print potential errors and warnings
@@ -367,7 +384,7 @@ catch(PDOException $e)
         <tbody>
         <?php
         // fetch rows of the executed sql query
-        while($row = $stmt->fetch()) {
+        foreach ($cursor as $row) {
             echo "<tr>";
             echo "<td>" . $row['AbteilungsNr'] . "</td>";
             echo "<td>" . $row['Nummer'] . "</td>";
@@ -381,12 +398,12 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $stmt->rowCount(); ?> Küche(n) gefunden!
+        Insgesamt <?php echo $cursor->count(); ?> Küche(n) gefunden!
 
     </div>
     <?php
-    $stmt = null;
-    $conn = null;
+    //$stmt = null;
+    //$conn = null;
     ?>
 </div>
 

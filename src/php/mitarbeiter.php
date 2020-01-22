@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <?php
+   ////////// MONGO DB CONNECTION ///////////
+   // connect to mongodb
+   $m = new MongoClient();
+
+   echo "Connection to database successfully";
+   // select a database
+   $db = $m->mydb;
+
+   echo "Database mydb selected";
+   ////////// MONGO DB CONNECTION ///////////
+?>
+<?php/*
 $servername = "mariadb";
 $username = "root";
 $password = "rootpsw";
@@ -18,7 +30,7 @@ try {
 catch(PDOException $e)
 {
     echo "Connection failed: " . $e->getMessage();
-}
+}*/
 ?>
 
 
@@ -336,12 +348,25 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['AbteilungsNr'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO imse_db.Mitarbeiter(Nachname,Vorname,Gehalt,Strasse,Ort,PLZ,Geburtsdatum,LeiterMId,AbteilungsNr)
+        /*$sql="INSERT INTO imse_db.Mitarbeiter(Nachname,Vorname,Gehalt,Strasse,Ort,PLZ,Geburtsdatum,LeiterMId,AbteilungsNr)
             VALUES('". $_GET['Nachname'] ."','". $_GET['Vorname']."',". $_GET['Gehalt'].",'".$_GET['Strasse']."','".$_GET['Ort']."',".
             $_GET['PLZ'].",STR_TO_DATE('" . $_GET['Geburtsdatum'] . "','%Y-%m-%d')," . $_GET['LeiterMId'] . "," . $_GET['AbteilungsNr']. ")";
-
+        */
         //Parse and execute statement
-        $insert = $conn->prepare($sql);
+        //$insert = $conn->prepare($sql);
+        $values = array(
+            'Nachname' => $_GET['Nachname'],
+            'Vorname' => $_GET['Vorname'],
+            'Gehalt' => $_GET['Gehalt'],
+            'Strasse' => $_GET['Strasse'],
+            'Ort' => $_GET['Ort'],
+            'PLZ' => $_GET['PLZ'],
+            'Geburtsdatum' => $_GET['Geburtsdatum'],
+            'LeiterMId' => $_GET['LeiterMId'],
+            'AbteilungsNr' => $_GET['AbteilungsNr']
+        );
+        $db->Mitarbeiter->insert($values);
+        /*
         try {
             $conn->exec($sql);
             echo "Successfully inserted!";
@@ -349,7 +374,7 @@ catch(PDOException $e)
         catch(PDOException $e)
         {
             echo $sql . "<br>" . $e->getMessage();
-        }
+        }*/
 
 
     }
@@ -375,13 +400,16 @@ catch(PDOException $e)
     <?php
     // check if search view of list view
     if (isset($_GET['search'])) {
-        $sql = "SELECT * FROM imse_db.Mitarbeiter WHERE MId='" . $_GET['search'] . "'";
+        //$sql = "SELECT * FROM imse_db.Mitarbeiter WHERE MId='" . $_GET['search'] . "'";
+        $where = array('MId' => $_GET['search']);
+        $cursor = $db->Mitarbeiter->find($where);
     } else {
-        $sql = "SELECT * FROM imse_db.Mitarbeiter";
+        //$sql = "SELECT * FROM imse_db.Mitarbeiter";
+        $cursor = $db->Mitarbeiter->find();
     }
     // execute sql statement
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
+    //$stmt = $conn->prepare($sql);
+    //$stmt->execute();
     ?>
     <!--Ausgabe-->
     <table>

@@ -49,75 +49,223 @@ public class DataMigration {
 
         return cpds.getConnection();
     }
+    private static boolean checkAllTablesExist(Connection conn) throws SQLException {
+        //Check if all tables were created
+        ResultSet rs0;
+        DatabaseMetaData meta = (DatabaseMetaData) conn.getMetaData();
+        rs0 = meta.getTables(null, null, null, new String[] {
+                "TABLE"
+        });
+        int tables_counter = 0;
+        System.out.println("All table names are in test database:");
+        while (rs0.next()) {
+            String tblName = rs0.getString("TABLE_NAME");
+            System.out.println(tblName);
+            tables_counter++;
+        }
 
+
+        System.out.println(tables_counter + " Tables in database ");
+        if (tables_counter == 10) {
+            rs0.close();
+            return true;
+        }else return false;
+
+    }
+
+    private static boolean checkKochschuleDatenExist(Connection conn) throws SQLException {
+        // check number of datasets in Kochschule table
+        Statement currentStatement = conn.createStatement();
+        ResultSet rs1 = currentStatement.executeQuery("SELECT COUNT(*) FROM Kochschule");
+        boolean flag=false;
+        if (rs1.next()) {
+            int count = rs1.getInt(1);
+            System.out.println("Number of datasets Kochschule: " + count);
+            if(count==1){
+                flag = true;
+            }
+        }
+        return flag;
+    }
+    private static boolean checkKuecheDatenExist (Connection conn) throws SQLException {
+        // check number of datasets in Kochschule table
+        Statement currentStatement = conn.createStatement();
+        ResultSet rs1 = currentStatement.executeQuery("SELECT COUNT(*) FROM Kueche");
+        boolean flag=false;
+        if (rs1.next()) {
+            int count = rs1.getInt(1);
+            System.out.println("Number of datasets Kueche: " + count);
+            if(count==109){
+                flag = true;
+            }
+        }
+        return flag;
+    }
+    private static boolean checkMitarbeiterDatenExist(Connection conn) throws SQLException {
+        // check number of datasets in Kochschule table
+        Statement currentStatement = conn.createStatement();
+        ResultSet rs1 = currentStatement.executeQuery("SELECT COUNT(*) FROM Mitarbeiter");
+        boolean flag=false;
+        if (rs1.next()) {
+            int count = rs1.getInt(1);
+            System.out.println("Number of datasets Mitarbeiter: " + count);
+            if(count==200){
+                flag = true;
+            }
+        }
+        return flag;
+    }
+    private static boolean checkManagerDatenExist(Connection conn) throws SQLException {
+        // check number of datasets in Kochschule table
+        Statement currentStatement = conn.createStatement();
+        ResultSet rs1 = currentStatement.executeQuery("SELECT COUNT(*) FROM Manager");
+        boolean flag=false;
+        if (rs1.next()) {
+            int count = rs1.getInt(1);
+            System.out.println("Number of datasets Manager: " + count);
+            if(count==49){
+                flag = true;
+            }
+        }
+        return flag;
+    }
+    private static boolean checkKochDatenExist(Connection conn) throws SQLException {
+        // check number of datasets in Kochschule table
+        Statement currentStatement = conn.createStatement();
+        ResultSet rs1 = currentStatement.executeQuery("SELECT COUNT(*) FROM Koch");
+        boolean flag=false;
+        if (rs1.next()) {
+            int count = rs1.getInt(1);
+            System.out.println("Number of datasets Koch: " + count);
+            if(count==151){
+                flag = true;
+            }
+        }
+        return flag;
+    }
+    private static boolean checkKochkurseDatenExist(Connection conn) throws SQLException {
+        // check number of datasets in Kochschule table
+        Statement currentStatement = conn.createStatement();
+        ResultSet rs1 = currentStatement.executeQuery("SELECT COUNT(*) FROM Kochkurse");
+        boolean flag=false;
+        if (rs1.next()) {
+            int count = rs1.getInt(1);
+            System.out.println("Number of datasets Kochkurse: " + count);
+            if(count==3500){
+                flag = true;
+            }
+        }
+        return flag;
+    }
+    private static boolean checkKursteilnehmerDatenExist(Connection conn) throws SQLException {
+        // check number of datasets in Kochschule table
+        Statement currentStatement = conn.createStatement();
+        ResultSet rs1 = currentStatement.executeQuery("SELECT COUNT(*) FROM Kursteilnehmer");
+        boolean flag=false;
+        if (rs1.next()) {
+            int count = rs1.getInt(1);
+            System.out.println("Number of datasets Kursteilnehmer: " + count);
+            if(count==3030){
+                flag = true;
+            }
+        }
+        return flag;
+    }
+    private static boolean checkZeitDatenExist(Connection conn) throws SQLException {
+        // check number of datasets in Kochschule table
+        Statement currentStatement = conn.createStatement();
+        ResultSet rs1 = currentStatement.executeQuery("SELECT COUNT(*) FROM Zeit");
+        boolean flag=false;
+        if (rs1.next()) {
+            int count = rs1.getInt(1);
+            System.out.println("Number of datasets Zeit: " + count);
+            if(count>400){
+                flag = true;
+            }
+        }
+        return flag;
+    }
+    private static boolean checkFindetStattDatenExist(Connection conn) throws SQLException {
+        // check number of datasets in Kochschule table
+        Statement currentStatement = conn.createStatement();
+        ResultSet rs1 = currentStatement.executeQuery("SELECT COUNT(*) FROM Findet_statt");
+        boolean flag=false;
+        if (rs1.next()) {
+            int count = rs1.getInt(1);
+            System.out.println("Number of datasets Findet_statt: " + count);
+            if(count>50){
+                flag = true;
+            }
+        }
+        return flag;
+    }
+    private static boolean checkFuehrtDatenExist(Connection conn) throws SQLException {
+        // check number of datasets in Kochschule table
+        Statement currentStatement = conn.createStatement();
+        ResultSet rs1 = currentStatement.executeQuery("SELECT COUNT(*) FROM Fuehrt");
+        boolean flag=false;
+        if (rs1.next()) {
+            int count = rs1.getInt(1);
+            System.out.println("Number of datasets Fuehrt: " + count);
+            if(count==349){
+                flag = true;
+            }
+        }
+        return flag;
+    }
     public static void main(String[] args) {
-   try {
+
+        //START MONGODATABASE
+        List<ServerAddress> seeds = new ArrayList<ServerAddress>();
+        seeds.add( new ServerAddress( "localhost",27017));
+        List<MongoCredential> credentials = new ArrayList<MongoCredential>();
+        credentials.add(
+                MongoCredential.createCredential(
+                        "admin",
+                        "imse_mongodb",
+                        "adminpsw".toCharArray()
+                )
+        );
+        MongoClient mongoClient = new MongoClient( seeds, credentials );
+
+        System.out.println("connecting to host....."+mongoClient);
+
+        // END
+       try {
             // Create connection pool
             createPool();
 
             //Open a connection
-            System.out.println("Connecting to a selected database...");
+            System.out.println("Connecting to a mariadb database...");
 
             Connection conn = getConnection();
 
-            System.out.println("Connected database successfully...");
-            // Delimiter
-            String delimiter = ";";
-            //Check if all tables were created
-            Statement currentStatement = conn.createStatement();
-            ResultSet rs0 = null;
-            DatabaseMetaData meta = (DatabaseMetaData) conn.getMetaData();
-            rs0 = meta.getTables(null, null, null, new String[] {
-                    "TABLE"
-            });
-            int tables_counter = 0;
-            System.out.println("All table names are in test database:");
-            while (rs0.next()) {
-                String tblName = rs0.getString("TABLE_NAME");
-                System.out.println(tblName);
-                tables_counter++;
+            System.out.println("Connected mariadb database successfully...");
+           boolean tables_exist = false;
+            while(true){
+                tables_exist = checkAllTablesExist(conn);
+                if(tables_exist==false){
+                    tables_exist = checkAllTablesExist(conn);
+                }else{
+                    break;
+                }
             }
-
-
-            System.out.println(tables_counter + " Tables in database ");
-            if (tables_counter == 10) {
-                rs0.close();
-                List<ServerAddress> seeds = new ArrayList<ServerAddress>();
-                seeds.add( new ServerAddress( "localhost",27017));
-                List<MongoCredential> credentials = new ArrayList<MongoCredential>();
-                credentials.add(
-                        MongoCredential.createMongoCRCredential(
-                                "admin",
-                                "imse_mongodb",
-                                "adminpsw".toCharArray()
-                        )
-                );
-                MongoClient mongoClient = new MongoClient( seeds, credentials );
-
-                System.out.println("HERE");
-                // Retrieving a collection
-                MongoDatabase mongoDatabase = mongoClient.getDatabase("imse_mongodb");
-                MongoCollection<Document> collection = mongoDatabase.getCollection("students");
-/***
-                Document doc = new Document("id", "4712")
-                        .append("name", "Sylvia Musterfrau")
-                        .append("regnr", "1600234")
-                        .append("curriculum", new Document("name", "Informatics")
-                                .append("type", "Bachelor")
-                                .append("currnr", "521" ));
-                collection.insertOne(doc);
-                System.out.println("END");
-***/
-                // Count documents
-                System.out.print(collection.count()); System.out.println(" Docs in collection");
-                currentStatement.close();
-                conn.close();
+            while(true){
+                if(checkFindetStattDatenExist(conn)==true&&checkFuehrtDatenExist(conn)==true&&checkKochDatenExist(conn)==true&&checkKochkurseDatenExist(conn)==true
+                        &&checkKochschuleDatenExist(conn)==true&&checkZeitDatenExist(conn)==true&&checkKuecheDatenExist(conn)==true&&checkManagerDatenExist(conn)==true
+                        &&checkMitarbeiterDatenExist(conn)==true&&checkKursteilnehmerDatenExist(conn)==true){
+                    break;
+                }
             }
-        }catch(SQLException e){
+           KochschuleMigration kochschuleMigration = new KochschuleMigration(conn,mongoClient);
+            kochschuleMigration.migrate();
+
+       }catch(SQLException e){
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
         } catch(Exception e){
             e.printStackTrace();
         }
+
     }
     }
 

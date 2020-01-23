@@ -10,6 +10,18 @@ ADD /localhost.conf /etc/apache2/sites-enabled/localhost.conf
 
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip mbstring
 
+RUN apt-get update; \
+	apt-get install openssl libssl-dev libcurl4-openssl-dev -y; \
+	pecl install mongo; \
+	echo "extension=mongo.so" > /usr/local/etc/php/conf.d/mongo.ini
+
+# Use the default production configuration
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+RUN apt-get update && apt-get install -y autoconf build-essential
+RUN pecl install mongodb
+RUN echo "extension=mongodb.so" >> $PHP_INI_DIR/php.ini
+
 # MySQL
 #RUN apt-get install -y mysql-client libmysqlclient-dev && docker-php-ext-install mysqli
 

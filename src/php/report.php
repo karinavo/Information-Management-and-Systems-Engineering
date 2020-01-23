@@ -124,11 +124,11 @@ try {
 // connect to mongodb
 $m = new MongoClient();
 
-echo "Connection to database successfully";
+echo "Connected to database succesfully";
 // select a database
-$db = $m->mydb;
+$db = $m->imse_mongodb;
 
-echo "Database mydb selected";
+echo "Database imse_mongodb selected";
 ////////// MONGO DB CONNECTION ///////////
 
     if (isset($_POST['reportsubmit'])) {

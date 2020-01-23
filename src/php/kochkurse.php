@@ -1,13 +1,13 @@
 <?php
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoClient();
+   $m = new MongoDB\Driver\Manager("mongodb://localhost:27017");
 
-   echo "Connection to database successfully";
+   echo "Connected to database succesfully";
    // select a database
-   $db = $m->mydb;
+   $db = $m->imse_mongodb;
 
-   echo "Database mydb selected";
+   echo "Database imse_mongodb selected";
    ////////// MONGO DB CONNECTION ///////////
 ?>
 <?php /*

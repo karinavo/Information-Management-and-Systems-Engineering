@@ -98,7 +98,7 @@ public class DataMigration {
                 // Retrieving a collection
                 MongoDatabase mongoDatabase = mongoClient.getDatabase("imse_mongodb");
                 MongoCollection<Document> collection = mongoDatabase.getCollection("students");
-
+/***
                 Document doc = new Document("id", "4712")
                         .append("name", "Sylvia Musterfrau")
                         .append("regnr", "1600234")
@@ -107,7 +107,7 @@ public class DataMigration {
                                 .append("currnr", "521" ));
                 collection.insertOne(doc);
                 System.out.println("END");
-
+***/
                 // Count documents
                 System.out.print(collection.count()); System.out.println(" Docs in collection");
                 currentStatement.close();

@@ -46,10 +46,15 @@ services:
 # MONGO 
   mongo:
     image: mongo
-    volumes:
-      - ./mongo-data:/data/db
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: adminpsw
+      MONGO_INITDB_DATABASE: imse_mongodb
+#    volumes:
+#      - ./mongo-data:/data/db
     ports:
       - 27017:27017
+    container_name: mongod
 # MONGO EXPRESS
   mongo-express:
     image: mongo-express
@@ -63,15 +68,14 @@ services:
       - ./portainer-data:/data
     ports:
       - 9000:9000
-
-#   Filler
+# MIGRATION
   migration:
-#    image: migration
+    image: migration
     restart: on-failure
     build:
       context: .
       dockerfile: Migration.dockerfile
     depends_on:
-      - mongo
       - filler
+      - mongo
     container_name: migration

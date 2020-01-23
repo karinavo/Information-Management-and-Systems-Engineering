@@ -5,12 +5,11 @@ import java.beans.PropertyVetoException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.GregorianCalendar;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
@@ -52,7 +51,7 @@ public class DataMigration {
     }
 
     public static void main(String[] args) {
-        try {
+   try {
             // Create connection pool
             createPool();
 
@@ -83,19 +82,41 @@ public class DataMigration {
             System.out.println(tables_counter + " Tables in database ");
             if (tables_counter == 10) {
                 rs0.close();
-                System.out.println("Number of tables in database: " + tables_counter);
+                List<ServerAddress> seeds = new ArrayList<ServerAddress>();
+                seeds.add( new ServerAddress( "localhost",27017));
+                List<MongoCredential> credentials = new ArrayList<MongoCredential>();
+                credentials.add(
+                        MongoCredential.createMongoCRCredential(
+                                "admin",
+                                "imse_mongodb",
+                                "adminpsw".toCharArray()
+                        )
+                );
+                MongoClient mongoClient = new MongoClient( seeds, credentials );
 
+                System.out.println("HERE");
+                // Retrieving a collection
+                MongoDatabase mongoDatabase = mongoClient.getDatabase("imse_mongodb");
+                MongoCollection<Document> collection = mongoDatabase.getCollection("students");
 
-            }
+                Document doc = new Document("id", "4712")
+                        .append("name", "Sylvia Musterfrau")
+                        .append("regnr", "1600234")
+                        .append("curriculum", new Document("name", "Informatics")
+                                .append("type", "Bachelor")
+                                .append("currnr", "521" ));
+                collection.insertOne(doc);
 
+                // Count documents
+                System.out.print(collection.count()); System.out.println(" Docs in collection");
                 currentStatement.close();
                 conn.close();
-
+            }
         }catch(SQLException e){
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
         } catch(Exception e){
             e.printStackTrace();
         }
     }
-}
+    }
 

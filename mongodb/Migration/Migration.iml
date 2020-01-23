@@ -11,5 +11,6 @@
     <orderEntry type="library" name="mchange-commons-java-0.2.16" level="project" />
     <orderEntry type="library" name="mchange-commons-java-0.2.3.4" level="project" />
     <orderEntry type="library" name="mongo-java-driver-3.11.0" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.48" level="project" />
   </component>
 </module>

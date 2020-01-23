@@ -1,5 +1,5 @@
 FROM adoptopenjdk:11-jre-hotspot
-#COPY ./mongo/Migration.jar /mongo/
+COPY ./mongodb/Migration.jar /mongodb/
 
-#EXPOSE 
-#CMD ["java","-jar","./mongo/Migration.jar"]
+EXPOSE 3306 3306
+CMD ["java","-jar","./mongodb/Migration.jar"]

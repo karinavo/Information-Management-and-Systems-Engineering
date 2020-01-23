@@ -106,6 +106,7 @@ public class DataMigration {
                                 .append("type", "Bachelor")
                                 .append("currnr", "521" ));
                 collection.insertOne(doc);
+                System.out.println("END");
 
                 // Count documents
                 System.out.print(collection.count()); System.out.println(" Docs in collection");

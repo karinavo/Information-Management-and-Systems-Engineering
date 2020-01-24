@@ -7,10 +7,9 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
+
+import com.mongodb.*;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -216,20 +215,25 @@ public class DataMigration {
     public static void main(String[] args) {
 
         //START MONGODATABASE
-        List<ServerAddress> seeds = new ArrayList<ServerAddress>();
-        seeds.add( new ServerAddress( "localhost",27017));
-        List<MongoCredential> credentials = new ArrayList<MongoCredential>();
-        credentials.add(
-                MongoCredential.createCredential(
-                        "admin",
-                        "imse_mongodb",
-                        "adminpsw".toCharArray()
-                )
-        );
-        MongoClient mongoClient = new MongoClient( seeds, credentials );
 
-        System.out.println("connecting to host....."+mongoClient);
 
+
+        @Deprecated
+        MongoClient mongoClient = null;
+        MongoCredential mongoCredential = MongoCredential.createScramSha1Credential("admin", "admin",
+                "adminpsw".toCharArray());
+        mongoClient = new MongoClient(new ServerAddress("localhost", 27017), Arrays.asList(mongoCredential));
+
+        MongoDatabase db = mongoClient.getDatabase("imse_mongodb");
+
+        System.out.println(db.getName());
+        Document behandlungDocument = new Document().append("s",1);
+        MongoCollection<Document> kochschule_collection =db.getCollection("test");
+        // Add behandlungsDokument in Collections
+        kochschule_collection.insertOne(behandlungDocument);
+        mongoClient.close();
+
+/***
         // END
        try {
             // Create connection pool
@@ -265,7 +269,7 @@ public class DataMigration {
         } catch(Exception e){
             e.printStackTrace();
         }
-
+**/
     }
     }
 

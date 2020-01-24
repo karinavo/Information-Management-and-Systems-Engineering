@@ -50,10 +50,10 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: adminpsw
       MONGO_INITDB_DATABASE: imse_mongodb
-    volumes:
-      - ./mongo-data:/data/db
+#    volumes:
+#      - ./mongo-data:/data/db
     ports:
-      - 27017:27017
+      - "27017:27017"
     container_name: mongo
 # MONGO EXPRESS
   mongo-express:

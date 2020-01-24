@@ -1,35 +1,20 @@
+<?php
+require 'vendor/autoload.php';
+    ////////// MONGO DB CONNECTION ///////////
+        // connect to mongodb
+    $m = new MongoDB\Client("mongodb://admin:adminpsw@localhost:27017");
+
+    echo "Connected to database succesfully\n";
+    //var_dump($m);
+        // select a database
+    
+    $db = $m->imse_mongodb;
+    echo "Database imse_mongodb selected";
+
+   ////////// MONGO DB CONNECTION ///////////
+?>
+
 <!DOCTYPE html>
-<?php
-   ////////// MONGO DB CONNECTION ///////////
-   // connect to mongodb
-   $m = new MongoClient("mongodb://localhost:27017");
-
-   echo "Connected to database succesfully";
-   // select a database
-   $db = $m->imse_mongodb;
-
-   echo "Database imse_mongodb selected";
-   ////////// MONGO DB CONNECTION ///////////
-?>
-<?php
-/*$servername = "mariadb";
-$username = "root";
-$password = "rootpsw";
-$dbname = "imse_db";
-try {
-    $conn = new PDO(
-        "mysql:host=$servername;$dbname;charset=utf8",
-        $username,
-        $password,
-        array(PDO::ATTR_PERSISTENT => true));
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e)
-{
-    echo "Connection failed: " . $e->getMessage();
-}*/
-?>
-
 
 <html>
 <title>Die Kochschule</title>
@@ -366,7 +351,7 @@ try {
     // check if search view of list view
     if (isset($_GET['search'])) {
         //$sql = "SELECT * FROM imse_db.Findet_statt WHERE Datum='" . $_GET['search'] . "'";
-        $where = array(Datum'' => $_GET['search']);
+        $where = array('Datum' => $_GET['search']);
         $cursor = $db->Findet_statt->find($where);
     } else {
         //$sql = "SELECT * FROM imse_db.Findet_statt";

@@ -1,4 +1,5 @@
 <?php
+require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
    $m = new MongoDB\Driver\Manager("mongodb://localhost:27017");

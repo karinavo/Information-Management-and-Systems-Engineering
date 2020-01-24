@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <?php
+require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoClient("mongodb://localhost:27017");
+   $m = new MongoDB\Client("mongodb://localhost:27017");
 
    echo "Connected to database succesfully";
    // select a database
@@ -403,6 +404,7 @@ catch(PDOException $e)
         //$sql = "SELECT * FROM imse_db.Mitarbeiter WHERE MId='" . $_GET['search'] . "'";
         $where = array('MId' => $_GET['search']);
         $cursor = $db->Mitarbeiter->find($where);
+
     } else {
         //$sql = "SELECT * FROM imse_db.Mitarbeiter";
         $cursor = $db->Mitarbeiter->find();
@@ -457,8 +459,8 @@ catch(PDOException $e)
 
     </div>
     <?php
-    $stmt = null;
-    $conn = null;
+    //$stmt = null;
+    //$conn = null;
     ?>
 </div>
 

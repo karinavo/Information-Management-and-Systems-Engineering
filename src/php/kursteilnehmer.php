@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <?php
+require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoClient("mongodb://localhost:27017");
+   $m = new MongoDB\Driver\Manager("mongodb://localhost:27017");
 
    echo "Connected to database succesfully";
    // select a database
@@ -332,7 +333,7 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['AbteilungsNr'])&&isset($_GET['KursNr'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO imse_db.Kursteilnehmer(Vorname,Nachname,EMail,TelefonNr,AbteilungsNr,KursNr) VALUES('". $_GET['Vorname'] ."','" . $_GET['Nachname'] . "','" . $_GET['EMail'] . "','" . $_GET['TelefonNr'] . "'," . $_GET['AbteilungsNr'] .",".$_GET['KursNr']. ")";
+        //$sql="INSERT INTO imse_db.Kursteilnehmer(Vorname,Nachname,EMail,TelefonNr,AbteilungsNr,KursNr) VALUES('". $_GET['Vorname'] ."','" . $_GET['Nachname'] . "','" . $_GET['EMail'] . "','" . $_GET['TelefonNr'] . "'," . $_GET['AbteilungsNr'] .",".$_GET['KursNr']. ")";
         $insert = array(
             'Vorname' => $_GET['Vorname'],
             'Nachname' => $_GET['Nachname'],

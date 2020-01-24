@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <?php
+require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoClient("mongodb://localhost:27017");
+   $m = new MongoDB\Client("mongodb://localhost:27017");
 
    echo "Connected to database succesfully";
    // select a database
@@ -10,27 +11,6 @@
 
    echo "Database imse_mongodb selected";
    ////////// MONGO DB CONNECTION ///////////
-?>
-<?php/*
-$servername = "mariadb";
-$username = "root";
-$password = "rootpsw";
-$dbname = "imse_db";
-try {
-    $conn = new PDO(
-        "mysql:host=$servername;$dbname;charset=utf8",
-        $username,
-        $password,
-        array(PDO::ATTR_PERSISTENT => true));
-
-
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
-{
-    echo "Connection failed: " . $e->getMessage();
-}*/
 ?>
 
 <html>
@@ -315,7 +295,7 @@ catch(PDOException $e)
         //$sql="INSERT INTO imse_db.Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
         //Parse and execute statement
         //$insert = $conn->prepare($sql);
-        $values = arrray(
+        $values = array(
             'Rand' => $_GET['Rang'],
             'Ausbildung' => $_GET['Ausbildung'],
             'MId' => $_GET['MId']
@@ -383,7 +363,8 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $cursor->count(); ?> Koch(e) gefunden!
+        Insgesamt <?php echo $cursor->toArray()->count(); ?> Koch(e) gefunden!
+
 
     </div>
     <?php

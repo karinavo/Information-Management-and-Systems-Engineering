@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <?php
+require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoClient("mongodb://localhost:27017");
+   $m = new MongoDB\Client("mongodb://localhost:27017");
 
    echo "Connected to database succesfully";
    // select a database
@@ -311,20 +312,18 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['Nummer'])) {
         //Prepare insert statementd
-        try{
-            //$sql="INSERT INTO imse_db.Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(" . $_GET['AbteilungsNr'] . "," . $_GET['Nummer'] . "," . $_GET['Fassungsvermoegen']." , '" . $_GET['Ausstattung'] . "')";
-            //Parse and execute statement
-            //$stmt = $conn->prepare($sql);
-            //$stmt->execute();
-            $values = array(
-                'AbteilungsNr' => $_GET['AbteilungsNr'],
-                'Nummer' => $_GET['Nummer'],
-                'Fassungsvermoegen' => $_GET['Fassungsvermoegen'],
-                'Austattung' => $_GET['Austattung']
-            );
-            $db->Kueche->insert($values);
-            echo "Successfully inserted!";
-
+        //$sql="INSERT INTO imse_db.Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(" . $_GET['AbteilungsNr'] . "," . $_GET['Nummer'] . "," . $_GET['Fassungsvermoegen']." , '" . $_GET['Ausstattung'] . "')";
+        //Parse and execute statement
+        //$stmt = $conn->prepare($sql);
+        //$stmt->execute();
+        $values = array(
+            'AbteilungsNr' => $_GET['AbteilungsNr'],
+            'Nummer' => $_GET['Nummer'],
+            'Fassungsvermoegen' => $_GET['Fassungsvermoegen'],
+            'Austattung' => $_GET['Austattung']
+        );
+        $db->Kueche->insert($values);
+        echo "Successfully inserted!";
     }
     ?>
     <!--Suche-->
@@ -404,6 +403,7 @@ catch(PDOException $e)
     <?php
     //$stmt = null;
     //$conn = null;
+    $cursor = null;
     ?>
 </div>
 

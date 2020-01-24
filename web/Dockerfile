@@ -22,14 +22,17 @@ RUN apt-get update && apt-get install -y autoconf build-essential
 RUN pecl install mongodb
 RUN echo "extension=mongodb.so" >> $PHP_INI_DIR/php.ini
 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN cd /html
+RUN /usr/local/bin/composer require mongodb/mongodb
+RUN /usr/local/bin/composer install --no-dev --no-interaction -o
+RUN composer dump-autoload
+
 # MySQL
 #RUN apt-get install -y mysql-client libmysqlclient-dev && docker-php-ext-install mysqli
-
 # RUN docker-php-ext-install mysqli pdo pdo_mysql zip mbstring
-
 # PDO
 # RUN docker-php-ext-install pdo pdo_mysql
-
 # GD for image processing
 # RUN apt-get update && apt-get install -y \
 #     libfreetype6-dev \

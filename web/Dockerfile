@@ -11,9 +11,10 @@ ADD /localhost.conf /etc/apache2/sites-enabled/localhost.conf
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip mbstring
 
 RUN apt-get update; \
-	apt-get install openssl libssl-dev libcurl4-openssl-dev -y; \
-	pecl install mongo; \
-	echo "extension=mongo.so" > /usr/local/etc/php/conf.d/mongo.ini
+	apt-get install openssl libssl-dev libcurl4-openssl-dev -y; 
+	
+#	\pecl install mongo; \ 
+#	echo "extension=mongo.so" > /usr/local/etc/php/conf.d/mongo.ini
 
 # Use the default production configuration
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
@@ -23,10 +24,19 @@ RUN pecl install mongodb
 RUN echo "extension=mongodb.so" >> $PHP_INI_DIR/php.ini
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN cd /html
-RUN /usr/local/bin/composer require mongodb/mongodb
-RUN /usr/local/bin/composer install --no-dev --no-interaction -o
-RUN composer dump-autoload
+#COPY composer.json ./html
+#COPY composer.lock ./html
+# WORKDIR var/www/html
+RUN composer require mongodb/mongodb
+RUN composer install --no-scripts --no-autoloader --working-dir=/var/www/html
+# COPY . ./html
+RUN composer dump-autoload --optimize 
+
+#&& \
+#    composer run-scripts post-install-cmd 
+
+#RUN /usr/local/bin/composer install --no-dev --no-interaction -o
+# RUN composer dump-autoload
 
 # MySQL
 #RUN apt-get install -y mysql-client libmysqlclient-dev && docker-php-ext-install mysqli

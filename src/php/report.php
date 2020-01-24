@@ -124,7 +124,7 @@ try {
 }*/
 ////////// MONGO DB CONNECTION ///////////
 // connect to mongodb
-$m = new MongoDB\Driver\Manager();
+$m = new MongoDB\Client();
 
 echo "Connected to database succesfully";
 // select a database

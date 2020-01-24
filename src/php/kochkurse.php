@@ -2,13 +2,14 @@
 require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+   $m = new MongoDB\Client("mongodb://localhost:27017");
 
    echo "Connected to database succesfully";
    // select a database
    $db = $m->imse_mongodb;
 
    echo "Database imse_mongodb selected";
+   $collection = $db->Kochkurse;
    ////////// MONGO DB CONNECTION ///////////
 ?>
 <?php /*
@@ -328,7 +329,7 @@ try {
             'Thema' => $_GET['Thema'],
             'SVNummer' => $_GET['SVNUmmer']
         );
-        $db->Kochkurse->insert($insert);
+        $collection->insertOne($insert);
     }
     ?>
 
@@ -369,10 +370,10 @@ try {
 if (isset($_GET['search'])) {
     //$sql = "SELECT * FROM imse_db.Kochkurse WHERE KursNr='" . $_GET['search'] . "'";
     $where = array('KursNr' => $_GET['search']);
-    $query = $db->Kochkurse->find($where);
+    $query = $collection->find($where);
 } else {
     //$sql = "SELECT * FROM imse_db.Kochkurse";
-    $query = $db->Kochkurse->find();
+    $query = $collection->find();
 }
 // execute sql statement
 //$stmt = $conn->prepare($sql);
@@ -384,10 +385,10 @@ if (isset($_GET['search'])) {
     if (isset($_GET['search1'])) {
         //$sql = "SELECT * FROM imse_db.Kochkurse WHERE Thema='" . $_GET['search1'] . "'";
         $where = array('Thema' => $_GET['search1']);
-        $query1 = $db->Kochkurse->find($where);
+        $query1 = $collection->find($where);
     } else {
         //$sql = "SELECT * FROM imse_db.Kochkurse";
-        $query1 = $db->Kochkurse->find();
+        $query1 = $collection->find();
     }
     // execute sql statement
     //$stmt1 = $conn->prepare($sql);
@@ -428,7 +429,7 @@ if (isset($_GET['search'])) {
     <!--ANZAHL-->
     <div>
 
-            Insgesamt <?php echo $cursor->count(); ?> Kochkurs(e) gefunden!
+            Insgesamt <?php echo count($cursor->toArray()); ?> Kochkurs(e) gefunden!
 
     </div>
 

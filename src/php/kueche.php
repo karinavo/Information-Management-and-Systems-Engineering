@@ -10,6 +10,7 @@ require 'vendor/autoload.php';
    $db = $m->imse_mongodb;
 
    echo "Database imse_mongodb selected";
+   $collection = $db->Kueche;
    ////////// MONGO DB CONNECTION ///////////
 ?>
 <?php /*
@@ -322,7 +323,7 @@ catch(PDOException $e)
             'Fassungsvermoegen' => $_GET['Fassungsvermoegen'],
             'Austattung' => $_GET['Austattung']
         );
-        $db->Kueche->insert($values);
+        $collection->insertOne($values);
         echo "Successfully inserted!";
     }
     ?>
@@ -355,13 +356,13 @@ catch(PDOException $e)
             //$stmt = $conn->query($sql);
             //$stmt->execute();
             $query = array('Nummer' => $_GET['search']);
-            $cursor = $db->Kueche->find($query);
+            $cursor = $collection->find($query);
         } else {
             //$sql = "SELECT * FROM imse_db.Kueche";
             // execute sql statement
             //$stmt = $conn->query($sql);
             //$stmt->execute();
-            $cursor = $db->Kueche->find();
+            $cursor = $collection->find();
         }
     } catch(PDOException $e){
         //Print potential errors and warnings
@@ -397,7 +398,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $cursor->count(); ?> Küche(n) gefunden!
+        Insgesamt <?php echo count($cursor->toArray()); ?> Küche(n) gefunden!
 
     </div>
     <?php

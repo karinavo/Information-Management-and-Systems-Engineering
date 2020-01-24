@@ -10,6 +10,7 @@ require 'vendor/autoload.php';
     
     $db = $m->imse_mongodb;
     echo "Database imse_mongodb selected";
+    $collection = $db->Findet_statt;
 
    ////////// MONGO DB CONNECTION ///////////
 ?>
@@ -317,7 +318,7 @@ require 'vendor/autoload.php';
             'Nummer' => $_GET['Nummer'],
             'AbteilungsNr' => $_GET['AbteilungsNr']
          );
-        $db->Findet_statt->insert($values);
+        $collection->insertOne($values);
         /*try {
             $conn->exec($sql);
             echo "Successfully inserted!";
@@ -352,10 +353,10 @@ require 'vendor/autoload.php';
     if (isset($_GET['search'])) {
         //$sql = "SELECT * FROM imse_db.Findet_statt WHERE Datum='" . $_GET['search'] . "'";
         $where = array('Datum' => $_GET['search']);
-        $cursor = $db->Findet_statt->find($where);
+        $cursor = $collection->find($where);
     } else {
         //$sql = "SELECT * FROM imse_db.Findet_statt";
-        $cursor = $db->Findet_statt->find();
+        $cursor = $collection->find();
     }
     // execute sql statement
     //$stmt = $conn->prepare($sql);
@@ -392,7 +393,7 @@ require 'vendor/autoload.php';
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $cursor->count(); ?> Termin(e) gefunden!
+        Insgesamt <?php echo count($cursor->toArray()); ?> Termin(e) gefunden!
 
     </div>
     <?php

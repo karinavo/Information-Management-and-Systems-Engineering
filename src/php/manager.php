@@ -10,6 +10,7 @@ require 'vendor/autoload.php';
    $db = $m->imse_mongodb;
 
    echo "Database imse_mongodb selected";
+   $collection = $db->Manager;
    ////////// MONGO DB CONNECTION ///////////
 ?>
 <?php/*
@@ -302,10 +303,10 @@ catch(PDOException $e)
     if (isset($_GET['search'])) {
         //$sql = "SELECT * FROM imse_db.Manager WHERE SVNummer='" . $_GET['search'] . "'";
         $query = array('SVNUmmer' => $_GET['search']);
-        $cursor = $db->Manager->find($query);
+        $cursor = $collection->find($query);
     } else {
         //$sql = "SELECT * FROM imse_db.Manager";
-        $cursor = $db->Manager->find();
+        $cursor = $collection->find();
     }
     // execute sql statement
     //$stmt = $conn->prepare($sql);
@@ -342,7 +343,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $cursor->count(); ?> Manager gefunden!
+        Insgesamt <?php echo count($cursor->toArray()); ?> Manager gefunden!
 
     </div>
     <?php

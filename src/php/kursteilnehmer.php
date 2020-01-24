@@ -3,13 +3,14 @@
 require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+   $m = new MongoDB\Client("mongodb://localhost:27017");
 
    echo "Connected to database succesfully";
    // select a database
    $db = $m->imse_mongodb;
 
    echo "Database imse_mongodb selected";
+   $collection = $db->Kursteilnehmer;
    ////////// MONGO DB CONNECTION ///////////
 ?>
 <?php/*
@@ -344,7 +345,7 @@ catch(PDOException $e)
         );
         //Parse and execute statement
         //$insert = $conn->prepare($sql);
-        $db->Kursteilnehmer->insert($insert);
+        $collection->insertOne($insert);
         /*try {
             $conn->exec($sql);
             echo "Successfully inserted!";
@@ -378,10 +379,10 @@ catch(PDOException $e)
     if (isset($_GET['search'])) {
         //$sql = "SELECT * FROM imse_db.Kursteilnehmer WHERE Nachname='" . $_GET['search'] . "'";
         $query = array('Nachname' => $_GET['search']);
-        $cursor = $db->Kursteilnehmer->find($query);
+        $cursor = $collection->find($query);
     } else {
         //$sql = "SELECT * FROM imse_db.Kursteilnehmer";
-        $cursor = $db->Kursteilnehmer->find();
+        $cursor = $collection->find();
     }
     // execute sql statement
     //$stmt = $conn->prepare($sql);
@@ -423,7 +424,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $cursor->count(); ?> Kursteilnehmer gefunden!
+        Insgesamt <?php echo count($cursor->toArray()); ?> Kursteilnehmer gefunden!
 
     </div>
     <?php

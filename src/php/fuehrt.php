@@ -10,6 +10,7 @@
    $db = $m->imse_mongodb;
 
    echo "Database imse_mongodb selected";
+   $collection = $db->Fuehrt;
    ////////// MONGO DB CONNECTION ///////////
 ?>
 <?php /*
@@ -310,7 +311,7 @@ catch(PDOException $e)
         //Parse and execute statement
         //$insert = $conn->prepare($sql);
         $insert = array('KochID' => $_GET['KochID'], 'KursNr' => $_GET['KursNr']);
-        $db->Fuert->insert($insert);
+        $collection->insertOne($insert);
         echo "Successfully inserted!";
     }
     ?>
@@ -335,10 +336,10 @@ catch(PDOException $e)
     // check if search view of list view
     if (isset($_GET['search'])) {
         $query = array('KursNr' => $_GET['search']);
-        $cursor = $db->Fuert->find($query);
+        $cursor = $collection->find($query);
         //$sql = "SELECT * FROM imse_db.Fuehrt WHERE KursNr='" . $_GET['search'] . "'";
     } else {
-        $cursor = $db->Fuehrt->find();
+        $cursor = $collection->find();
         //$sql = "SELECT * FROM imse_db.Fuehrt";
     }
     // execute sql statement
@@ -370,7 +371,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $cursor->count(); ?> Fuehrung(en) gefunden!
+        Insgesamt <?php echo count($cursor->toArray()); ?> Fuehrung(en) gefunden!
         <br>
     </div>
     <?php

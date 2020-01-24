@@ -3,13 +3,14 @@
 require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+   $m = new MongoDB\Client("mongodb://localhost:27017");
 
    echo "Connected to database successfully";
    // select a database
    $db = $m->imse_mongodb;
 
    echo "Database imse_mongodb selected";
+
    ////////// MONGO DB CONNECTION ///////////
 ?>
 

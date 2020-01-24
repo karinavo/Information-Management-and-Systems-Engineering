@@ -10,6 +10,9 @@ require 'vendor/autoload.php';
    $db = $m->imse_mongodb;
 
    echo "Database imse_mongodb selected";
+
+   $collection = $db->Koch;
+
    ////////// MONGO DB CONNECTION ///////////
 ?>
 
@@ -294,13 +297,13 @@ require 'vendor/autoload.php';
         //Prepare insert statementd
         //$sql="INSERT INTO imse_db.Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
         //Parse and execute statement
-        //$insert = $conn->prepare($sql);
+        //$insertOne = $conn->prepare($sql);
         $values = array(
             'Rand' => $_GET['Rang'],
             'Ausbildung' => $_GET['Ausbildung'],
             'MId' => $_GET['MId']
         );
-        $db->Koch->insert($values);
+        $collection->insertOne($values);
     }
     ?>
     <!--Suche-->
@@ -325,10 +328,10 @@ require 'vendor/autoload.php';
     if (isset($_GET['search'])) {
         //$sql = "SELECT * FROM imse_db.Koch WHERE KochID='" . $_GET['search'] . "'";
         $where = array('KochID' => $_GET['search']);
-        $cursor = $db->Koch->find($where);
+        $cursor = $collection->find($where);
     } else {
         //$sql = "SELECT * FROM imse_db.Koch";
-        $cursor = $db->Koch->find();
+        $cursor = $collection->find();
     }
     // execute sql statement
     //$stmt = $conn->prepare($sql);
@@ -363,7 +366,7 @@ require 'vendor/autoload.php';
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $cursor->toArray()->count(); ?> Koch(e) gefunden!
+        Insgesamt <?php echo count($cursor->toArray()); ?> Koch(e) gefunden!
 
 
     </div>

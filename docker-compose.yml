@@ -79,15 +79,14 @@ services:
       - ./portainer-data:/data
     ports:
       - "9000:9000"
-
 # MIGRATION
-  migration:
-    image: migration
-    restart: on-failure
-    build:
-      context: .
-      dockerfile: Migration.dockerfile
-    depends_on:
-      - filler
-      - mongo
-    container_name: migration
+#  migration:
+#    image: migration
+#    restart: on-failure
+#    build:
+#      context: .
+#      dockerfile: Migration.dockerfile
+#    depends_on:
+#      - filler
+#      - mongo
+#    container_name: migration

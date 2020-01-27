@@ -35,6 +35,7 @@ public class FuehrtMigration extends AMigration {
         ResultSet fuehrt_mysql = current_statement.executeQuery("SELECT * FROM Fuehrt");
         /////////////////////// Update Koch collection
         FindIterable<Document> fi = koch_collection.find();
+        System.out.println("Koch " + koch_collection.countDocuments());
         FindIterable<Document> kursit = kochkurseCollection.find();
         MongoCursor<Document> mongoCursorKoch = fi.iterator();
         MongoCursor<Document> mongoCursorKurs =kursit.iterator();
@@ -43,11 +44,12 @@ public class FuehrtMigration extends AMigration {
 
             while(mongoCursorKoch.hasNext()){
                 Document current_doc = mongoCursorKoch.next();
-                List<Document> kursList = new ArrayList<Document>();
-                ResultSet kurs_mysql = current_statement.executeQuery("SELECT * FROM Fuehrt WHERE KursNr = " + current_doc.get("KursNr"));
+                List<ObjectId> kursList = new ArrayList<ObjectId>();
+                ResultSet kurs_mysql = current_statement.executeQuery("SELECT * FROM Fuehrt WHERE KochID = " + current_doc.getInteger("KochID"));
+
                 while(kurs_mysql.next()){
                     Document kursDoc = kochkurseCollection.find(eq("KursNr",kurs_mysql.getInt(2))).first();
-                    kursList.add(kursDoc);
+                    kursList.add(kursDoc.get("_id", ObjectId.class));
                 }
                 koch_collection.updateOne(current_doc, Updates.pushEach("Fuehrung", kursList));
             }
@@ -59,13 +61,13 @@ public class FuehrtMigration extends AMigration {
 
             while(mongoCursorKurs.hasNext()){
                 Document current_doc = mongoCursorKurs.next();
-                List<Document> kochList = new ArrayList<Document>();
-                ResultSet koch_mysql = current_statement.executeQuery("SELECT * FROM Fuehrt WHERE KochID = " + current_doc.get("KochID"));
+                List<ObjectId> kochList = new ArrayList<ObjectId>();
+                ResultSet koch_mysql = current_statement.executeQuery("SELECT * FROM Fuehrt WHERE KursNr = " + current_doc.getInteger("KursNr"));
                 while(koch_mysql.next()){
-                    Document kochDoc = kochkurseCollection.find(eq("KochID",koch_mysql.getInt(1))).first();
-                    kochList.add(kochDoc);
+                    Document kochDoc = koch_collection.find(eq("KochID",koch_mysql.getInt(1))).first();
+                    kochList.add(kochDoc.get("_id", ObjectId.class));
                 }
-                koch_collection.updateOne(current_doc, Updates.pushEach("Fuehrung", kochList));
+                kochkurseCollection.updateOne(current_doc, Updates.pushEach("Fuehrung", kochList));
             }
         }finally {
             mongoCursorKurs.close();

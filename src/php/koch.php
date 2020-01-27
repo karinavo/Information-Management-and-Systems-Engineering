@@ -11,7 +11,7 @@ require 'vendor/autoload.php';
 
    echo "Database imse_mongodb selected";
 
-   $collection = $db->Koch;
+   $collection = $db->kochCollection;
 
    ////////// MONGO DB CONNECTION ///////////
 ?>

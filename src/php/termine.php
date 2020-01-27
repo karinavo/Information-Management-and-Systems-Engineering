@@ -20,7 +20,7 @@ require 'vendor/autoload.php';
     
     $db = $m->imse_mongodb;
     echo "Database imse_mongodb selected";
-    $collection = $db->Findet_statt;
+    $collection = $db->findet_stattCollection;
 
    ////////// MONGO DB CONNECTION ///////////
 ?>

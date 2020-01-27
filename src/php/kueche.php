@@ -10,7 +10,7 @@ require 'vendor/autoload.php';
    $db = $m->imse_mongodb;
 
    echo "Database imse_mongodb selected";
-   $collection = $db->Kueche;
+   $collection = $db->kuecheCollection;
    ////////// MONGO DB CONNECTION ///////////
 ?>
 <?php /*

@@ -10,29 +10,8 @@ require 'vendor/autoload.php';
    $db = $m->imse_mongodb;
 
    echo "Database imse_mongodb selected";
-   $collection = $db->Mitarbeiter;
+   $collection = $db->mitarbeiterCollection;
    ////////// MONGO DB CONNECTION ///////////
-?>
-<?php/*
-$servername = "mariadb";
-$username = "root";
-$password = "rootpsw";
-$dbname = "imse_db";
-try {
-    $conn = new PDO(
-        "mysql:host=$servername;$dbname;charset=utf8",
-        $username,
-        $password,
-        array(PDO::ATTR_PERSISTENT => true));
-
-
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
-{
-    echo "Connection failed: " . $e->getMessage();
-}*/
 ?>
 
 

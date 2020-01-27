@@ -9,7 +9,7 @@ require 'vendor/autoload.php';
    $db = $m->imse_mongodb;
 
    echo "Database imse_mongodb selected";
-   $collection = $db->Kochkurse;
+   $collection = $db->kochkurseCollection;
    ////////// MONGO DB CONNECTION ///////////
 ?>
 <?php /*

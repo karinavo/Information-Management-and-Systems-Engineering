@@ -262,9 +262,9 @@ require 'vendor/autoload.php';
     </script>
 
 <!--
-<?php/*
-    $query_zb = $db->Zeit->find(array(), ['ZeitBlock' => true])->distinct();
-    $query_thema =$db->Kochkurse->find(array(), ['Thema' => true])->distinct();*/
+<?php
+    $query_zb = $db->zeitCollection->find(array(), ['ZeitBlock' => true])->distinct();
+    $query_thema =$db->kochkurseCollection->find(array(), ['Thema' => true])->distinct();
 ?>
 -->
 

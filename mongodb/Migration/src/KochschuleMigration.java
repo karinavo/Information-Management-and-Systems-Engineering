@@ -29,7 +29,7 @@ public class KochschuleMigration extends AMigration {
         System.out.println("Kochschule migrating");
         Statement current_statement = mariadb_conn.createStatement();
         MongoDatabase mongoDatabase = this.mongoClient.getDatabase("imse_mongodb");
-        MongoCollection<Document> kochschule_collection = mongoDatabase.getCollection("kochschulen");
+        MongoCollection<Document> kochschule_collection = mongoDatabase.getCollection("kochschuleCollection");
 
         ResultSet kochschule_mysql = current_statement.executeQuery("SELECT * FROM Kochschule");
         //KOCHSCHULE
@@ -49,6 +49,8 @@ public class KochschuleMigration extends AMigration {
         FindIterable<Document> fi = kochschule_collection.find();
         MongoCursor<Document> mongoCursor = fi.iterator();
         try{
+            System.out.println("Kueche migrating");
+
             while(mongoCursor.hasNext()){
                 Document current_doc = mongoCursor.next();
                 List<Document> kueche_list = new ArrayList<Document>();

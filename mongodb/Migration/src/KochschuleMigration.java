@@ -14,6 +14,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import java.sql.SQLException;
 
@@ -30,10 +32,8 @@ public class KochschuleMigration extends AMigration {
         MongoCollection<Document> kochschule_collection = mongoDatabase.getCollection("kochschulen");
 
         ResultSet kochschule_mysql = current_statement.executeQuery("SELECT * FROM Kochschule");
-
-        // Move cursor forward
+        //KOCHSCHULE
         while (kochschule_mysql.next()) {
-
             int abteilungsNr = kochschule_mysql.getInt(1);
             String name = kochschule_mysql.getString(2);
             String ort = kochschule_mysql.getString(3);
@@ -44,7 +44,26 @@ public class KochschuleMigration extends AMigration {
             // Add kochschule in collection
             kochschule_collection.insertOne(kochschuleDocument);
 
-
+        }
+        //KUECHE
+        FindIterable<Document> fi = kochschule_collection.find();
+        MongoCursor<Document> mongoCursor = fi.iterator();
+        try{
+            while(mongoCursor.hasNext()){
+                Document current_doc = mongoCursor.next();
+                List<Document> kueche_list = new ArrayList<Document>();
+                ResultSet kueche_mysql = current_statement.executeQuery("SELECT * FROM Kueche WHERE AbteilungsNr = " + 1);
+                while(kueche_mysql.next()){
+                    int nummber = kueche_mysql.getInt(2);
+                    int fassung = kueche_mysql.getInt(3);
+                    String ausstatung = kueche_mysql.getString(4);
+                    Document kuecheDocument = new Document().append("Nummer",nummber).append("Fassungsvermoegen",fassung).append("Ausstattung",ausstatung);
+                    kueche_list.add(kuecheDocument);
+                }
+                kochschule_collection.updateOne(current_doc, Updates.pushEach("Kueche", kueche_list));
+            }
+        }finally {
+            mongoCursor.close();
         }
     }
 }

@@ -265,7 +265,7 @@ public class DataMigration {
                     break;
                 }
             }
-          KochschuleMigration kochschuleMigration = new KochschuleMigration(conn,mongoClient);
+            KochschuleMigration kochschuleMigration = new KochschuleMigration(conn,mongoClient);
             kochschuleMigration.migrate();
 
        }catch(SQLException e){

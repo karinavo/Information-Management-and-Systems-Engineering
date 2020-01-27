@@ -124,7 +124,7 @@ try {
 }*/
 ////////// MONGO DB CONNECTION ///////////
 // connect to mongodb
-$m = new MongoDB\Client();
+$m = new MongoDB\Client("mongodb://admin:adminpsw@mongo:27017");
 
 echo "Connected to database succesfully";
 // select a database

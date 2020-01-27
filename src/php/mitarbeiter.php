@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <?php
+require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoClient();
+   $m = new MongoDB\Client("mongodb://admin:adminpsw@mongo:27017");
 
-   echo "Connection to database successfully";
+   echo "Connected to database succesfully";
    // select a database
-   $db = $m->mydb;
+   $db = $m->imse_mongodb;
 
-   echo "Database mydb selected";
+   echo "Database imse_mongodb selected";
+   $collection = $db->Mitarbeiter;
    ////////// MONGO DB CONNECTION ///////////
 ?>
 <?php/*
@@ -365,7 +367,7 @@ catch(PDOException $e)
             'LeiterMId' => $_GET['LeiterMId'],
             'AbteilungsNr' => $_GET['AbteilungsNr']
         );
-        $db->Mitarbeiter->insert($values);
+        $collection->insertOne($values);
         /*
         try {
             $conn->exec($sql);
@@ -402,10 +404,11 @@ catch(PDOException $e)
     if (isset($_GET['search'])) {
         //$sql = "SELECT * FROM imse_db.Mitarbeiter WHERE MId='" . $_GET['search'] . "'";
         $where = array('MId' => $_GET['search']);
-        $cursor = $db->Mitarbeiter->find($where);
+        $cursor = $collection->find($where);
+
     } else {
         //$sql = "SELECT * FROM imse_db.Mitarbeiter";
-        $cursor = $db->Mitarbeiter->find();
+        $cursor = $collection->find();
     }
     // execute sql statement
     //$stmt = $conn->prepare($sql);
@@ -453,12 +456,12 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $cursor->count(); ?> Mitarbeiter gefunden!
+        Insgesamt <?php echo count($cursor->toArray()); ?> Mitarbeiter gefunden!
 
     </div>
     <?php
-    $stmt = null;
-    $conn = null;
+    //$stmt = null;
+    //$conn = null;
     ?>
 </div>
 

@@ -59,6 +59,7 @@ and deployment
 ### How to build and run the project
 
 With docker-compose
+(FOR MS3 sudo is needed because of protected portainer and mongo data folders!)
 
 ```bash
 cd /imse

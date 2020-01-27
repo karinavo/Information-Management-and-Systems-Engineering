@@ -1,35 +1,31 @@
+<?php
+require 'vendor/autoload.php';
+    ////////// MONGO DB CONNECTION ///////////
+        // connect to mongodb
+    $m = new MongoDB\Client("mongodb://admin:adminpsw@mongo:27017");
+
+    try
+    {
+        $dbs = $m->listDatabases();
+    }
+    catch (MongoDB\Driver\Exception\ConnectionTimeoutException $e)
+    {
+        echo 'Connection error';
+        // PHP cannot find a MongoDB server using the MongoDB connection string specified
+        // do something here
+    }
+    echo "Connected to database succesfully\n";
+    //var_dump($m);
+        // select a database
+    
+    $db = $m->imse_mongodb;
+    echo "Database imse_mongodb selected";
+    $collection = $db->Findet_statt;
+
+   ////////// MONGO DB CONNECTION ///////////
+?>
+
 <!DOCTYPE html>
-<?php
-   ////////// MONGO DB CONNECTION ///////////
-   // connect to mongodb
-   $m = new MongoClient();
-
-   echo "Connection to database successfully";
-   // select a database
-   $db = $m->mydb;
-
-   echo "Database mydb selected";
-   ////////// MONGO DB CONNECTION ///////////
-?>
-<?php
-/*$servername = "mariadb";
-$username = "root";
-$password = "rootpsw";
-$dbname = "imse_db";
-try {
-    $conn = new PDO(
-        "mysql:host=$servername;$dbname;charset=utf8",
-        $username,
-        $password,
-        array(PDO::ATTR_PERSISTENT => true));
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e)
-{
-    echo "Connection failed: " . $e->getMessage();
-}*/
-?>
-
 
 <html>
 <title>Die Kochschule</title>
@@ -332,7 +328,7 @@ try {
             'Nummer' => $_GET['Nummer'],
             'AbteilungsNr' => $_GET['AbteilungsNr']
          );
-        $db->Findet_statt->insert($values);
+        $collection->insertOne($values);
         /*try {
             $conn->exec($sql);
             echo "Successfully inserted!";
@@ -366,11 +362,11 @@ try {
     // check if search view of list view
     if (isset($_GET['search'])) {
         //$sql = "SELECT * FROM imse_db.Findet_statt WHERE Datum='" . $_GET['search'] . "'";
-        $where = array(Datum'' => $_GET['search']);
-        $cursor = $db->Findet_statt->find($where);
+        $where = array('Datum' => $_GET['search']);
+        $cursor = $collection->find($where);
     } else {
         //$sql = "SELECT * FROM imse_db.Findet_statt";
-        $cursor = $db->Findet_statt->find();
+        $cursor = $collection->find();
     }
     // execute sql statement
     //$stmt = $conn->prepare($sql);
@@ -407,7 +403,7 @@ try {
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $cursor->count(); ?> Termin(e) gefunden!
+        Insgesamt <?php echo count($cursor->toArray()); ?> Termin(e) gefunden!
 
     </div>
     <?php

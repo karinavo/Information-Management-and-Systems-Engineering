@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <?php
+require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoClient();
+   $m = new MongoDB\Client("mongodb://admin:adminpsw@mongo:27017");
 
-   echo "Connection to database successfully";
+   echo "Connected to database succesfully";
    // select a database
-   $db = $m->mydb;
+   $db = $m->imse_mongodb;
 
-   echo "Database mydb selected";
+   echo "Database imse_mongodb selected";
+   $collection = $db->Kueche;
    ////////// MONGO DB CONNECTION ///////////
 ?>
 <?php /*
@@ -311,20 +313,18 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['Nummer'])) {
         //Prepare insert statementd
-        try{
-            //$sql="INSERT INTO imse_db.Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(" . $_GET['AbteilungsNr'] . "," . $_GET['Nummer'] . "," . $_GET['Fassungsvermoegen']." , '" . $_GET['Ausstattung'] . "')";
-            //Parse and execute statement
-            //$stmt = $conn->prepare($sql);
-            //$stmt->execute();
-            $values = array(
-                'AbteilungsNr' => $_GET['AbteilungsNr'],
-                'Nummer' => $_GET['Nummer'],
-                'Fassungsvermoegen' => $_GET['Fassungsvermoegen'],
-                'Austattung' => $_GET['Austattung']
-            );
-            $db->Kueche->insert($values);
-            echo "Successfully inserted!"
-
+        //$sql="INSERT INTO imse_db.Kueche(AbteilungsNr,Nummer,Fassungsvermoegen,Ausstattung) VALUES(" . $_GET['AbteilungsNr'] . "," . $_GET['Nummer'] . "," . $_GET['Fassungsvermoegen']." , '" . $_GET['Ausstattung'] . "')";
+        //Parse and execute statement
+        //$stmt = $conn->prepare($sql);
+        //$stmt->execute();
+        $values = array(
+            'AbteilungsNr' => $_GET['AbteilungsNr'],
+            'Nummer' => $_GET['Nummer'],
+            'Fassungsvermoegen' => $_GET['Fassungsvermoegen'],
+            'Austattung' => $_GET['Austattung']
+        );
+        $collection->insertOne($values);
+        echo "Successfully inserted!";
     }
     ?>
     <!--Suche-->
@@ -356,13 +356,13 @@ catch(PDOException $e)
             //$stmt = $conn->query($sql);
             //$stmt->execute();
             $query = array('Nummer' => $_GET['search']);
-            $cursor = $db->Kueche->find($query);
+            $cursor = $collection->find($query);
         } else {
             //$sql = "SELECT * FROM imse_db.Kueche";
             // execute sql statement
             //$stmt = $conn->query($sql);
             //$stmt->execute();
-            $cursor = $db->Kueche->find();
+            $cursor = $collection->find();
         }
     } catch(PDOException $e){
         //Print potential errors and warnings
@@ -398,12 +398,13 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $cursor->count(); ?> Küche(n) gefunden!
+        Insgesamt <?php echo count($cursor->toArray()); ?> Küche(n) gefunden!
 
     </div>
     <?php
     //$stmt = null;
     //$conn = null;
+    $cursor = null;
     ?>
 </div>
 

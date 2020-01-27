@@ -1,36 +1,19 @@
 <!DOCTYPE html>
 <?php
+require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoClient();
+   $m = new MongoDB\Client("mongodb://admin:adminpsw@mongo:27017");
 
-   echo "Connection to database successfully";
+   echo "Connected to database succesfully";
    // select a database
-   $db = $m->mydb;
+   $db = $m->imse_mongodb;
 
-   echo "Database mydb selected";
+   echo "Database imse_mongodb selected";
+
+   $collection = $db->Koch;
+
    ////////// MONGO DB CONNECTION ///////////
-?>
-<?php/*
-$servername = "mariadb";
-$username = "root";
-$password = "rootpsw";
-$dbname = "imse_db";
-try {
-    $conn = new PDO(
-        "mysql:host=$servername;$dbname;charset=utf8",
-        $username,
-        $password,
-        array(PDO::ATTR_PERSISTENT => true));
-
-
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
-{
-    echo "Connection failed: " . $e->getMessage();
-}*/
 ?>
 
 <html>
@@ -314,13 +297,13 @@ catch(PDOException $e)
         //Prepare insert statementd
         //$sql="INSERT INTO imse_db.Koch(Rang,Ausbildung,MId) VALUES('". $_GET['Rang'] ."','" . $_GET['Ausbildung']."'," . $_GET['MId'] . ")";
         //Parse and execute statement
-        //$insert = $conn->prepare($sql);
-        $values = arrray(
+        //$insertOne = $conn->prepare($sql);
+        $values = array(
             'Rand' => $_GET['Rang'],
             'Ausbildung' => $_GET['Ausbildung'],
             'MId' => $_GET['MId']
         );
-        $db->Koch->insert($values);
+        $collection->insertOne($values);
     }
     ?>
     <!--Suche-->
@@ -345,10 +328,10 @@ catch(PDOException $e)
     if (isset($_GET['search'])) {
         //$sql = "SELECT * FROM imse_db.Koch WHERE KochID='" . $_GET['search'] . "'";
         $where = array('KochID' => $_GET['search']);
-        $cursor = $db->Koch->find($where);
+        $cursor = $collection->find($where);
     } else {
         //$sql = "SELECT * FROM imse_db.Koch";
-        $cursor = $db->Koch->find();
+        $cursor = $collection->find();
     }
     // execute sql statement
     //$stmt = $conn->prepare($sql);
@@ -383,7 +366,8 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $cursor->count(); ?> Koch(e) gefunden!
+        Insgesamt <?php echo count($cursor->toArray()); ?> Koch(e) gefunden!
+
 
     </div>
     <?php

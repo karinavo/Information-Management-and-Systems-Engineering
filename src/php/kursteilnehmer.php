@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <?php
+require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoClient();
+   $m = new MongoDB\Client("mongodb://admin:adminpsw@mongo:27017");
 
-   echo "Connection to database successfully";
+   echo "Connected to database succesfully";
    // select a database
-   $db = $m->mydb;
+   $db = $m->imse_mongodb;
 
-   echo "Database mydb selected";
+   echo "Database imse_mongodb selected";
+   $collection = $db->Kursteilnehmer;
    ////////// MONGO DB CONNECTION ///////////
 ?>
 <?php/*
@@ -332,7 +334,7 @@ catch(PDOException $e)
     //HANDLE insert
     if(isset($_GET['AbteilungsNr'])&&isset($_GET['KursNr'])) {
         //Prepare insert statementd
-        $sql="INSERT INTO imse_db.Kursteilnehmer(Vorname,Nachname,EMail,TelefonNr,AbteilungsNr,KursNr) VALUES('". $_GET['Vorname'] ."','" . $_GET['Nachname'] . "','" . $_GET['EMail'] . "','" . $_GET['TelefonNr'] . "'," . $_GET['AbteilungsNr'] .",".$_GET['KursNr']. ")";
+        //$sql="INSERT INTO imse_db.Kursteilnehmer(Vorname,Nachname,EMail,TelefonNr,AbteilungsNr,KursNr) VALUES('". $_GET['Vorname'] ."','" . $_GET['Nachname'] . "','" . $_GET['EMail'] . "','" . $_GET['TelefonNr'] . "'," . $_GET['AbteilungsNr'] .",".$_GET['KursNr']. ")";
         $insert = array(
             'Vorname' => $_GET['Vorname'],
             'Nachname' => $_GET['Nachname'],
@@ -343,7 +345,7 @@ catch(PDOException $e)
         );
         //Parse and execute statement
         //$insert = $conn->prepare($sql);
-        $db->Kursteilnehmer->insert($insert);
+        $collection->insertOne($insert);
         /*try {
             $conn->exec($sql);
             echo "Successfully inserted!";
@@ -377,10 +379,10 @@ catch(PDOException $e)
     if (isset($_GET['search'])) {
         //$sql = "SELECT * FROM imse_db.Kursteilnehmer WHERE Nachname='" . $_GET['search'] . "'";
         $query = array('Nachname' => $_GET['search']);
-        $cursor = $db->Kursteilnehmer->find($query);
+        $cursor = $collection->find($query);
     } else {
         //$sql = "SELECT * FROM imse_db.Kursteilnehmer";
-        $cursor = $db->Kursteilnehmer->find();
+        $cursor = $collection->find();
     }
     // execute sql statement
     //$stmt = $conn->prepare($sql);
@@ -422,7 +424,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo $cursor->count(); ?> Kursteilnehmer gefunden!
+        Insgesamt <?php echo count($cursor->toArray()); ?> Kursteilnehmer gefunden!
 
     </div>
     <?php

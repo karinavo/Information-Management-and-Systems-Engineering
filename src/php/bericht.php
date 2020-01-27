@@ -1,38 +1,19 @@
 <!DOCTYPE html>
 <?php
+require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoClient();
+   $m = new MongoDB\Client("mongodb://admin:adminpsw@mongo:27017");
 
-   echo "Connection to database successfully";
+   echo "Connected to database successfully";
    // select a database
-   $db = $m->mydb;
+   $db = $m->imse_mongodb;
 
-   echo "Database mydb selected";
+   echo "Database imse_mongodb selected";
+
    ////////// MONGO DB CONNECTION ///////////
 ?>
 
-<?php/*
-$servername = "mariadb";
-$username = "root";
-$password = "rootpsw";
-$dbname = "imse_db";
-
-try {
-    $conn = new PDO(
-        "mysql:host=$servername;$dbname;charset=utf8",
-        $username,
-        $password,
-        array(PDO::ATTR_PERSISTENT => true));
-
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
-{
-    echo "Connection failed: " . $e->getMessage();
-}*/
-?>
 
 <html>
 <title>Die Kochschule</title>
@@ -252,7 +233,7 @@ catch(PDOException $e)
 <!--background-->
 <div class="sidenav">
     <div class="dropdown">
-        <button class="dropdown-btn">
+        <button class="dropdown-btn"> &#9778
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content" style="margin-left: 6%">
@@ -270,8 +251,8 @@ catch(PDOException $e)
         </div>
     </div>
 </div>
-<div class="main">
 
+<div class="main">
     <!--Report Formular-->
 
     <script>
@@ -280,34 +261,16 @@ catch(PDOException $e)
         }
     </script>
 
-
-
-
-
-
-
-
-    <?php
-    //$query_zb = "SELECT DISTINCT ZeitBlock FROM imse_db.Zeit;";
-    //$query_thema ="SELECT DISTINCT Thema FROM imse_db.Kochkurse;";
-    // execute sql for zeitbloc statement
-    //$stmt_zb = $conn->prepare($query_zb);
-    //$stmt_zb->execute();
-    // execute sql for thema statement
-    //$stmt_thema= $conn->prepare($query_thema);
-    //$stmt_thema->execute();
-    ?>
-
-    <?php
+<!--
+<?php/*
     $query_zb = $db->Zeit->find(array(), ['ZeitBlock' => true])->distinct();
-    $query_thema =$db->Kochkurse->find(array(), ['Thema' => true])->distinct();
-     ?>
+    $query_thema =$db->Kochkurse->find(array(), ['Thema' => true])->distinct();*/
+?>
+-->
 
-
-
-    <!-- Button for reporting use case -->
+<!-- Button for reporting use case -->
     <div>
-        <br/>
+        <!--<br/> -->
         <form id="berichtform" action="report.php/?reportsubmit=true" method="post">
             Wählen Sie bitte aus:
             <table>
@@ -331,7 +294,7 @@ catch(PDOException $e)
                         <INPUT TYPE="text" name="Thema" list="themas">
                         <datalist id="themas">
                         <?php
-                            foreach ($query_thema as $row)
+                        foreach ($query_thema as $row)
                         {
                             echo '<option value=" '.$row['Thema'].' " </option>';
                         }
@@ -359,15 +322,8 @@ catch(PDOException $e)
 
         </form>
     </div>
-    <?php
-
-    //$stmt = null;
-    //$conn = null;
-    ?>
 
 </div>
-
-
 
 </body>
 </html>

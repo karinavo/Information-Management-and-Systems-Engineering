@@ -4,7 +4,9 @@ header('Content-Disposition: attachment; filename="report.csv"');
 header('Pragma: no-cache');
 header('Expires: 0');
 
-function gen_report_csv(MongoDB $db) {
+require 'vendor/autoload.php';
+
+function gen_report_csv_mongo(MongoDB $db) {
     if (isset($_POST['Datum']) && isset($_POST['Thema']) && isset($_POST['ZeitBlock'])) {
 
     $kochkurse = $db->Kochkurse->find();
@@ -122,13 +124,13 @@ try {
 }*/
 ////////// MONGO DB CONNECTION ///////////
 // connect to mongodb
-$m = new MongoClient();
+$m = new MongoDB\Client();
 
-echo "Connection to database successfully";
+echo "Connected to database succesfully";
 // select a database
-$db = $m->mydb;
+$db = $m->imse_mongodb;
 
-echo "Database mydb selected";
+echo "Database imse_mongodb selected";
 ////////// MONGO DB CONNECTION ///////////
 
     if (isset($_POST['reportsubmit'])) {

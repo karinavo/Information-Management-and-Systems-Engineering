@@ -225,7 +225,6 @@ public class DataMigration {
 
 
 
-        @Deprecated
         MongoClient mongoClient = null;
         MongoCredential mongoCredential = MongoCredential.createScramSha1Credential("admin", "admin",
                 "adminpsw".toCharArray());
@@ -265,9 +264,31 @@ public class DataMigration {
                     break;
                 }
             }
+            //1. Kochschule AND 2.Kueche
             KochschuleMigration kochschuleMigration = new KochschuleMigration(conn,mongoClient);
             kochschuleMigration.migrate();
-
+            //3.Mitarbeiter
+            MitarbeiterMigrator mitarbeiterMigrator = new MitarbeiterMigrator(conn,mongoClient);
+            mitarbeiterMigrator.migrate();
+            //4.Koch
+            KochMigration kochMigration = new KochMigration(conn,mongoClient);
+            kochMigration.migrate();
+            //5.Manager
+            ManagerMigrator managerMigrator = new ManagerMigrator(conn,mongoClient);
+            managerMigrator.migrate();
+            //6.Kochkurse
+            KochkursMigrator kochkursMigrator = new KochkursMigrator(conn,mongoClient);
+            kochkursMigrator.migrate();
+            //7.Kursteilnehmer
+            KursteilnehmerMigrator kursteilnehmerMigrator = new KursteilnehmerMigrator(conn,mongoClient);
+            kursteilnehmerMigrator.migrate();
+            //8.Zeit
+            ZeitMigrator zeitMigrator = new ZeitMigrator(conn,mongoClient);
+            zeitMigrator.migrate();
+            //9.Findet_statt
+            //10.Fuehrt
+            FuehrtMigration fuehrtMigration = new FuehrtMigration(conn,mongoClient);
+            fuehrtMigration.migrate();
        }catch(SQLException e){
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
         } catch(Exception e){

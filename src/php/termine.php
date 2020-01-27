@@ -2,8 +2,18 @@
 require 'vendor/autoload.php';
     ////////// MONGO DB CONNECTION ///////////
         // connect to mongodb
-    $m = new MongoDB\Client("mongodb://admin:adminpsw@localhost:27017");
+    $m = new MongoDB\Client("mongodb://admin:adminpsw@mongo:27017");
 
+    try
+    {
+        $dbs = $m->listDatabases();
+    }
+    catch (MongoDB\Driver\Exception\ConnectionTimeoutException $e)
+    {
+        echo 'Connection error';
+        // PHP cannot find a MongoDB server using the MongoDB connection string specified
+        // do something here
+    }
     echo "Connected to database succesfully\n";
     //var_dump($m);
         // select a database

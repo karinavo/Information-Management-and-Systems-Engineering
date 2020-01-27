@@ -3,7 +3,7 @@
 require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoDB\Client("mongodb://localhost:27017");
+   $m = new MongoDB\Client("mongodb://admin:adminpsw@mongo:27017");
 
    echo "Connected to database succesfully";
    // select a database

@@ -3,7 +3,7 @@
 require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
-   $m = new MongoDB\Client("mongodb://localhost:27017");
+   $m = new MongoDB\Client("mongodb://admin:adminpsw@mongo:27017");
 
    echo "Connected to database successfully";
    // select a database
@@ -233,7 +233,7 @@ require 'vendor/autoload.php';
 <!--background-->
 <div class="sidenav">
     <div class="dropdown">
-        <button class="dropdown-btn">
+        <button class="dropdown-btn"> &#9778
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content" style="margin-left: 6%">
@@ -251,8 +251,8 @@ require 'vendor/autoload.php';
         </div>
     </div>
 </div>
-<div class="main">
 
+<div class="main">
     <!--Report Formular-->
 
     <script>
@@ -261,34 +261,16 @@ require 'vendor/autoload.php';
         }
     </script>
 
-
-
-
-
-
-
-
-    <?php
-    //$query_zb = "SELECT DISTINCT ZeitBlock FROM imse_db.Zeit;";
-    //$query_thema ="SELECT DISTINCT Thema FROM imse_db.Kochkurse;";
-    // execute sql for zeitbloc statement
-    //$stmt_zb = $conn->prepare($query_zb);
-    //$stmt_zb->execute();
-    // execute sql for thema statement
-    //$stmt_thema= $conn->prepare($query_thema);
-    //$stmt_thema->execute();
-    ?>
-
-    <?php
+<!--
+<?php/*
     $query_zb = $db->Zeit->find(array(), ['ZeitBlock' => true])->distinct();
-    $query_thema =$db->Kochkurse->find(array(), ['Thema' => true])->distinct();
-     ?>
+    $query_thema =$db->Kochkurse->find(array(), ['Thema' => true])->distinct();*/
+?>
+-->
 
-
-
-    <!-- Button for reporting use case -->
+<!-- Button for reporting use case -->
     <div>
-        <br/>
+        <!--<br/> -->
         <form id="berichtform" action="report.php/?reportsubmit=true" method="post">
             Wählen Sie bitte aus:
             <table>
@@ -312,7 +294,7 @@ require 'vendor/autoload.php';
                         <INPUT TYPE="text" name="Thema" list="themas">
                         <datalist id="themas">
                         <?php
-                            foreach ($query_thema as $row)
+                        foreach ($query_thema as $row)
                         {
                             echo '<option value=" '.$row['Thema'].' " </option>';
                         }
@@ -340,15 +322,8 @@ require 'vendor/autoload.php';
 
         </form>
     </div>
-    <?php
-
-    //$stmt = null;
-    //$conn = null;
-    ?>
 
 </div>
-
-
 
 </body>
 </html>

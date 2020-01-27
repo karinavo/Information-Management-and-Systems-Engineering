@@ -20,13 +20,20 @@ public class DataMigration {
 
     private static ComboPooledDataSource cpds = new ComboPooledDataSource();
 
+    /// JDBC driver name and database URL
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/imse_db";
+
+    //  Database credentials
+    static final String USER = "root";
+    static final String PASS = "rootpsw";
     private static void createPool()
     {
         try
         {
             cpds = new ComboPooledDataSource();
             cpds.setDriverClass("com.mysql.jdbc.Driver");
-            cpds.setJdbcUrl("jdbc:mysql://mariadb:3306/imse_db");
+            cpds.setJdbcUrl("jdbc:mysql://localhost:3306/imse_db");
             cpds.setUser("root");
             cpds.setPassword("rootpsw");
             cpds.setMinPoolSize(100);
@@ -229,13 +236,10 @@ public class DataMigration {
         System.out.println(db.getName());
         Document behandlungDocument = new Document().append("s",1);
         MongoCollection<Document> kochschule_collection =db.getCollection("test");
-        // Add behandlungsDokument in Collections
-        kochschule_collection.insertOne(behandlungDocument);
-        mongoClient.close();
 
-/***
-        // END
-       try {
+        // Add behandlungsDokument in Collections
+   // END
+    try {
             // Create connection pool
             createPool();
 
@@ -261,7 +265,7 @@ public class DataMigration {
                     break;
                 }
             }
-           KochschuleMigration kochschuleMigration = new KochschuleMigration(conn,mongoClient);
+            KochschuleMigration kochschuleMigration = new KochschuleMigration(conn,mongoClient);
             kochschuleMigration.migrate();
 
        }catch(SQLException e){
@@ -269,7 +273,7 @@ public class DataMigration {
         } catch(Exception e){
             e.printStackTrace();
         }
-**/
+
     }
     }
 

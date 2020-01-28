@@ -264,9 +264,24 @@ public class DataMigration {
                     break;
                 }
             }
-            //1. Kochschule AND 2.Kueche
+            MongoDatabase mongoDatabase = mongoClient.getDatabase("imse_mongodb");
+            if(mongoDatabase.getCollection("kochschuleCollection").countDocuments()==1&&
+                mongoDatabase.getCollection("kuecheCollection").countDocuments()==109
+                &&mongoDatabase.getCollection("mitarbeiterCollection").countDocuments()==200
+                &&mongoDatabase.getCollection("kochCollection").countDocuments()==151
+                    &&mongoDatabase.getCollection("managerCollection").countDocuments()==49
+            &&mongoDatabase.getCollection("kochkurseCollection").countDocuments()==3500
+            &&mongoDatabase.getCollection("kursteilnehmerCollection").countDocuments()==3030
+                    &&mongoDatabase.getCollection("zeitCollection").countDocuments()>600){
+                System.out.println("Databank is already migrated");
+                System.exit(0);
+            }
+            //1. Kochschule
             KochschuleMigration kochschuleMigration = new KochschuleMigration(conn,mongoClient);
             kochschuleMigration.migrate();
+            //2.Kueche
+            KuecheMigrator kuecheMigrator = new KuecheMigrator(conn,mongoClient);
+            kuecheMigrator.migrate();
             //3.Mitarbeiter
             MitarbeiterMigrator mitarbeiterMigrator = new MitarbeiterMigrator(conn,mongoClient);
             mitarbeiterMigrator.migrate();
@@ -286,6 +301,8 @@ public class DataMigration {
             ZeitMigrator zeitMigrator = new ZeitMigrator(conn,mongoClient);
             zeitMigrator.migrate();
             //9.Findet_statt
+            FindetStattMigrator findetStattMigrator = new FindetStattMigrator(conn,mongoClient);
+            findetStattMigrator.migrate();
             //10.Fuehrt
             FuehrtMigration fuehrtMigration = new FuehrtMigration(conn,mongoClient);
             fuehrtMigration.migrate();

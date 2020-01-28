@@ -33,12 +33,12 @@ public class ManagerMigrator extends AMigration {
             int mID = manager_mysql.getInt(4);
             //find document mitarbeoiter
             Document mitrDoc = mitarbeiter_collection.find(eq("MId", mID)).first();
-            // Add koch in document
+            // Add manager in document
             Document mitarbeiterDocument = new Document().append("SVNummer", svNummer)
                     .append("EMail", eMail)
                     .append("Telefonummer",tel)
                     .append("MId",mitrDoc.get("_id", ObjectId.class));
-            // Add koch in collection
+            // Add manager in collection
             manager_collection.insertOne(mitarbeiterDocument);
 
 

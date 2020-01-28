@@ -32,7 +32,7 @@ public class KochkursMigrator  extends AMigration {
             String thema = kochkurs_mysql.getString(3);
             String svNr = kochkurs_mysql.getString(4);
             Document managerDoc = manager_collection.find(eq("SVNummer", svNr)).first();
-            // Add kurs in document
+            // create document
             Document kursDocument = new Document().append("KursNr", kursNr).append("Preis",preis)
                     .append("Thema",thema)
                     .append("SVNummer",managerDoc.get("_id", ObjectId.class));

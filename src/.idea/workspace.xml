@@ -2,20 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9614be49-9268-4e4d-aa8b-e728cb097b3d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../mongodb/Migration/src/KochMigration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mongodb/Migration/src/KochkursMigrator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mongodb/Migration/src/KursteilnehmerMigrator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mongodb/Migration/src/ManagerMigrator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mongodb/Migration/src/ZeitMigrator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mongodb/Migration/out/artifacts/Migration_jar/Migration.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../mongodb/Migration/out/artifacts/Migration_jar/Migration.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mongodb/Migration/out/production/Migration/DataMigration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mongodb/Migration/out/production/Migration/KochschuleMigration.class" beforeDir="false" afterPath="$PROJECT_DIR$/../mongodb/Migration/out/production/Migration/KochschuleMigration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mongodb/Migration/out/production/Migration/MitarbeiterMigrator.class" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mongodb/Migration/src/FindetStattMigrator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mongodb/Migration/src/DataMigration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mongodb/Migration/src/DataMigration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mongodb/Migration/src/KochschuleMigration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mongodb/Migration/src/KochschuleMigration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mongodb/Migration/src/MitarbeiterMigrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mongodb/Migration/src/MitarbeiterMigrator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mongodb/Migration/src/ZeitMigrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mongodb/Migration/src/ZeitMigrator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../portainer-data/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../portainer-data/config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../portainer-data/portainer.db" beforeDir="false" afterPath="$PROJECT_DIR$/../portainer-data/portainer.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/src.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/src.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +16,8 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings">
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/php/composer.json</pharConfigPath>
     <execution>
       <executable />
     </execution>
@@ -44,6 +38,12 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/php/vendor/mongodb/mongodb" />
+      <path value="$PROJECT_DIR$/php/vendor/composer" />
+    </include_path>
   </component>
   <component name="ProjectId" id="1VLVHE61GEqPjVag64uZYvCDUkO" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -94,6 +94,7 @@
       <workItem from="1578230257539" duration="14477000" />
       <workItem from="1579810227438" duration="2000" />
       <workItem from="1580143339036" duration="634000" />
+      <workItem from="1580174899063" duration="1345000" />
     </task>
     <servers />
   </component>
@@ -109,10 +110,10 @@
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="790" y="479" width="399" height="156" key="NewPhpFileDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1578238032708" />
-    <state x="346" y="513" key="com.intellij.ide.util.TipDialog" timestamp="1580143339075">
+    <state x="346" y="513" key="com.intellij.ide.util.TipDialog" timestamp="1580174899749">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
-    <state x="346" y="513" key="com.intellij.ide.util.TipDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1580143339075" />
+    <state x="346" y="513" key="com.intellij.ide.util.TipDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1580174899749" />
     <state x="658" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1578238839076">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>

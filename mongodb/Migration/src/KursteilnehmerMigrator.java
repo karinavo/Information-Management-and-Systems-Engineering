@@ -1,15 +1,14 @@
 import com.mongodb.MongoClient;
-        import com.mongodb.client.MongoCollection;
-        import com.mongodb.client.MongoDatabase;
-        import org.bson.Document;
-        import org.bson.types.ObjectId;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-        import java.sql.Connection;
-        import java.sql.ResultSet;
-        import java.sql.SQLException;
-        import java.sql.Statement;
-
-        import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.eq;
 
 
 public class KursteilnehmerMigrator extends AMigration {
@@ -47,7 +46,7 @@ public class KursteilnehmerMigrator extends AMigration {
                     .append("EMail", eMail)
                     .append("TelefonNr",tel)
                     .append("AbteilungsNr",schuleDoc.get("_id", ObjectId.class))
-                    .append("KursNr",schuleDoc.get("_id",ObjectId.class));
+                    .append("KursNr",kursDoc.get("_id",ObjectId.class));
             // Add  in collection
             kursteilnehmerCollection_collection.insertOne(teilnehmerDocument);
 

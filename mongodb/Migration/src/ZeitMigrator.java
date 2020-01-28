@@ -2,14 +2,12 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static com.mongodb.client.model.Filters.eq;
 
 public class ZeitMigrator  extends AMigration {
     public ZeitMigrator(Connection mariadb_conn, MongoClient mongoClient) {
@@ -28,9 +26,9 @@ public class ZeitMigrator  extends AMigration {
         while (zeit_mysql.next()) {
             String zeitB = zeit_mysql.getString(1);
             String date = zeit_mysql.getString(2);
-
-            Document zeitDocument = new Document().append("ZeitBlock", zeitB).append("Date",date);
-
+            //create document
+            Document zeitDocument = new Document().append("ZeitBlock", zeitB).append("Datum",date);
+            //add to the collection
             zeit_collection.insertOne(zeitDocument);
 
 

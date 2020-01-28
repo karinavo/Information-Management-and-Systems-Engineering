@@ -280,7 +280,7 @@ require 'vendor/autoload.php';
     // check if search view of list view
     if (isset($_GET['search'])) {
         //$sql = "SELECT * FROM imse_db.Manager WHERE SVNummer='" . $_GET['search'] . "'";
-        $query = array('SVNUmmer' => $_GET['search']);
+        $query = array('SVNummer' => $_GET['search']);
         $cursor = $collection->find($query);
     } else {
         //$sql = "SELECT * FROM imse_db.Manager";
@@ -321,14 +321,14 @@ require 'vendor/autoload.php';
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo count($cursor->toArray()); ?> Manager gefunden!
+        Insgesamt <?php echo count($cursor) ?> Manager gefunden!
 
     </div>
     <?php
     $stmt = null;
     $conn = null;
     ?>
-</div>
+</div>s
 
 
 </body>

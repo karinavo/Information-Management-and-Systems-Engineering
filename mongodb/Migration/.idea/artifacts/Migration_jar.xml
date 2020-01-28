@@ -3,12 +3,12 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Migration_jar</output-path>
     <root id="archive" name="Migration.jar">
       <element id="module-output" name="Migration" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/c3p0-0.9.2.1.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/mongo-java-driver-3.11.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/mysql-connector-java-5.1.48.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/mongodb-driver-core-3.11.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/mchange-commons-java-0.2.16.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/mysql-connector-java-5.1.48.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/c3p0-0.9.2.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/mongodb-driver-3.11.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/mongo-java-driver-3.11.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/bson-3.11.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/mchange-commons-java-0.2.3.4.jar" path-in-jar="/" />
     </root>

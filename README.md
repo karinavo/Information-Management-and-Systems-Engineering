@@ -44,7 +44,7 @@ and deployment
 - we bundled all needed libraries and the Java code into a single jar file for convenience, but the code can be seen too
 
 ### 3.3 Implementation IS (NoSQL)
-- 
+- all use cases except the reporting use case work
 
 
 ### Additional information
@@ -91,6 +91,9 @@ docker ps # find out the id or name of the filler container
 docker restart <filler id/filler name>
 ```
 ### How to execute Data migration
+
+CAUTION JAVA 11 needed to execute!
+
 1. Migrator.jar is in mongodb Folder:
 Run  `cd ./mongodb`
 2. Run  `java -jar Migration.jar `

@@ -31,11 +31,8 @@ public class FuehrtMigration extends AMigration {
         MongoDatabase mongoDatabase = this.mongoClient.getDatabase("imse_mongodb");
         MongoCollection<Document> koch_collection = mongoDatabase.getCollection("kochCollection");
         MongoCollection<Document> kochkurseCollection = mongoDatabase.getCollection("kochkurseCollection");
-
-        ResultSet fuehrt_mysql = current_statement.executeQuery("SELECT * FROM Fuehrt");
         /////////////////////// Update Koch collection
         FindIterable<Document> fi = koch_collection.find();
-        System.out.println("Koch " + koch_collection.countDocuments());
         FindIterable<Document> kursit = kochkurseCollection.find();
         MongoCursor<Document> mongoCursorKoch = fi.iterator();
         MongoCursor<Document> mongoCursorKurs =kursit.iterator();

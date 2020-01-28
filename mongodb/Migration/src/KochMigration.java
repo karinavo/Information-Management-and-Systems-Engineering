@@ -1,24 +1,13 @@
 import static com.mongodb.client.model.Filters.eq;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
-import java.sql.SQLException;
-
 public class KochMigration extends AMigration {
     public KochMigration(Connection mariadb_conn, MongoClient mongoClient) {
         super(mariadb_conn, mongoClient);
@@ -38,9 +27,9 @@ public class KochMigration extends AMigration {
             String rang = koch_mysql.getString(2);
             String ausbildung  = koch_mysql.getString(3);
             int mID = koch_mysql.getInt(4);
-            //find document mitarbeoiter
+            //find document mitarbeiter
             Document mitrDoc = mitarbeiter_collection.find(eq("MId", mID)).first();
-            // Add koch in document
+            // create document
             Document mitarbeiterDocument = new Document().append("KochID", kochId)
                     .append("Rang", rang)
                     .append("Ausbildung",ausbildung)

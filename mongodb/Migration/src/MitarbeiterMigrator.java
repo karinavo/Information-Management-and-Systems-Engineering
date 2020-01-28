@@ -1,23 +1,17 @@
 import static com.mongodb.client.model.Filters.eq;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCursor;
+
 import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.sql.SQLException;
 
 public class MitarbeiterMigrator extends AMigration {
     public MitarbeiterMigrator(Connection mariadb_conn, MongoClient mongoClient) {
@@ -33,7 +27,6 @@ public class MitarbeiterMigrator extends AMigration {
         MongoCollection<Document> kochschule_collection = mongoDatabase.getCollection("kochschuleCollection");
 
         ResultSet mitarbeiter_mysql = current_statement.executeQuery("SELECT * FROM Mitarbeiter");
-        //KOCHSCHULE
 
 
         while (mitarbeiter_mysql.next()) {
@@ -47,7 +40,7 @@ public class MitarbeiterMigrator extends AMigration {
             String gebDatum = mitarbeiter_mysql.getString(8);
             int leiterID = mitarbeiter_mysql.getInt(9);
             int abtNr = mitarbeiter_mysql.getInt(10);
-            //find document to the kochschule
+            //find document for the kochschule
             Document kochschuleDoc = kochschule_collection.find(eq("AbteilungsNr", abtNr)).first();
             // Add mitarbeiter in document
             Document mitarbeiterDocument = new Document().append("MId", mID).append("Nachname",nachname)

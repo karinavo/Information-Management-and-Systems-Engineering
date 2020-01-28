@@ -71,14 +71,6 @@ services:
       - "8081:8081"
     depends_on:
       - mongo
-# PORTAINER
-  portainer:
-    image: portainer/portainer
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./portainer-data:/data
-    ports:
-      - "9000:9000"
 # MIGRATION
 #  migration:
 #    image: migration

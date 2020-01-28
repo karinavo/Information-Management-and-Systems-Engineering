@@ -91,6 +91,7 @@ public class DataMigration {
                 flag = true;
             }
         }
+        rs1.close();
         return flag;
     }
     private static boolean checkKuecheDatenExist (Connection conn) throws SQLException {
@@ -105,6 +106,8 @@ public class DataMigration {
                 flag = true;
             }
         }
+        rs1.close();
+
         return flag;
     }
     private static boolean checkMitarbeiterDatenExist(Connection conn) throws SQLException {
@@ -119,6 +122,8 @@ public class DataMigration {
                 flag = true;
             }
         }
+        rs1.close();
+
         return flag;
     }
     private static boolean checkManagerDatenExist(Connection conn) throws SQLException {
@@ -133,6 +138,8 @@ public class DataMigration {
                 flag = true;
             }
         }
+        rs1.close();
+
         return flag;
     }
     private static boolean checkKochDatenExist(Connection conn) throws SQLException {
@@ -147,6 +154,8 @@ public class DataMigration {
                 flag = true;
             }
         }
+        rs1.close();
+
         return flag;
     }
     private static boolean checkKochkurseDatenExist(Connection conn) throws SQLException {
@@ -161,6 +170,8 @@ public class DataMigration {
                 flag = true;
             }
         }
+        rs1.close();
+
         return flag;
     }
     private static boolean checkKursteilnehmerDatenExist(Connection conn) throws SQLException {
@@ -175,6 +186,8 @@ public class DataMigration {
                 flag = true;
             }
         }
+        rs1.close();
+
         return flag;
     }
     private static boolean checkZeitDatenExist(Connection conn) throws SQLException {
@@ -189,6 +202,8 @@ public class DataMigration {
                 flag = true;
             }
         }
+        rs1.close();
+
         return flag;
     }
     private static boolean checkFindetStattDatenExist(Connection conn) throws SQLException {
@@ -203,6 +218,8 @@ public class DataMigration {
                 flag = true;
             }
         }
+        rs1.close();
+
         return flag;
     }
     private static boolean checkFuehrtDatenExist(Connection conn) throws SQLException {
@@ -217,6 +234,8 @@ public class DataMigration {
                 flag = true;
             }
         }
+        rs1.close();
+
         return flag;
     }
     public static void main(String[] args) {
@@ -230,14 +249,7 @@ public class DataMigration {
                 "adminpsw".toCharArray());
         mongoClient = new MongoClient(new ServerAddress("localhost", 27017), Arrays.asList(mongoCredential));
 
-        MongoDatabase db = mongoClient.getDatabase("imse_mongodb");
-
-        System.out.println(db.getName());
-        Document behandlungDocument = new Document().append("s",1);
-        MongoCollection<Document> kochschule_collection =db.getCollection("test");
-
-        // Add behandlungsDokument in Collections
-   // END
+        // END
     try {
             // Create connection pool
             createPool();
@@ -310,7 +322,9 @@ public class DataMigration {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
         } catch(Exception e){
             e.printStackTrace();
-        }
+        }finally {
+            mongoClient.close();
+    }
 
     }
     }

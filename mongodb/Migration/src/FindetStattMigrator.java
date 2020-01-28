@@ -71,6 +71,7 @@ public class FindetStattMigrator  extends AMigration {
                kueche_collection.updateOne(current_doc, Updates.pushEach("Zeit", zeitList));
             }
         }finally {
+
             mongoCursorKueche.close();
         }
     }

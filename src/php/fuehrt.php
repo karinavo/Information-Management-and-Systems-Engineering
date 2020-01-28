@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <?php
-    require 'vendor/autoload.php';
+
+use MongoDB\BSON\ObjectId;
+
+require 'vendor/autoload.php';
    ////////// MONGO DB CONNECTION ///////////
    // connect to mongodb
    $m = new MongoDB\Client("mongodb://admin:adminpsw@mongo:27017");
@@ -10,7 +13,8 @@
    $db = $m->imse_mongodb;
 
    echo "Database imse_mongodb selected";
-   $collection = $db->fuehrtCollection;
+   $collection = $db->kochkurseCollection;
+   
    ////////// MONGO DB CONNECTION ///////////
 ?>
 
@@ -289,8 +293,11 @@
         //$sql="INSERT INTO imse_db.Fuehrt VALUES(". $_GET['KochID'] . "," . $_GET['KursNr'] . ")";
         //Parse and execute statement
         //$insert = $conn->prepare($sql);
-        $insert = array('KochID' => $_GET['KochID'], 'KursNr' => $_GET['KursNr']);
-        $collection->insertOne($insert);
+        //$cursor = $collection->findOne(['KursNr' => (int) $_GET['KursNr']];
+        $find = ['KursNr' => (int) $_GET['KursNr']];
+        $update = ['Fuehrung' => $_GET['KochID']];
+        $cursor = $collection->findOneAndUpdate($find, $update);
+        //var_dump($cursor);
         echo "Successfully inserted!";
     }
     ?>
@@ -314,7 +321,7 @@
     <?php
     // check if search view of list view
     if (isset($_GET['search'])) {
-        $query = array('KursNr' => $_GET['search']);
+        $query = array('KursNr' => (int) $_GET['search']);
         $cursor = $collection->find($query);
         //$sql = "SELECT * FROM imse_db.Fuehrt WHERE KursNr='" . $_GET['search'] . "'";
     } else {
@@ -340,7 +347,7 @@
         // fetch rows of the executed sql query
         foreach ($cursor as $row) {
             echo "<tr>";
-            echo "<td><a href='koch.php?search=" . $row['KochID'] . "'>" . $row['KochID'] . "</a></td>";
+            echo "<td><a href='koch.php?search=" . $row['Fuehrung'] . "'>" . $row['Fuehrung'] . "</a></td>";
             echo "<td><a href='kochkurse.php?search=" . $row['KursNr'] . "'>" . $row['KursNr'] . "</a></td>";
             echo "</tr>";
         }

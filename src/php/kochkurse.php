@@ -12,28 +12,6 @@ require 'vendor/autoload.php';
    $collection = $db->kochkurseCollection;
    ////////// MONGO DB CONNECTION ///////////
 ?>
-<?php /*
-
-$servername = "mariadb";
-$username = "root";
-$password = "rootpsw";
-$dbname = "imse_db";
-try {
-    $conn = new PDO(
-    "mysql:host=$servername;$dbname;charset=utf8",
-    $username,
-    $password,
-    array(PDO::ATTR_PERSISTENT => true));
-
-
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e)
-{
-    echo "Connection failed: " . $e->getMessage();
-}
-*/
-?>
 
 <!DOCTYPE html>
 
@@ -327,9 +305,10 @@ try {
         $insert = array(
             'Preis' => $_GET['Preis'],
             'Thema' => $_GET['Thema'],
-            'SVNummer' => $_GET['SVNUmmer']
+            'SVNummer' => new \MongoDB\BSON\ObjectId($_GET['SVNUmmer'])
         );
         $collection->insertOne($insert);
+        echo "Inserted succesfully";
     }
     ?>
 
@@ -369,7 +348,7 @@ try {
 // check if search view of list view
 if (isset($_GET['search'])) {
     //$sql = "SELECT * FROM imse_db.Kochkurse WHERE KursNr='" . $_GET['search'] . "'";
-    $where = array('KursNr' => $_GET['search']);
+    $where = array('KursNr' => (int) $_GET['search']);
     $query = $collection->find($where);
 } else {
     //$sql = "SELECT * FROM imse_db.Kochkurse";
@@ -413,7 +392,10 @@ if (isset($_GET['search'])) {
             $cursor = $query;
         }else if(isset($_GET['search1'])){
             $cursor = $query1;
-        }else
+        }else {
+            $cursor = $query;
+        }
+
         foreach ($cursor as $row) {
                 echo "<tr>";
                 echo "<td>" . $row['KursNr'] . "</td>";

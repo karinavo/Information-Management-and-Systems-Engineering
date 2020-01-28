@@ -382,7 +382,7 @@ require 'vendor/autoload.php';
     // check if search view of list view
     if (isset($_GET['search'])) {
         //$sql = "SELECT * FROM imse_db.Mitarbeiter WHERE MId='" . $_GET['search'] . "'";
-        $where = array('MId' => $_GET['search']);
+        $where = array('MId' => (int) $_GET['search']);
         $cursor = $collection->find($where);
 
     } else {

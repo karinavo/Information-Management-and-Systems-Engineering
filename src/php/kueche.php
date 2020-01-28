@@ -13,21 +13,6 @@ require 'vendor/autoload.php';
    $collection = $db->kuecheCollection;
    ////////// MONGO DB CONNECTION ///////////
 ?>
-<?php /*
-$servername = "mariadb";
-$username = "root";
-$password = "rootpsw";
-$dbname = "imse_db";
-try {
-    $conn = new PDO("mysql:host=$servername;$dbname", $username, $password);
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
-catch(PDOException $e)
-    {
-    echo "Connection failed: " . $e->getMessage();
-}*/
-?>
 
 
 <html>
@@ -351,12 +336,13 @@ catch(PDOException $e)
     try{
         $search = $_GET['search'];
         if (isset($search)) {
-            $sql = "SELECT * FROM imse_db.Kueche WHERE Nummer='" . $search ."'";
+            //$sql = "SELECT * FROM imse_db.Kueche WHERE Nummer='" . $search ."'";
             // execute sql statement
             //$stmt = $conn->query($sql);
             //$stmt->execute();
-            $query = array('Nummer' => $_GET['search']);
+            $query = array('Nummer' => (int) $_GET['search']);
             $cursor = $collection->find($query);
+            //var_dump($cursor);
         } else {
             //$sql = "SELECT * FROM imse_db.Kueche";
             // execute sql statement
@@ -385,6 +371,7 @@ catch(PDOException $e)
         <?php
         // fetch rows of the executed sql query
         foreach ($cursor as $row) {
+            //var_dump($row);
             echo "<tr>";
             echo "<td>" . $row['AbteilungsNr'] . "</td>";
             echo "<td>" . $row['Nummer'] . "</td>";
@@ -398,7 +385,7 @@ catch(PDOException $e)
     <!--ANZAHL-->
     <div>
 
-        Insgesamt <?php echo count($cursor->toArray()); ?> Küche(n) gefunden!
+        Insgesamt <?php echo array_count_values($cursor->toArray()); ?> Küche(n) gefunden!
 
     </div>
     <?php

@@ -319,12 +319,15 @@ require 'vendor/autoload.php';
             'Nachname' => $_GET['Nachname'],
             'EMail' => $_GET['EMail'],
             'TelefonNr' => $_GET['TelefonNr'],
-            'AbteilungsNr' => $_GET['AbteilungsNr'],
-            'KursNr' => $_GET['KursNr']
+            'AbteilungsNr' => new \MongoDB\BSON\ObjectId($_GET['AbteilungsNr']),
+            'KursNr' => new \MongoDB\BSON\ObjectId($_GET['KursNr'])
         );
         //Parse and execute statement
         //$insert = $conn->prepare($sql);
+
         $collection->insertOne($insert);
+
+
         /*try {
             $conn->exec($sql);
             echo "Successfully inserted!";
